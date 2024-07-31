@@ -7,10 +7,11 @@ params:
   checked: 0
   output: !r tibble::tibble(id = "test", checked = FALSE, correct = NA)
 title: "`r params$reporttitle`"
-author: "`r params$student_name`"
 date: "`r params$reportdate`"
 ---
 
+STUDENT Name: `r params$student_name`
+STUDENT UniKey: `r params$student_unikey`
 
 ```{r, echo = FALSE, }
 library("qsslearnr")
