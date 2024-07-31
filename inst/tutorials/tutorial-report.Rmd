@@ -18,7 +18,7 @@ date: "`r params$reportdate`"
 ```{r, echo = FALSE, }
 library("sspslearnr")
 
-checked_prop <- sum(params$output$checked) / length(params$output$checked)
+checked_prop <- sum(params$output$checked, na.rm = T) / length(params$output$checked)
 ```
 
 Congrats on getting through this tutorial! Please upload this PDF to Canvas/Gradescope. 
@@ -27,7 +27,7 @@ Congrats on getting through this tutorial! Please upload this PDF to Canvas/Grad
 
 - Exercises attempted: `r length(params$output$attempted)`
 - Exercises attempted (%): `r round(checked_prop*100,2)`
-- Correct exercises: `r sum(params$output$checked) `
+- Correct exercises: `r sum(params$output$checked, na.rm = T) `
 
 \newpage
 
