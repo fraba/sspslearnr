@@ -20,41 +20,6 @@ knitr::opts_chunk$set(echo = FALSE)
 tut_reptitle <- "SSPS [4102|6006] Week 01: In-class Individual Tutorial"
 ```
 
-## Instructions to complete in-class tutorials
-
-When running code on our own computers, we write the code on the R script (the upper left window of RStudio), then we highlight the code we want to run and either (a) manually click on the *Run* icon of RStudio or (b) use the shortcut *command+enter* in Mac or *ctrl+enter* in Windows.
-
-When running code on the tutorials, however, we have to do things a little differently. Every time an exercise asks you to type and run some code, you will see an *R code* window. This is where you will type the code. <br><br>
-Once you are done typing the code, you can run it by clicking on the *Run Code* button in green. The output produced by the executed code will appear underneath the *R code* window.
-
-Once you are satisfied with your answer, you can submit it by clicking on the *Submit Answer* button in blue. 
-
-To help you figure out the right answer, some questions contain hints. You can access them by clicking on the *Hint* button in white. 
-
-If you would like to delete ALL your answers and start the tutorial again, click on *Start Over* under Submit on the Table of Contents shown on the right-hand side of the tutorial.</p>
-
-<table>
-  <tr> 
-    <th> variable </th>
-    <th> description </th>
-  </tr>
-  <tr>
-    <td> *classtype* </td>
-    <td>  class size the student attended: 'small' or 'regular'
-  </tr>
-  <tr>  
-    <td>*reading* </td>
-    <td> student's third-grade reading test scores (in points) </td>
-  </tr>
-  <tr>  
-    <td> *math* </td>
-    <td>  student's third-grade math test scores (in points) </td>
-  <tr>
-    <td>*graduated* </td>
-    <td>  identifies whether the student graduated from high school: <br>1=graduated or 0=did not graduate </td>
-  </tr>
-</table>
-
 ## Basics of R
 
 ### Running code in RStudio
@@ -217,6 +182,24 @@ grade_result_strict(
 ## Working with Data
 
 
+### Working with real data
+
+Next, we are going to start working with real data: estimates of world population (in thousands). A vector of data called `world.pop` has been loaded with this lesson. The first element is for the year 1950 up to the last element for 2010. You can see that we create the vector by using the `c()` function which concatenates multiple values together into one vector. We enter the data one value at a time, each separated by a comma.
+
+- Print the `world.pop` data by simply typing it into a line of code.
+
+```{r printdata, exercise=TRUE}
+## create the world.pop data
+world.pop <- c(2525779, 3026003, 3691173, 4449049, 5320817, 6127700, 6916183)
+
+## print the world.pop data
+
+```
+
+```{r printdata-solution}
+world.pop
+```
+
 ### Reading data into your R sessions
 
 ```{r question-read}
@@ -238,23 +221,6 @@ question("What would be the code to read a CSV file called *testscores.csv* and 
 ```
 
 
-### Working with real data
-
-Next, we are going to start working with real data: estimates of world population (in thousands). A vector of data called `world.pop` has been loaded with this lesson. The first element is for the year 1950 up to the last element for 2010. You can see that we create the vector by using the `c()` function which concatenates multiple values together into one vector. We enter the data one value at a time, each separated by a comma.
-
-- Print the `world.pop` data by simply typing it into a line of code.
-
-```{r printdata, exercise=TRUE}
-## create the world.pop data
-world.pop <- c(2525779, 3026003, 3691173, 4449049, 5320817, 6127700, 6916183)
-
-## print the world.pop data
-
-```
-
-```{r printdata-solution}
-world.pop
-```
 
 ### Indexing and subsetting
 
@@ -350,37 +316,6 @@ mean(world.pop)
 grade_code()
 ```
 
-### Creating and using sequences
-
-Creating vectors using the `c()` command can be cumbersome and time consuming. Sometimes we can create vectors much more quickly. One place where we can do this is with sequences of numbers that follow a pre-specified pattern. In that case, we can use the `seq()` function. This function most commonly takes three arguments:
-
-- `from` - the first number in the sequence.
-- `to` - the last number in the sequence
-- `by` - the increments between each value in the sequence.
-
-We're going to use this to create a label for the  `world.pop` vector. We can assign these labels using the `names()` function.
-
-#### Instructions
-
-- Create a vector called `year` that is a sequence from 1950 to 2010 that increases in increments of 10 years and print it.
-- Assign this `year` vector to the `names(world.pop)` to set the names of the `world.pop` vector.
-
-```{r seq, exercise = TRUE, exercise.setup = "worlddata"}
-## create a vector with a sequence from 1950 to 2010 by 10
-year <- ...
-
-names(world.pop) <- ...
-
-world.pop
-```
-
-```{r seq-check}
-grade_result_strict(
-  pass_if(~ identical(year, seq(1950, 2010, by = 10))),
-  pass_if(~ identical(.result, c("1950" = 2525779, "1960" = 3026003, "1970" = 3691173, "1980" = 4449049, "1990" = 5320817, "2000" = 6127700, "2010" = 6916183)))
-)
-```
-
 ### Replacing values in a vector
 
 Indexing and subsetting allow you to access specific values in the vector, but you can also use the same syntax to replace certain values in the vector. That is we can assign a value such as `x[4] <- 50`, which would replace the fourth entry in the `x` vector with the number 50.
@@ -392,6 +327,7 @@ For example, suppose that your research assistant came running in to tell you th
 - Replace the first entry of the `year` vector with 1945.
 
 ```{r replace, exercise = TRUE}
+# seq() creates a sequence of values
 year <- seq(from=1950, to=2010, by = 10)
 
 ## update the first entry of year
@@ -621,8 +557,189 @@ UNpop[5:7, "world.pop"]
 grade_code()
 ```
 
+## Introductory stats
 
-## Submit
+```{r ch1_topic3_mc}
+quiz(caption="",
+  question("If *X*  = {10, 4, 6, 8, 22}, what is $\\overline{X}$ ?",
+    answer("10", correct = TRUE),
+    answer("6", message = "Hint: $\\overline{X}$ stands for the mean of *X* in mathematical notation. And, to compute the mean of a variable, we sum the values across all observations and divide the result by the total number of observations."),
+    answer("8", message = "Hint: $\\overline{X}$ stands for the mean of *X* in mathematical notation. And, to compute the mean of a variable, we sum the values across all observations and divide the result by the total number of observations."),
+    answer("It is impossible to know with the information given", message = "Hint: $\\overline{X}$ stands for the mean of *X* in mathematical notation. And, to compute the mean of a variable, we sum the values across all observations and divide the result by the total number of observations."),
+    post_message = "$\\overline{X}$ stands for the mean of *X* and, here, $\\overline{X}$ equals 10 because: (10+4+6+8+22)/5 = 50/5 = 10.",
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  ),
+  question("If the unit of observation is students and the variable *attended* = {0, 0, 1, 1, 1, 0}, what proportion of students attended class?",
+    answer("50 percent of the students attended class", correct = TRUE),
+    answer("60 percent of the students attended class", message = "Hint: The proportion of observations that meet a criterion is calculated as: *number of observations that meet criterion* / *total number of observations*. And, to interpret the resulting decimal as a percentage, we multiply it by 100."),
+    answer("3 percent of the students attended class", message = "Hint: The proportion of observations that meet a criterion is calculated as: *number of observations that meet criterion* / *total number of observations*. And, to interpret the resulting decimal as a percentage, we multiply it by 100."),
+    answer("30 percent of the students attended class", message = "Hint: The proportion of observations that meet a criterion is calculated as: *number of observations that meet criterion* / *total number of observations*. And, to interpret the resulting decimal as a percentage, we multiply it by 100."),
+    post_message = "The variable *attended* appears to be binary, where 1 means that the student attended class, and 0 means that the student did not attend class. <br><br> 
+    There are six observations in this variable: three 1s and three 0s. This means that three out of the six students attended class, which is a proportion of 50 percent (3/6 = 0.5 and 0.5*100 = 50%).",
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  ),
+question("If the unit of observation is students and *attended* = {0, 0, 1, 1, 1, 0}, what is $\\overline{attended}$ ?",
+    answer("$\\overline{attended}$ = 0.5, which we can interpret as `50 percent of the students attended class'", correct = TRUE),
+    answer("$\\overline{attended}$ = 0.5, which we can interpret as `students attended 0.5 classes on average'", message = "Hint: Is *attended* a binary or a non-binary variable?"),
+    answer("$\\overline{attended}$ = 3, which we can interpret as `students attended 3 classes on average'", message = "Hint: Check your calculations. Plus, is *attended* a binary or a non-binary variable?"),
+    answer("$\\overline{attended}$ = 0.3, which we can interpret as `30 percent of the students attended class'", message = "Hint: Check your calculations"),
+    post_message = "The correct answer is:
+    $\\overline{attended}$ = 0.5, which we can interpret as ''50 percent of the students attended class'' <br><br>
+  Calculation: $\\overline{attended}$ ${ }$ equals 0.5 because: (0+0+1+1+1+0)/6 = 3/6 = 0.5. <br><br>
+  Interpretation: Here, *attendance* is binary (because it can take only two values: 1s and 0s), so the mean of *attendance* should be interpreted as a proportion and in percentages after multiplying the output by 100 (0.5*100=50%). In particular, it should be interpreted as the proportion of the observations that have the characteristic identified by the variable. In this case, the proportion of students who attended class.<br><br>
+  Important: Notice that we arrived to the same conclusion in the prior question. Computing the proportion of 1s in a binary variable is equivalent to computing the mean of the binary variable. Both calculations will lead us to the same conclusion.",
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  )
+)
+```
+
+Below is the description of the variables in a dataset from a survey of students participating to Project Star, where the unit of observation is students.</b>
+
+<table>
+  <tr> 
+    <th> variable </th>
+    <th> description </th>
+  </tr>
+  <tr>
+    <td> *classtype* </td>
+    <td>  class size the student attended: 'small' or 'regular'
+  </tr>
+  <tr>  
+    <td>*reading* </td>
+    <td> student's third-grade reading test scores (in points) </td>
+  </tr>
+  <tr>  
+    <td> *math* </td>
+    <td>  student's third-grade math test scores (in points) </td>
+  <tr>
+    <td>*graduated* </td>
+    <td>  identifies whether the student graduated from high school: <br>1=graduated or 0=did not graduate </td>
+  </tr>
+</table>
+ 
+<br> 
+ 
+**SETUP: Suppose we have already set the working directory to the DSS folder and we have already run the code below to read and store the STAR dataset in an object called `star`.** 
+
+```{r star_FALSE2, eval=FALSE, echo=TRUE}
+star <- read.csv("STAR.csv") # reads and stores data
+```
+
+```{r star, echo=FALSE}
+star <- read.csv("data/STAR.csv")
+```
+
+**Go ahead and run the following piece of code to ask R to show the first six observations in the dataframe stored in the `star` object:**
+ 
+```{r ch1_topic3_r1_setup, exercise=TRUE, exercise.setup = "star"}
+head(star) # shows the first six observations
+```
+
+**Use the `mean()` function to compute the mean of the variable *reading***
+
+```{r ch1_topic3_r1, exercise=TRUE, exercise.setup = "star"}
+
+```
+
+<div id="ch1_topic3_r1-hint">
+Hint: *reading* is a variable of the dataframe stored inside the object `star`, and the `$` character might be helpful when accessing variables of dataframes.
+</div>
+
+```{r ch1_topic3_r1-solution}
+mean(star$reading)
+```
+
+```{r ch1_topic3_r1-check}
+grade_code()
+```
+
+```{r ch1_topic3_r1_inter}
+quiz(caption="",
+       question("How can we interpret the mean of *reading* computed above?",
+    answer("Among the students who participated in Project STAR, the average score in the third-grade reading test is about 629 points", correct = TRUE),
+    answer("Among the students who participated in Project STAR, the average score in the third-grade reading test is about 629%", message="Check the unit of measurement of *reading*"),
+    answer("Among the students who participated in Project STAR, the average score in the third-grade reading test is about 629", message="You are missing the unit of measurement."),
+    answer("Among the students who participated in Project STAR, the average score in the third-grade reading test is about 628 points", message="Notice that we round up whenever the next decimal point is 5 or above."),
+    post_message = "The correct answer is: Among the students who participated in Project STAR, the average score in the third-grade reading test is about 629 points.<br><br>
+Here, as we can see in the output of `head()` above, *reading* is non-binary because it can take more than two values. And, as we can read in the description of the variable in the table above, *reading* is measured in points. So, the mean of *reading* should be interpreted as an average and in points.",
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  ))
+```
+
+**Now, use the `mean()` function to compute the mean of the variable *graduated* **
+
+```{r ch1_topic3_r2, exercise=TRUE, exercise.setup = "star"}
+
+```
+
+<div id="ch1_topic3_r2-hint">
+Hint: *graduated* is a variable of the dataframe stored inside the object `star`, and the `$` character might be helpful when accessing variables of dataframes.
+</div>
+
+```{r ch1_topic3_r2-solution}
+mean(star$graduated)
+```
+
+```{r ch1_topic3_r2-check}
+grade_code()
+```
+
+```{r ch1_topic3_r2_inter}
+quiz(caption="",
+       question("How can we interpret the mean of *graduated* computed above?",
+    answer("87% of the students who participated in Project STAR graduated from high school", correct = TRUE),
+    answer("0.87% of the students who participated in Project STAR graduated from high school", message="Remember that to interpret the output as a percentage, we need to multiply it by 100. (Review how to interpret the mean of binary variable in section 1.8 of DSS.)"),
+    answer("87 students in Project STAR graduated from high school.", message="Is *graduated* a binary or a non-binary variable?"),
+    answer("Fewer than one student in Project STAR graduated from high school", message="Is *graduated* a binary or non-binary variable?"),
+    post_message = "The correct answer is: 87% of the students who participated in Project STAR graduated from high school.<br><br>
+   Here, as we can see in the output of `head()` above and read in the description of variables in the table above, *graduated* is binary because it can take only two values: 1s and 0s. So, the mean of *graduated* should be interpreted as a proportion and in percentages after multiplying the output by 100 (0.87*100=87%). In particular, it should be interpreted as the proportion of the observations that have the characteristic identified by the variable. In this case, the proportion of students who graduated from high school.",
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  ))
+```
+
+<br> <span style=color:dodgerblue> **FIX THE ERRORS IN THE CODE:** </span> **Running into error messages is part of coding, so let's practice fixing mistakes in our code. There are many mistakes in the code below. Try to fix them all so that R computes de mean of the variable *math*, which is one of the variables in the dataframe stored in the object called *star*. (The error messages that R provides can be really helpful when looking to debug code. So, I recommend starting by running the code as is, and then running it again after fixing each individual error, so that you can read the messages that R provides.)**
+
+```{r ch1_topic3_r3, exercise=TRUE, exercise.setup = "star"}
+average(math$STAR) # computes the mean of math
+```
+
+<div id="ch1_topic3_r3-hint">
+Hints: <br><br>
+The function that calculates the mean of a variable is `mean()`, not `average()`.<br><br>
+To the left of the `$` character, we specify the name of the object where the dataframe is stored (without quotes). To the right of the `$` character, we specify the name of the variable (without quotes). Example: `data$variable`. <br><br>
+R code is case sensitive and the name of the object where we have stored the dataset is `star`, not `STAR`.
+</div>
+
+```{r ch1_topic3_r3-solution}
+mean(star$math)
+```
+
+```{r ch1_topic3_r3-check}
+grade_code("<br><br>The function that calculates the mean of a variable is `mean()`, not `average()`.<br><br>
+We use the `$` character to access a variable inside a dataframe. To its left, we specify the name of the object where the dataframe is stored (without quotes). To its right, we specify the name of the variable (without quotes). Example: `data$variable`. <br><br>
+R code is case sensitive and the name of the object where we have stored the dataset is `star`, not `STAR`.")
+```
+
+```{r ch1_topic3_r3_inter}
+quiz(caption="",
+       question("How can we interpret the mean of *math* computed above?",
+    answer("Among the students who participated in Project STAR, the average score in the third-grade math test is about 632 points", correct = TRUE),
+    answer("Among the students who participated in Project STAR, the average score in the third-grade math test is about 63.2%", message="Check the unit of measurement"),
+    answer("Among the students who participated in Project STAR, the average score in the third-grade math test is about 632", message="You are missing the unit of measurement."),
+    answer("Among the students who participated in Project STAR, the average score in the third-grade math test is about 631 points", message="Notice that we round up whenever the next decimal point is 5 or above."),
+    post_message = "The correct answer is: Among the students who participated in Project STAR, the average score in the third-grade math test is about 632 points.<br><br>
+     Here, as we can see in the output of `head()` above, *math* is non-binary because it can take more than two values. And, as we can read in the description of the variable in the table above, *math* is measured in points. So, the mean of *math* should be interpreted as an average and in points.",
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  ))
+```
+
+## Submit Report
 
 ```{r context="setup"}
 submission_ui
