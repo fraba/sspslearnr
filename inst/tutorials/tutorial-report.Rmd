@@ -11,7 +11,7 @@ title: "`r params$reporttitle`"
 date: "`r params$reportdate`"
 ---
 
-STUDENT Name: `r params$student_name`
+STUDENT Name: `r params$student_name` \\
 
 STUDENT UniKey: `r params$student_unikey`
 
@@ -21,7 +21,7 @@ library("qsslearnr")
 checked_prop <- sum(params$output$checked) / length(params$output$checked)
 ```
 
-Congrats on getting through this tutorial! Please upload this PDF to Gradescope. 
+Congrats on getting through this tutorial! Please upload this PDF to Canvas/Gradescope. 
 
 ## Tutorial progress:
 
