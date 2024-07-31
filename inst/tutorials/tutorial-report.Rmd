@@ -25,7 +25,9 @@ Congrats on getting through this tutorial! Please upload this PDF to Canvas/Grad
 
 ## Tutorial progress:
 
-- Exercises attempted: `r length(params$output$attempted)` 
+- Exercises attempted: `r length(params$output$attempted)`
+- Exercises attempted (%): `r round(checked_prop*100,2)`
+- Correct exercises: `r sum(params$output$checked) `
 
 \newpage
 
