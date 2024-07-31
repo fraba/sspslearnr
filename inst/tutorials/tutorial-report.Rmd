@@ -1,6 +1,7 @@
 ---
 params:
   student_name: "Student T."
+  student_unikey: "abcd1234"
   reportdate: !r Sys.Date()
   reporttitle: "Week 0 Tutorial Report"
   skipped: 0
