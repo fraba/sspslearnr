@@ -14,7 +14,7 @@ description: "This tutorial will introduce you to the basics of R."
 ```{r setup, include=FALSE}
 library(gradethis)
 library(learnr)
-library(qsslearnr)
+library(sspslearnr)
 tutorial_options(exercise.checker = gradethis::grade_learnr)
 knitr::opts_chunk$set(echo = FALSE)
 tut_reptitle <- "SSPS [4102|6006] Week 01: In-class Individual Tutorial"
