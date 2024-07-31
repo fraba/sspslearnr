@@ -17,7 +17,7 @@ library(learnr)
 library(qsslearnr)
 tutorial_options(exercise.checker = gradethis::grade_learnr)
 knitr::opts_chunk$set(echo = FALSE)
-tut_reptitle <- "SSPS [4102|6006] Week 01: In-class Report"
+tut_reptitle <- "SSPS [4102|6006] Week 01: In-class Individual Tutorial"
 ```
 
 ## Basics of R
