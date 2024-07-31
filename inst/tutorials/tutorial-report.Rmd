@@ -11,9 +11,9 @@ title: "`r params$reporttitle`"
 date: "`r params$reportdate`"
 ---
 
-- STUDENT Name: `r params$student_name`
+* STUDENT Name: `r params$student_name`
 
-- STUDENT UniKey: `r params$student_unikey`
+* STUDENT UniKey: `r params$student_unikey`
 
 ```{r, echo = FALSE, }
 library("qsslearnr")
