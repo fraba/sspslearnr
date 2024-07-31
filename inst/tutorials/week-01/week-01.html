@@ -856,7 +856,7 @@ Download HTML (backup)
 <script type="application/shiny-prerendered" data-context="server-start">
 library(gradethis)
 library(learnr)
-library(qsslearnr)
+library(sspslearnr)
 tutorial_options(exercise.checker = gradethis::grade_learnr)
 knitr::opts_chunk$set(echo = FALSE)
 tut_reptitle <- "SSPS [4102|6006] Week 01: In-class Individual Tutorial"
@@ -885,23 +885,23 @@ session$onSessionEnded(function() {
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "question-code", 
     question = structure("How do we run code that has already been written on an R script?", html = TRUE, class = c("html", 
-    "character")), answers = list(structure(list(id = "lnr_ans_a1e3f8c", 
+    "character")), answers = list(structure(list(id = "lnr_ans_a9fb334", 
         option = "We highlight the code we want to run and either (a) manually click on the *Run* icon RStudio displays in the upper right corner of the R script window or (b) use the shortcut *command+enter* in Mac or *ctrl+enter* in Windows", 
         value = "We highlight the code we want to run and either (a) manually click on the *Run* icon RStudio displays in the upper right corner of the R script window or (b) use the shortcut *command+enter* in Mac or *ctrl+enter* in Windows", 
         label = structure("We highlight the code we want to run and either (a) manually click on the <em>Run<\u002fem> icon RStudio displays in the upper right corner of the R script window or (b) use the shortcut <em>command+enter<\u002fem> in Mac or <em>ctrl+enter<\u002fem> in Windows", html = TRUE, class = c("html", 
         "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_8b3ad21", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_d782dff", 
         option = "We highlight the code we want to run and hit *enter*", 
         value = "We highlight the code we want to run and hit *enter*", 
         label = structure("We highlight the code we want to run and hit <em>enter<\u002fem>", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = structure("Almost! You are missing the key that must be used in conjunction with <em>enter<\u002fem>.", html = TRUE, class = c("html", 
         "character")), type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_e8189c7", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_946fabb", 
         option = "We highlight the code we want to run and hit the *spacebar*", 
         value = "We highlight the code we want to run and hit the *spacebar*", 
         label = structure("We highlight the code we want to run and hit the <em>spacebar<\u002fem>", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_e732125", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_4364793", 
         option = "We highlight the code we want to run and hit *F1*", 
         value = "We highlight the code we want to run and hit *F1*", 
         label = structure("We highlight the code we want to run and hit <em>F1<\u002fem>", html = TRUE, class = c("html", 
@@ -914,7 +914,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
     "character")), message = NULL, post_message = structure("We highlight the code we want to run and either (a) manually click on the <em>Run<\u002fem> icon RStudio displays in the upper right corner of the R script window or (b) use the shortcut <em>command+enter<\u002fem> in Mac or <em>ctrl+enter<\u002fem> in Windows.", html = TRUE, class = c("html", 
     "character"))), ids = list(answer = "question-code-answer", 
         question = "question-code"), loading = NULL, random_answer_order = TRUE, 
-    allow_retry = TRUE, seed = 1184363859.44849, options = list()), class = c("learnr_radio", 
+    allow_retry = TRUE, seed = 1429950059.83413, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
 
@@ -928,7 +928,7 @@ output$`tutorial-exercise-add-output` <- renderUI({
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "add", global_setup = structure(c("library(gradethis)", 
-"library(learnr)", "library(qsslearnr)", "tutorial_options(exercise.checker = gradethis::grade_learnr)", 
+"library(learnr)", "library(sspslearnr)", "tutorial_options(exercise.checker = gradethis::grade_learnr)", 
 "knitr::opts_chunk$set(echo = FALSE)", "tut_reptitle <- \"SSPS [4102|6006] Week 01: In-class Individual Tutorial\""
 ), chunk_opts = list(label = "setup", include = FALSE)), setup = NULL, 
     chunks = list(list(label = "add", code = "", opts = list(
@@ -970,7 +970,7 @@ output$`tutorial-exercise-subtract-output` <- renderUI({
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "subtract", global_setup = structure(c("library(gradethis)", 
-"library(learnr)", "library(qsslearnr)", "tutorial_options(exercise.checker = gradethis::grade_learnr)", 
+"library(learnr)", "library(sspslearnr)", "tutorial_options(exercise.checker = gradethis::grade_learnr)", 
 "knitr::opts_chunk$set(echo = FALSE)", "tut_reptitle <- \"SSPS [4102|6006] Week 01: In-class Individual Tutorial\""
 ), chunk_opts = list(label = "setup", include = FALSE)), setup = NULL, 
     chunks = list(list(label = "subtract", code = "", opts = list(
@@ -1012,7 +1012,7 @@ output$`tutorial-exercise-divide-output` <- renderUI({
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "divide", global_setup = structure(c("library(gradethis)", 
-"library(learnr)", "library(qsslearnr)", "tutorial_options(exercise.checker = gradethis::grade_learnr)", 
+"library(learnr)", "library(sspslearnr)", "tutorial_options(exercise.checker = gradethis::grade_learnr)", 
 "knitr::opts_chunk$set(echo = FALSE)", "tut_reptitle <- \"SSPS [4102|6006] Week 01: In-class Individual Tutorial\""
 ), chunk_opts = list(label = "setup", include = FALSE)), setup = NULL, 
     chunks = list(list(label = "divide", code = "", opts = list(
@@ -1054,7 +1054,7 @@ output$`tutorial-exercise-sqrt-output` <- renderUI({
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "sqrt", global_setup = structure(c("library(gradethis)", 
-"library(learnr)", "library(qsslearnr)", "tutorial_options(exercise.checker = gradethis::grade_learnr)", 
+"library(learnr)", "library(sspslearnr)", "tutorial_options(exercise.checker = gradethis::grade_learnr)", 
 "knitr::opts_chunk$set(echo = FALSE)", "tut_reptitle <- \"SSPS [4102|6006] Week 01: In-class Individual Tutorial\""
 ), chunk_opts = list(label = "setup", include = FALSE)), setup = NULL, 
     chunks = list(list(label = "sqrt", code = "", opts = list(
@@ -1096,7 +1096,7 @@ output$`tutorial-exercise-storing-output` <- renderUI({
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "storing", global_setup = structure(c("library(gradethis)", 
-"library(learnr)", "library(qsslearnr)", "tutorial_options(exercise.checker = gradethis::grade_learnr)", 
+"library(learnr)", "library(sspslearnr)", "tutorial_options(exercise.checker = gradethis::grade_learnr)", 
 "knitr::opts_chunk$set(echo = FALSE)", "tut_reptitle <- \"SSPS [4102|6006] Week 01: In-class Individual Tutorial\""
 ), chunk_opts = list(label = "setup", include = FALSE)), setup = NULL, 
     chunks = list(list(label = "storing", code = "## assign the difference here\nmydiff <- ...\n\n## print the value of mydiff on the next line\n", 
@@ -1141,7 +1141,7 @@ output$`tutorial-exercise-strings-output` <- renderUI({
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "strings", global_setup = structure(c("library(gradethis)", 
-"library(learnr)", "library(qsslearnr)", "tutorial_options(exercise.checker = gradethis::grade_learnr)", 
+"library(learnr)", "library(sspslearnr)", "tutorial_options(exercise.checker = gradethis::grade_learnr)", 
 "knitr::opts_chunk$set(echo = FALSE)", "tut_reptitle <- \"SSPS [4102|6006] Week 01: In-class Individual Tutorial\""
 ), chunk_opts = list(label = "setup", include = FALSE)), setup = NULL, 
     chunks = list(list(label = "strings", code = "## save the first string\ncourse <- ...\n\n## overwrite the course variable with the second phrase\ncourse <- ...\n\n## print the value of course on the next line\n", 
@@ -1185,7 +1185,7 @@ output$`tutorial-exercise-copying-output` <- renderUI({
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "copying", global_setup = structure(c("library(gradethis)", 
-"library(learnr)", "library(qsslearnr)", "tutorial_options(exercise.checker = gradethis::grade_learnr)", 
+"library(learnr)", "library(sspslearnr)", "tutorial_options(exercise.checker = gradethis::grade_learnr)", 
 "knitr::opts_chunk$set(echo = FALSE)", "tut_reptitle <- \"SSPS [4102|6006] Week 01: In-class Individual Tutorial\""
 ), chunk_opts = list(label = "setup", include = FALSE)), setup = "result <- 8 - 2", 
     chunks = list(list(label = "copying-setup", code = "result <- 8 - 2", 
@@ -1233,7 +1233,7 @@ output$`tutorial-exercise-printdata-output` <- renderUI({
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "printdata", global_setup = structure(c("library(gradethis)", 
-"library(learnr)", "library(qsslearnr)", "tutorial_options(exercise.checker = gradethis::grade_learnr)", 
+"library(learnr)", "library(sspslearnr)", "tutorial_options(exercise.checker = gradethis::grade_learnr)", 
 "knitr::opts_chunk$set(echo = FALSE)", "tut_reptitle <- \"SSPS [4102|6006] Week 01: In-class Individual Tutorial\""
 ), chunk_opts = list(label = "setup", include = FALSE)), setup = NULL, 
     chunks = list(list(label = "printdata", code = "## create the world.pop data\nworld.pop <- c(2525779, 3026003, 3691173, 4449049, 5320817, 6127700, 6916183)\n\n## print the world.pop data\n", 
@@ -1270,26 +1270,26 @@ learnr:::store_exercise_cache(structure(list(label = "printdata", global_setup =
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "question-read", 
     question = structure("What would be the code to read a CSV file called <em>testscores.csv<\u002fem> and store the data from that file in an object called <em>grades<\u002fem>?", html = TRUE, class = c("html", 
-    "character")), answers = list(structure(list(id = "lnr_ans_fc5cc0f", 
+    "character")), answers = list(structure(list(id = "lnr_ans_8718609", 
         option = "`grades <- read.csv(''testscores.csv'')`", 
         value = "`grades <- read.csv(''testscores.csv'')`", label = structure("<code>grades &lt;- read.csv(''testscores.csv'')<\u002fcode>", html = TRUE, class = c("html", 
         "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_4867db1", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_3d0a4d1", 
         option = "`read.csv(''testscores.csv'')`", value = "`read.csv(''testscores.csv'')`", 
         label = structure("<code>read.csv(''testscores.csv'')<\u002fcode>", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = structure("This code will read the data from the CSV file, but it won’t store it into an object called <em>grades<\u002fem>.", html = TRUE, class = c("html", 
         "character")), type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_3f85157", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_733e3e6", 
         option = "`grades <- read.csv(testscores.csv)`", value = "`grades <- read.csv(testscores.csv)`", 
         label = structure("<code>grades &lt;- read.csv(testscores.csv)<\u002fcode>", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = structure("You are almost there. Hint: The file name is text and not (1) the name of an object, (2) the name of a function, (3) the name of an argument, or (4) a special character such as TRUE, FALSE, NA, and NULL.", html = TRUE, class = c("html", 
         "character")), type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_af2dd85", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_4824338", 
         option = "`grades <- read.csv(''testscores'')`", value = "`grades <- read.csv(''testscores'')`", 
         label = structure("<code>grades &lt;- read.csv(''testscores'')<\u002fcode>", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = structure("You are almost there. Hint: The file name needs to include its extension (i.e., ‘’.csv’’).", html = TRUE, class = c("html", 
         "character")), type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_890217c", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_345950c", 
         option = "`testcores <- read.csv(''grades.csv'')`", value = "`testcores <- read.csv(''grades.csv'')`", 
         label = structure("<code>testcores &lt;- read.csv(''grades.csv'')<\u002fcode>", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = structure("You are almost there. Hint: The name of the file is <em>testcores.csv<\u002fem> and the name of the object is <em>grades<\u002fem>, not the other way around.", html = TRUE, class = c("html", 
@@ -1302,7 +1302,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
     "character")), message = NULL, post_message = structure("The correct answer is: <code>grades &lt;- read.csv(''testscores.csv'') <\u002fcode><br><br>\nTo create an object, we use the assignment operator <code>&lt;-<\u002fcode> <br>\nTo the left of the assignment operator, we specify the name of the object; <em>grades<\u002fem> in this case. <br>\nTo the right of the assignment operator, we specify the contents, which, in this case, are produced by reading the CSV file <em>testcores.csv<\u002fem>. <br><br>\nNote: We do not use quotes around the name of an object such as <em>grades<\u002fem> or around the name of a function such as <em>read.csv()<\u002fem>, but we do use quotes around the name of a file, because it is text and neither of the exceptions (i.e., it is not (1) the name of an object, (2) the name of a function, (3) the name of an argument, or (4) a special character such as TRUE, FALSE, NA, and NULL).\n<br><br> For more information on how to create objects in R, review subsection 1.6.2 of DSS. And, for more information on how to use the <code>read.csv()<\u002fcode> function, review step #2 of the section 1.7 of DSS. In addition, you may want to review the CHEATSHEETs on page 26.", html = TRUE, class = c("html", 
     "character"))), ids = list(answer = "question-read-answer", 
         question = "question-read"), loading = NULL, random_answer_order = TRUE, 
-    allow_retry = TRUE, seed = 67547714.4685456, options = list()), class = c("learnr_radio", 
+    allow_retry = TRUE, seed = 876214769.091981, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
  
@@ -1316,7 +1316,7 @@ output$`tutorial-exercise-indexing1-output` <- renderUI({
 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "indexing1", global_setup = structure(c("library(gradethis)", 
-"library(learnr)", "library(qsslearnr)", "tutorial_options(exercise.checker = gradethis::grade_learnr)", 
+"library(learnr)", "library(sspslearnr)", "tutorial_options(exercise.checker = gradethis::grade_learnr)", 
 "knitr::opts_chunk$set(echo = FALSE)", "tut_reptitle <- \"SSPS [4102|6006] Week 01: In-class Individual Tutorial\""
 ), chunk_opts = list(label = "setup", include = FALSE)), setup = "world.pop <- c(2525779, 3026003, 3691173, 4449049, 5320817, 6127700, 6916183)", 
     chunks = list(list(label = "worlddata", code = "world.pop <- c(2525779, 3026003, 3691173, 4449049, 5320817, 6127700, 6916183)", 
@@ -1362,7 +1362,7 @@ output$`tutorial-exercise-indexing2-output` <- renderUI({
 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "indexing2", global_setup = structure(c("library(gradethis)", 
-"library(learnr)", "library(qsslearnr)", "tutorial_options(exercise.checker = gradethis::grade_learnr)", 
+"library(learnr)", "library(sspslearnr)", "tutorial_options(exercise.checker = gradethis::grade_learnr)", 
 "knitr::opts_chunk$set(echo = FALSE)", "tut_reptitle <- \"SSPS [4102|6006] Week 01: In-class Individual Tutorial\""
 ), chunk_opts = list(label = "setup", include = FALSE)), setup = "world.pop <- c(2525779, 3026003, 3691173, 4449049, 5320817, 6127700, 6916183)", 
     chunks = list(list(label = "worlddata", code = "world.pop <- c(2525779, 3026003, 3691173, 4449049, 5320817, 6127700, 6916183)", 
@@ -1408,7 +1408,7 @@ output$`tutorial-exercise-length-output` <- renderUI({
 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "length", global_setup = structure(c("library(gradethis)", 
-"library(learnr)", "library(qsslearnr)", "tutorial_options(exercise.checker = gradethis::grade_learnr)", 
+"library(learnr)", "library(sspslearnr)", "tutorial_options(exercise.checker = gradethis::grade_learnr)", 
 "knitr::opts_chunk$set(echo = FALSE)", "tut_reptitle <- \"SSPS [4102|6006] Week 01: In-class Individual Tutorial\""
 ), chunk_opts = list(label = "setup", include = FALSE)), setup = "world.pop <- c(2525779, 3026003, 3691173, 4449049, 5320817, 6127700, 6916183)", 
     chunks = list(list(label = "worlddata", code = "world.pop <- c(2525779, 3026003, 3691173, 4449049, 5320817, 6127700, 6916183)", 
@@ -1453,7 +1453,7 @@ output$`tutorial-exercise-min-output` <- renderUI({
 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "min", global_setup = structure(c("library(gradethis)", 
-"library(learnr)", "library(qsslearnr)", "tutorial_options(exercise.checker = gradethis::grade_learnr)", 
+"library(learnr)", "library(sspslearnr)", "tutorial_options(exercise.checker = gradethis::grade_learnr)", 
 "knitr::opts_chunk$set(echo = FALSE)", "tut_reptitle <- \"SSPS [4102|6006] Week 01: In-class Individual Tutorial\""
 ), chunk_opts = list(label = "setup", include = FALSE)), setup = "world.pop <- c(2525779, 3026003, 3691173, 4449049, 5320817, 6127700, 6916183)", 
     chunks = list(list(label = "worlddata", code = "world.pop <- c(2525779, 3026003, 3691173, 4449049, 5320817, 6127700, 6916183)", 
@@ -1498,7 +1498,7 @@ output$`tutorial-exercise-mean-output` <- renderUI({
 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "mean", global_setup = structure(c("library(gradethis)", 
-"library(learnr)", "library(qsslearnr)", "tutorial_options(exercise.checker = gradethis::grade_learnr)", 
+"library(learnr)", "library(sspslearnr)", "tutorial_options(exercise.checker = gradethis::grade_learnr)", 
 "knitr::opts_chunk$set(echo = FALSE)", "tut_reptitle <- \"SSPS [4102|6006] Week 01: In-class Individual Tutorial\""
 ), chunk_opts = list(label = "setup", include = FALSE)), setup = "world.pop <- c(2525779, 3026003, 3691173, 4449049, 5320817, 6127700, 6916183)", 
     chunks = list(list(label = "worlddata", code = "world.pop <- c(2525779, 3026003, 3691173, 4449049, 5320817, 6127700, 6916183)", 
@@ -1543,7 +1543,7 @@ output$`tutorial-exercise-replace-output` <- renderUI({
 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "replace", global_setup = structure(c("library(gradethis)", 
-"library(learnr)", "library(qsslearnr)", "tutorial_options(exercise.checker = gradethis::grade_learnr)", 
+"library(learnr)", "library(sspslearnr)", "tutorial_options(exercise.checker = gradethis::grade_learnr)", 
 "knitr::opts_chunk$set(echo = FALSE)", "tut_reptitle <- \"SSPS [4102|6006] Week 01: In-class Individual Tutorial\""
 ), chunk_opts = list(label = "setup", include = FALSE)), setup = NULL, 
     chunks = list(list(label = "replace", code = "# seq() creates a sequence of values\nyear <- seq(from=1950, to=2010, by = 10)\n\n## update the first entry of year\n\n\n## print the modified year vector\n", 
@@ -1587,7 +1587,7 @@ output$`tutorial-exercise-vector_math-output` <- renderUI({
 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "vector_math", global_setup = structure(c("library(gradethis)", 
-"library(learnr)", "library(qsslearnr)", "tutorial_options(exercise.checker = gradethis::grade_learnr)", 
+"library(learnr)", "library(sspslearnr)", "tutorial_options(exercise.checker = gradethis::grade_learnr)", 
 "knitr::opts_chunk$set(echo = FALSE)", "tut_reptitle <- \"SSPS [4102|6006] Week 01: In-class Individual Tutorial\""
 ), chunk_opts = list(label = "setup", include = FALSE)), setup = "world.pop <- c(2525779, 3026003, 3691173, 4449049, 5320817, 6127700, 6916183)", 
     chunks = list(list(label = "worlddata", code = "world.pop <- c(2525779, 3026003, 3691173, 4449049, 5320817, 6127700, 6916183)", 
@@ -1634,7 +1634,7 @@ output$`tutorial-exercise-printdf-output` <- renderUI({
 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "printdf", global_setup = structure(c("library(gradethis)", 
-"library(learnr)", "library(qsslearnr)", "tutorial_options(exercise.checker = gradethis::grade_learnr)", 
+"library(learnr)", "library(sspslearnr)", "tutorial_options(exercise.checker = gradethis::grade_learnr)", 
 "knitr::opts_chunk$set(echo = FALSE)", "tut_reptitle <- \"SSPS [4102|6006] Week 01: In-class Individual Tutorial\""
 ), chunk_opts = list(label = "setup", include = FALSE)), setup = "UNpop <- data.frame(\n  year = seq(1950, 2010, by = 10),\n  world.pop = c(2525779, 3026003, 3691173, 4449049, 5320817, 6127700, 6916183)\n)", 
     chunks = list(list(label = "unpop", code = "UNpop <- data.frame(\n  year = seq(1950, 2010, by = 10),\n  world.pop = c(2525779, 3026003, 3691173, 4449049, 5320817, 6127700, 6916183)\n)", 
@@ -1680,7 +1680,7 @@ output$`tutorial-exercise-namesdf-output` <- renderUI({
 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "namesdf", global_setup = structure(c("library(gradethis)", 
-"library(learnr)", "library(qsslearnr)", "tutorial_options(exercise.checker = gradethis::grade_learnr)", 
+"library(learnr)", "library(sspslearnr)", "tutorial_options(exercise.checker = gradethis::grade_learnr)", 
 "knitr::opts_chunk$set(echo = FALSE)", "tut_reptitle <- \"SSPS [4102|6006] Week 01: In-class Individual Tutorial\""
 ), chunk_opts = list(label = "setup", include = FALSE)), setup = "UNpop <- data.frame(\n  year = seq(1950, 2010, by = 10),\n  world.pop = c(2525779, 3026003, 3691173, 4449049, 5320817, 6127700, 6916183)\n)", 
     chunks = list(list(label = "unpop", code = "UNpop <- data.frame(\n  year = seq(1950, 2010, by = 10),\n  world.pop = c(2525779, 3026003, 3691173, 4449049, 5320817, 6127700, 6916183)\n)", 
@@ -1725,7 +1725,7 @@ output$`tutorial-exercise-dim-output` <- renderUI({
 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "dim", global_setup = structure(c("library(gradethis)", 
-"library(learnr)", "library(qsslearnr)", "tutorial_options(exercise.checker = gradethis::grade_learnr)", 
+"library(learnr)", "library(sspslearnr)", "tutorial_options(exercise.checker = gradethis::grade_learnr)", 
 "knitr::opts_chunk$set(echo = FALSE)", "tut_reptitle <- \"SSPS [4102|6006] Week 01: In-class Individual Tutorial\""
 ), chunk_opts = list(label = "setup", include = FALSE)), setup = "UNpop <- data.frame(\n  year = seq(1950, 2010, by = 10),\n  world.pop = c(2525779, 3026003, 3691173, 4449049, 5320817, 6127700, 6916183)\n)", 
     chunks = list(list(label = "unpop", code = "UNpop <- data.frame(\n  year = seq(1950, 2010, by = 10),\n  world.pop = c(2525779, 3026003, 3691173, 4449049, 5320817, 6127700, 6916183)\n)", 
@@ -1771,7 +1771,7 @@ output$`tutorial-exercise-summary-output` <- renderUI({
 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "summary", global_setup = structure(c("library(gradethis)", 
-"library(learnr)", "library(qsslearnr)", "tutorial_options(exercise.checker = gradethis::grade_learnr)", 
+"library(learnr)", "library(sspslearnr)", "tutorial_options(exercise.checker = gradethis::grade_learnr)", 
 "knitr::opts_chunk$set(echo = FALSE)", "tut_reptitle <- \"SSPS [4102|6006] Week 01: In-class Individual Tutorial\""
 ), chunk_opts = list(label = "setup", include = FALSE)), setup = "UNpop <- data.frame(\n  year = seq(1950, 2010, by = 10),\n  world.pop = c(2525779, 3026003, 3691173, 4449049, 5320817, 6127700, 6916183)\n)", 
     chunks = list(list(label = "unpop", code = "UNpop <- data.frame(\n  year = seq(1950, 2010, by = 10),\n  world.pop = c(2525779, 3026003, 3691173, 4449049, 5320817, 6127700, 6916183)\n)", 
@@ -1816,7 +1816,7 @@ output$`tutorial-exercise-dollar-output` <- renderUI({
 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "dollar", global_setup = structure(c("library(gradethis)", 
-"library(learnr)", "library(qsslearnr)", "tutorial_options(exercise.checker = gradethis::grade_learnr)", 
+"library(learnr)", "library(sspslearnr)", "tutorial_options(exercise.checker = gradethis::grade_learnr)", 
 "knitr::opts_chunk$set(echo = FALSE)", "tut_reptitle <- \"SSPS [4102|6006] Week 01: In-class Individual Tutorial\""
 ), chunk_opts = list(label = "setup", include = FALSE)), setup = "UNpop <- data.frame(\n  year = seq(1950, 2010, by = 10),\n  world.pop = c(2525779, 3026003, 3691173, 4449049, 5320817, 6127700, 6916183)\n)", 
     chunks = list(list(label = "unpop", code = "UNpop <- data.frame(\n  year = seq(1950, 2010, by = 10),\n  world.pop = c(2525779, 3026003, 3691173, 4449049, 5320817, 6127700, 6916183)\n)", 
@@ -1861,7 +1861,7 @@ output$`tutorial-exercise-meandollar-output` <- renderUI({
 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "meandollar", global_setup = structure(c("library(gradethis)", 
-"library(learnr)", "library(qsslearnr)", "tutorial_options(exercise.checker = gradethis::grade_learnr)", 
+"library(learnr)", "library(sspslearnr)", "tutorial_options(exercise.checker = gradethis::grade_learnr)", 
 "knitr::opts_chunk$set(echo = FALSE)", "tut_reptitle <- \"SSPS [4102|6006] Week 01: In-class Individual Tutorial\""
 ), chunk_opts = list(label = "setup", include = FALSE)), setup = "UNpop <- data.frame(\n  year = seq(1950, 2010, by = 10),\n  world.pop = c(2525779, 3026003, 3691173, 4449049, 5320817, 6127700, 6916183)\n)", 
     chunks = list(list(label = "unpop", code = "UNpop <- data.frame(\n  year = seq(1950, 2010, by = 10),\n  world.pop = c(2525779, 3026003, 3691173, 4449049, 5320817, 6127700, 6916183)\n)", 
@@ -1906,7 +1906,7 @@ output$`tutorial-exercise-brackets-output` <- renderUI({
 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "brackets", global_setup = structure(c("library(gradethis)", 
-"library(learnr)", "library(qsslearnr)", "tutorial_options(exercise.checker = gradethis::grade_learnr)", 
+"library(learnr)", "library(sspslearnr)", "tutorial_options(exercise.checker = gradethis::grade_learnr)", 
 "knitr::opts_chunk$set(echo = FALSE)", "tut_reptitle <- \"SSPS [4102|6006] Week 01: In-class Individual Tutorial\""
 ), chunk_opts = list(label = "setup", include = FALSE)), setup = "UNpop <- data.frame(\n  year = seq(1950, 2010, by = 10),\n  world.pop = c(2525779, 3026003, 3691173, 4449049, 5320817, 6127700, 6916183)\n)", 
     chunks = list(list(label = "unpop", code = "UNpop <- data.frame(\n  year = seq(1950, 2010, by = 10),\n  world.pop = c(2525779, 3026003, 3691173, 4449049, 5320817, 6127700, 6916183)\n)", 
@@ -1951,7 +1951,7 @@ output$`tutorial-exercise-rows-output` <- renderUI({
 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "rows", global_setup = structure(c("library(gradethis)", 
-"library(learnr)", "library(qsslearnr)", "tutorial_options(exercise.checker = gradethis::grade_learnr)", 
+"library(learnr)", "library(sspslearnr)", "tutorial_options(exercise.checker = gradethis::grade_learnr)", 
 "knitr::opts_chunk$set(echo = FALSE)", "tut_reptitle <- \"SSPS [4102|6006] Week 01: In-class Individual Tutorial\""
 ), chunk_opts = list(label = "setup", include = FALSE)), setup = "UNpop <- data.frame(\n  year = seq(1950, 2010, by = 10),\n  world.pop = c(2525779, 3026003, 3691173, 4449049, 5320817, 6127700, 6916183)\n)", 
     chunks = list(list(label = "unpop", code = "UNpop <- data.frame(\n  year = seq(1950, 2010, by = 10),\n  world.pop = c(2525779, 3026003, 3691173, 4449049, 5320817, 6127700, 6916183)\n)", 
@@ -1996,7 +1996,7 @@ output$`tutorial-exercise-rowcols-output` <- renderUI({
 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "rowcols", global_setup = structure(c("library(gradethis)", 
-"library(learnr)", "library(qsslearnr)", "tutorial_options(exercise.checker = gradethis::grade_learnr)", 
+"library(learnr)", "library(sspslearnr)", "tutorial_options(exercise.checker = gradethis::grade_learnr)", 
 "knitr::opts_chunk$set(echo = FALSE)", "tut_reptitle <- \"SSPS [4102|6006] Week 01: In-class Individual Tutorial\""
 ), chunk_opts = list(label = "setup", include = FALSE)), setup = "UNpop <- data.frame(\n  year = seq(1950, 2010, by = 10),\n  world.pop = c(2525779, 3026003, 3691173, 4449049, 5320817, 6127700, 6916183)\n)", 
     chunks = list(list(label = "unpop", code = "UNpop <- data.frame(\n  year = seq(1950, 2010, by = 10),\n  world.pop = c(2525779, 3026003, 3691173, 4449049, 5320817, 6127700, 6916183)\n)", 
@@ -2034,18 +2034,18 @@ learnr:::store_exercise_cache(structure(list(label = "rowcols", global_setup = s
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "ch1_topic3_mc-1", 
     question = structure("If <em>X<\u002fem>  = {10, 4, 6, 8, 22}, what is \\(\\overline{X}\\) ?", html = TRUE, class = c("html", 
-    "character")), answers = list(structure(list(id = "lnr_ans_b552392", 
+    "character")), answers = list(structure(list(id = "lnr_ans_286f5b0", 
         option = "10", value = "10", label = structure("10", html = TRUE, class = c("html", 
         "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_a1ea5ed", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_a7e6651", 
         option = "6", value = "6", label = structure("6", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = structure("Hint: \\(\\overline{X}\\) stands for the mean of <em>X<\u002fem> in mathematical notation. And, to compute the mean of a variable, we sum the values across all observations and divide the result by the total number of observations.", html = TRUE, class = c("html", 
         "character")), type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_f950ac2", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_44db82", 
         option = "8", value = "8", label = structure("8", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = structure("Hint: \\(\\overline{X}\\) stands for the mean of <em>X<\u002fem> in mathematical notation. And, to compute the mean of a variable, we sum the values across all observations and divide the result by the total number of observations.", html = TRUE, class = c("html", 
         "character")), type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_ebf43c", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_dc64714", 
         option = "It is impossible to know with the information given", 
         value = "It is impossible to know with the information given", 
         label = structure("It is impossible to know with the information given", html = TRUE, class = c("html", 
@@ -2059,7 +2059,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
     "character")), message = NULL, post_message = structure("\\(\\overline{X}\\) stands for the mean of <em>X<\u002fem> and, here, \\(\\overline{X}\\) equals 10 because: (10+4+6+8+22)/5 = 50/5 = 10.", html = TRUE, class = c("html", 
     "character"))), ids = list(answer = "ch1_topic3_mc-1-answer", 
         question = "ch1_topic3_mc-1"), loading = NULL, random_answer_order = TRUE, 
-    allow_retry = TRUE, seed = 860204478.599436, options = list()), class = c("learnr_radio", 
+    allow_retry = TRUE, seed = 142863125.933474, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
 
@@ -2067,23 +2067,23 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "ch1_topic3_mc-2", 
     question = structure("If the unit of observation is students and the variable <em>attended<\u002fem> = {0, 0, 1, 1, 1, 0}, what proportion of students attended class?", html = TRUE, class = c("html", 
-    "character")), answers = list(structure(list(id = "lnr_ans_6726fa4", 
+    "character")), answers = list(structure(list(id = "lnr_ans_ca4c5b0", 
         option = "50 percent of the students attended class", 
         value = "50 percent of the students attended class", 
         label = structure("50 percent of the students attended class", html = TRUE, class = c("html", 
         "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_536ea94", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_5e16483", 
         option = "60 percent of the students attended class", 
         value = "60 percent of the students attended class", 
         label = structure("60 percent of the students attended class", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = structure("Hint: The proportion of observations that meet a criterion is calculated as: <em>number of observations that meet criterion<\u002fem> / <em>total number of observations<\u002fem>. And, to interpret the resulting decimal as a percentage, we multiply it by 100.", html = TRUE, class = c("html", 
         "character")), type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_4155b4d", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_a5caa7d", 
         option = "3 percent of the students attended class", 
         value = "3 percent of the students attended class", label = structure("3 percent of the students attended class", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = structure("Hint: The proportion of observations that meet a criterion is calculated as: <em>number of observations that meet criterion<\u002fem> / <em>total number of observations<\u002fem>. And, to interpret the resulting decimal as a percentage, we multiply it by 100.", html = TRUE, class = c("html", 
         "character")), type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_fbd2342", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_9b4c3df", 
         option = "30 percent of the students attended class", 
         value = "30 percent of the students attended class", 
         label = structure("30 percent of the students attended class", html = TRUE, class = c("html", 
@@ -2097,31 +2097,31 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
     "character")), message = NULL, post_message = structure("The variable <em>attended<\u002fem> appears to be binary, where 1 means that the student attended class, and 0 means that the student did not attend class. <br><br>\nThere are six observations in this variable: three 1s and three 0s. This means that three out of the six students attended class, which is a proportion of 50 percent (3/6 = 0.5 and 0.5*100 = 50%).", html = TRUE, class = c("html", 
     "character"))), ids = list(answer = "ch1_topic3_mc-2-answer", 
         question = "ch1_topic3_mc-2"), loading = NULL, random_answer_order = TRUE, 
-    allow_retry = TRUE, seed = 739723254.15554, options = list()), class = c("learnr_radio", 
+    allow_retry = TRUE, seed = 566591815.73616, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "ch1_topic3_mc-3", 
     question = structure("If the unit of observation is students and <em>attended<\u002fem> = {0, 0, 1, 1, 1, 0}, what is \\(\\overline{attended}\\) ?", html = TRUE, class = c("html", 
-    "character")), answers = list(structure(list(id = "lnr_ans_7ebf418", 
+    "character")), answers = list(structure(list(id = "lnr_ans_c39899c", 
         option = "$\\overline{attended}$ = 0.5, which we can interpret as `50 percent of the students attended class'", 
         value = "$\\overline{attended}$ = 0.5, which we can interpret as `50 percent of the students attended class'", 
         label = structure("\\(\\overline{attended}\\) = 0.5, which we can interpret as `50 percent of the students attended class’", html = TRUE, class = c("html", 
         "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_8a1a0b1", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_18769b0", 
         option = "$\\overline{attended}$ = 0.5, which we can interpret as `students attended 0.5 classes on average'", 
         value = "$\\overline{attended}$ = 0.5, which we can interpret as `students attended 0.5 classes on average'", 
         label = structure("\\(\\overline{attended}\\) = 0.5, which we can interpret as `students attended 0.5 classes on average’", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = structure("Hint: Is <em>attended<\u002fem> a binary or a non-binary variable?", html = TRUE, class = c("html", 
         "character")), type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_cdaf0d9", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_8fcca48", 
         option = "$\\overline{attended}$ = 3, which we can interpret as `students attended 3 classes on average'", 
         value = "$\\overline{attended}$ = 3, which we can interpret as `students attended 3 classes on average'", 
         label = structure("\\(\\overline{attended}\\) = 3, which we can interpret as `students attended 3 classes on average’", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = structure("Hint: Check your calculations. Plus, is <em>attended<\u002fem> a binary or a non-binary variable?", html = TRUE, class = c("html", 
         "character")), type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_9f24e7f", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_efe1384", 
         option = "$\\overline{attended}$ = 0.3, which we can interpret as `30 percent of the students attended class'", 
         value = "$\\overline{attended}$ = 0.3, which we can interpret as `30 percent of the students attended class'", 
         label = structure("\\(\\overline{attended}\\) = 0.3, which we can interpret as `30 percent of the students attended class’", html = TRUE, class = c("html", 
@@ -2135,7 +2135,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
     "character")), message = NULL, post_message = structure("The correct answer is:\n\\(\\overline{attended}\\) = 0.5, which we can interpret as ‘‘50 percent of the students attended class’’ <br><br>\nCalculation: \\(\\overline{attended}\\) \\({ }\\) equals 0.5 because: (0+0+1+1+1+0)/6 = 3/6 = 0.5. <br><br>\nInterpretation: Here, <em>attendance<\u002fem> is binary (because it can take only two values: 1s and 0s), so the mean of <em>attendance<\u002fem> should be interpreted as a proportion and in percentages after multiplying the output by 100 (0.5*100=50%). In particular, it should be interpreted as the proportion of the observations that have the characteristic identified by the variable. In this case, the proportion of students who attended class.<br><br>\nImportant: Notice that we arrived to the same conclusion in the prior question. Computing the proportion of 1s in a binary variable is equivalent to computing the mean of the binary variable. Both calculations will lead us to the same conclusion.", html = TRUE, class = c("html", 
     "character"))), ids = list(answer = "ch1_topic3_mc-3-answer", 
         question = "ch1_topic3_mc-3"), loading = NULL, random_answer_order = TRUE, 
-    allow_retry = TRUE, seed = 987993875.53993, options = list()), class = c("learnr_radio", 
+    allow_retry = TRUE, seed = 979351032.543954, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
 
@@ -2149,7 +2149,7 @@ output$`tutorial-exercise-ch1_topic3_r1_setup-output` <- renderUI({
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "ch1_topic3_r1_setup", global_setup = structure(c("library(gradethis)", 
-"library(learnr)", "library(qsslearnr)", "tutorial_options(exercise.checker = gradethis::grade_learnr)", 
+"library(learnr)", "library(sspslearnr)", "tutorial_options(exercise.checker = gradethis::grade_learnr)", 
 "knitr::opts_chunk$set(echo = FALSE)", "tut_reptitle <- \"SSPS [4102|6006] Week 01: In-class Individual Tutorial\""
 ), chunk_opts = list(label = "setup", include = FALSE)), setup = "star <- read.csv(\"data/STAR.csv\")", 
     chunks = list(list(label = "star", code = "star <- read.csv(\"data/STAR.csv\")", 
@@ -2193,7 +2193,7 @@ output$`tutorial-exercise-ch1_topic3_r1-output` <- renderUI({
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "ch1_topic3_r1", global_setup = structure(c("library(gradethis)", 
-"library(learnr)", "library(qsslearnr)", "tutorial_options(exercise.checker = gradethis::grade_learnr)", 
+"library(learnr)", "library(sspslearnr)", "tutorial_options(exercise.checker = gradethis::grade_learnr)", 
 "knitr::opts_chunk$set(echo = FALSE)", "tut_reptitle <- \"SSPS [4102|6006] Week 01: In-class Individual Tutorial\""
 ), chunk_opts = list(label = "setup", include = FALSE)), setup = "star <- read.csv(\"data/STAR.csv\")", 
     chunks = list(list(label = "star", code = "star <- read.csv(\"data/STAR.csv\")", 
@@ -2231,24 +2231,24 @@ learnr:::store_exercise_cache(structure(list(label = "ch1_topic3_r1", global_set
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "ch1_topic3_r1_inter-1", 
     question = structure("How can we interpret the mean of <em>reading<\u002fem> computed above?", html = TRUE, class = c("html", 
-    "character")), answers = list(structure(list(id = "lnr_ans_443c4d9", 
+    "character")), answers = list(structure(list(id = "lnr_ans_8ce23c5", 
         option = "Among the students who participated in Project STAR, the average score in the third-grade reading test is about 629 points", 
         value = "Among the students who participated in Project STAR, the average score in the third-grade reading test is about 629 points", 
         label = structure("Among the students who participated in Project STAR, the average score in the third-grade reading test is about 629 points", html = TRUE, class = c("html", 
         "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_90d1684", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_d5d33ed", 
         option = "Among the students who participated in Project STAR, the average score in the third-grade reading test is about 629%", 
         value = "Among the students who participated in Project STAR, the average score in the third-grade reading test is about 629%", 
         label = structure("Among the students who participated in Project STAR, the average score in the third-grade reading test is about 629%", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = structure("Check the unit of measurement of <em>reading<\u002fem>", html = TRUE, class = c("html", 
         "character")), type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_943de23", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_9aeb018", 
         option = "Among the students who participated in Project STAR, the average score in the third-grade reading test is about 629", 
         value = "Among the students who participated in Project STAR, the average score in the third-grade reading test is about 629", 
         label = structure("Among the students who participated in Project STAR, the average score in the third-grade reading test is about 629", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = structure("You are missing the unit of measurement.", html = TRUE, class = c("html", 
         "character")), type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_c8a6a06", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_5934eea", 
         option = "Among the students who participated in Project STAR, the average score in the third-grade reading test is about 628 points", 
         value = "Among the students who participated in Project STAR, the average score in the third-grade reading test is about 628 points", 
         label = structure("Among the students who participated in Project STAR, the average score in the third-grade reading test is about 628 points", html = TRUE, class = c("html", 
@@ -2262,7 +2262,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
     "character")), message = NULL, post_message = structure("The correct answer is: Among the students who participated in Project STAR, the average score in the third-grade reading test is about 629 points.<br><br>\nHere, as we can see in the output of <code>head()<\u002fcode> above, <em>reading<\u002fem> is non-binary because it can take more than two values. And, as we can read in the description of the variable in the table above, <em>reading<\u002fem> is measured in points. So, the mean of <em>reading<\u002fem> should be interpreted as an average and in points.", html = TRUE, class = c("html", 
     "character"))), ids = list(answer = "ch1_topic3_r1_inter-1-answer", 
         question = "ch1_topic3_r1_inter-1"), loading = NULL, 
-    random_answer_order = TRUE, allow_retry = TRUE, seed = 612141983.214949, 
+    random_answer_order = TRUE, allow_retry = TRUE, seed = 535238254.75076, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>
@@ -2277,7 +2277,7 @@ output$`tutorial-exercise-ch1_topic3_r2-output` <- renderUI({
 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "ch1_topic3_r2", global_setup = structure(c("library(gradethis)", 
-"library(learnr)", "library(qsslearnr)", "tutorial_options(exercise.checker = gradethis::grade_learnr)", 
+"library(learnr)", "library(sspslearnr)", "tutorial_options(exercise.checker = gradethis::grade_learnr)", 
 "knitr::opts_chunk$set(echo = FALSE)", "tut_reptitle <- \"SSPS [4102|6006] Week 01: In-class Individual Tutorial\""
 ), chunk_opts = list(label = "setup", include = FALSE)), setup = "star <- read.csv(\"data/STAR.csv\")", 
     chunks = list(list(label = "star", code = "star <- read.csv(\"data/STAR.csv\")", 
@@ -2314,24 +2314,24 @@ learnr:::store_exercise_cache(structure(list(label = "ch1_topic3_r2", global_set
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "ch1_topic3_r2_inter-1", 
     question = structure("How can we interpret the mean of <em>graduated<\u002fem> computed above?", html = TRUE, class = c("html", 
-    "character")), answers = list(structure(list(id = "lnr_ans_d75bb95", 
+    "character")), answers = list(structure(list(id = "lnr_ans_4441c7e", 
         option = "87% of the students who participated in Project STAR graduated from high school", 
         value = "87% of the students who participated in Project STAR graduated from high school", 
         label = structure("87% of the students who participated in Project STAR graduated from high school", html = TRUE, class = c("html", 
         "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_e73b6f7", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_ee69dd5", 
         option = "0.87% of the students who participated in Project STAR graduated from high school", 
         value = "0.87% of the students who participated in Project STAR graduated from high school", 
         label = structure("0.87% of the students who participated in Project STAR graduated from high school", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = structure("Remember that to interpret the output as a percentage, we need to multiply it by 100. (Review how to interpret the mean of binary variable in section 1.8 of DSS.)", html = TRUE, class = c("html", 
         "character")), type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_db84c27", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_bf9503e", 
         option = "87 students in Project STAR graduated from high school.", 
         value = "87 students in Project STAR graduated from high school.", 
         label = structure("87 students in Project STAR graduated from high school.", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = structure("Is <em>graduated<\u002fem> a binary or a non-binary variable?", html = TRUE, class = c("html", 
         "character")), type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_b236d3f", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_70fff5e", 
         option = "Fewer than one student in Project STAR graduated from high school", 
         value = "Fewer than one student in Project STAR graduated from high school", 
         label = structure("Fewer than one student in Project STAR graduated from high school", html = TRUE, class = c("html", 
@@ -2345,7 +2345,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
     "character")), message = NULL, post_message = structure("The correct answer is: 87% of the students who participated in Project STAR graduated from high school.<br><br>\nHere, as we can see in the output of <code>head()<\u002fcode> above and read in the description of variables in the table above, <em>graduated<\u002fem> is binary because it can take only two values: 1s and 0s. So, the mean of <em>graduated<\u002fem> should be interpreted as a proportion and in percentages after multiplying the output by 100 (0.87*100=87%). In particular, it should be interpreted as the proportion of the observations that have the characteristic identified by the variable. In this case, the proportion of students who graduated from high school.", html = TRUE, class = c("html", 
     "character"))), ids = list(answer = "ch1_topic3_r2_inter-1-answer", 
         question = "ch1_topic3_r2_inter-1"), loading = NULL, 
-    random_answer_order = TRUE, allow_retry = TRUE, seed = 2104903387.01983, 
+    random_answer_order = TRUE, allow_retry = TRUE, seed = 834977500.611183, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>
@@ -2360,7 +2360,7 @@ output$`tutorial-exercise-ch1_topic3_r3-output` <- renderUI({
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "ch1_topic3_r3", global_setup = structure(c("library(gradethis)", 
-"library(learnr)", "library(qsslearnr)", "tutorial_options(exercise.checker = gradethis::grade_learnr)", 
+"library(learnr)", "library(sspslearnr)", "tutorial_options(exercise.checker = gradethis::grade_learnr)", 
 "knitr::opts_chunk$set(echo = FALSE)", "tut_reptitle <- \"SSPS [4102|6006] Week 01: In-class Individual Tutorial\""
 ), chunk_opts = list(label = "setup", include = FALSE)), setup = "star <- read.csv(\"data/STAR.csv\")", 
     chunks = list(list(label = "star", code = "star <- read.csv(\"data/STAR.csv\")", 
@@ -2401,24 +2401,24 @@ learnr:::store_exercise_cache(structure(list(label = "ch1_topic3_r3", global_set
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "ch1_topic3_r3_inter-1", 
     question = structure("How can we interpret the mean of <em>math<\u002fem> computed above?", html = TRUE, class = c("html", 
-    "character")), answers = list(structure(list(id = "lnr_ans_e04f1dc", 
+    "character")), answers = list(structure(list(id = "lnr_ans_a03d60c", 
         option = "Among the students who participated in Project STAR, the average score in the third-grade math test is about 632 points", 
         value = "Among the students who participated in Project STAR, the average score in the third-grade math test is about 632 points", 
         label = structure("Among the students who participated in Project STAR, the average score in the third-grade math test is about 632 points", html = TRUE, class = c("html", 
         "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_380bab", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_e8cf68a", 
         option = "Among the students who participated in Project STAR, the average score in the third-grade math test is about 63.2%", 
         value = "Among the students who participated in Project STAR, the average score in the third-grade math test is about 63.2%", 
         label = structure("Among the students who participated in Project STAR, the average score in the third-grade math test is about 63.2%", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = structure("Check the unit of measurement", html = TRUE, class = c("html", 
         "character")), type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_5dc752d", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_b1a059d", 
         option = "Among the students who participated in Project STAR, the average score in the third-grade math test is about 632", 
         value = "Among the students who participated in Project STAR, the average score in the third-grade math test is about 632", 
         label = structure("Among the students who participated in Project STAR, the average score in the third-grade math test is about 632", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = structure("You are missing the unit of measurement.", html = TRUE, class = c("html", 
         "character")), type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_6093db9", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_6698143", 
         option = "Among the students who participated in Project STAR, the average score in the third-grade math test is about 631 points", 
         value = "Among the students who participated in Project STAR, the average score in the third-grade math test is about 631 points", 
         label = structure("Among the students who participated in Project STAR, the average score in the third-grade math test is about 631 points", html = TRUE, class = c("html", 
@@ -2432,7 +2432,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
     "character")), message = NULL, post_message = structure("The correct answer is: Among the students who participated in Project STAR, the average score in the third-grade math test is about 632 points.<br><br>\nHere, as we can see in the output of <code>head()<\u002fcode> above, <em>math<\u002fem> is non-binary because it can take more than two values. And, as we can read in the description of the variable in the table above, <em>math<\u002fem> is measured in points. So, the mean of <em>math<\u002fem> should be interpreted as an average and in points.", html = TRUE, class = c("html", 
     "character"))), ids = list(answer = "ch1_topic3_r3_inter-1-answer", 
         question = "ch1_topic3_r3_inter-1"), loading = NULL, 
-    random_answer_order = TRUE, allow_retry = TRUE, seed = 870223426.094771, 
+    random_answer_order = TRUE, allow_retry = TRUE, seed = 1308750854.89057, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>
@@ -2453,7 +2453,7 @@ submission_server()
 <!--/html_preserve-->
 <!--html_preserve-->
 <script type="application/shiny-prerendered" data-context="execution_dependencies">
-{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages","version"]},"class":{"type":"character","attributes":{},"value":["data.frame"]},"row.names":{"type":"integer","attributes":{},"value":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46]}},"value":[{"type":"character","attributes":{},"value":["backports","base","bslib","cachem","checkmate","cli","commonmark","compiler","datasets","digest","evaluate","fastmap","fontawesome","gradethis","graphics","grDevices","htmltools","htmlwidgets","httpuv","jquerylib","jsonlite","knitr","later","learnr","lifecycle","magrittr","markdown","methods","mime","promises","qsslearnr","R6","Rcpp","rlang","rmarkdown","rprojroot","rstudioapi","sass","shiny","stats","tools","utils","withr","xfun","xtable","yaml"]},{"type":"character","attributes":{},"value":["1.5.0","4.3.2","0.8.0","1.1.0","2.3.2","3.6.3","1.9.1","4.3.2","4.3.2","0.6.36","0.24.0","1.2.0","0.5.2","0.2.14","4.3.2","4.3.2","0.5.8.1","1.6.4","1.6.15","0.1.4","1.8.8","1.48","1.3.2","0.11.5.9000","1.0.4","2.0.3","1.13","4.3.2","0.12","1.3.0","0.1.0.9003","2.5.1","1.0.13","1.1.4","2.27","2.0.4","0.16.0","0.4.9","1.9.0","4.3.2","4.3.2","4.3.2","3.0.0","0.46","1.8-4","2.3.10"]}]}]}
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages","version"]},"class":{"type":"character","attributes":{},"value":["data.frame"]},"row.names":{"type":"integer","attributes":{},"value":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46]}},"value":[{"type":"character","attributes":{},"value":["backports","base","bslib","cachem","checkmate","cli","commonmark","compiler","datasets","digest","evaluate","fastmap","fontawesome","gradethis","graphics","grDevices","htmltools","htmlwidgets","httpuv","jquerylib","jsonlite","knitr","later","learnr","lifecycle","magrittr","markdown","methods","mime","promises","R6","Rcpp","rlang","rmarkdown","rprojroot","rstudioapi","sass","shiny","sspslearnr","stats","tools","utils","withr","xfun","xtable","yaml"]},{"type":"character","attributes":{},"value":["1.5.0","4.3.2","0.8.0","1.1.0","2.3.2","3.6.3","1.9.1","4.3.2","4.3.2","0.6.36","0.24.0","1.2.0","0.5.2","0.2.14","4.3.2","4.3.2","0.5.8.1","1.6.4","1.6.15","0.1.4","1.8.8","1.48","1.3.2","0.11.5.9000","1.0.4","2.0.3","1.13","4.3.2","0.12","1.3.0","2.5.1","1.0.13","1.1.4","2.27","2.0.4","0.16.0","0.4.9","1.9.0","0.1.0.0002","4.3.2","4.3.2","4.3.2","3.0.0","0.46","1.8-4","2.3.10"]}]}]}
 </script>
 <!--/html_preserve-->
 </div>
