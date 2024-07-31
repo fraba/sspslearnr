@@ -20,8 +20,44 @@ knitr::opts_chunk$set(echo = FALSE)
 tut_reptitle <- "SSPS [4102|6006] Week 01: In-class Individual Tutorial"
 ```
 
+## Instructions to complete in-class tutorials
+
+When running code on our own computers, we write the code on the R script (the upper left window of RStudio), then we highlight the code we want to run and either (a) manually click on the *Run* icon of RStudio or (b) use the shortcut *command+enter* in Mac or *ctrl+enter* in Windows.
+
+When running code on the tutorials, however, we have to do things a little differently. Every time an exercise asks you to type and run some code, you will see an *R code* window. This is where you will type the code. <br><br>
+Once you are done typing the code, you can run it by clicking on the *Run Code* button in green. The output produced by the executed code will appear underneath the *R code* window.
+
+Once you are satisfied with your answer, you can submit it by clicking on the *Submit Answer* button in blue. 
+
+To help you figure out the right answer, some questions contain hints. You can access them by clicking on the *Hint* button in white. 
+
+If you would like to delete ALL your answers and start the tutorial again, click on *Start Over* under Submit on the Table of Contents shown on the right-hand side of the tutorial.</p>
+
+<table>
+  <tr> 
+    <th> variable </th>
+    <th> description </th>
+  </tr>
+  <tr>
+    <td> *classtype* </td>
+    <td>  class size the student attended: 'small' or 'regular'
+  </tr>
+  <tr>  
+    <td>*reading* </td>
+    <td> student's third-grade reading test scores (in points) </td>
+  </tr>
+  <tr>  
+    <td> *math* </td>
+    <td>  student's third-grade math test scores (in points) </td>
+  <tr>
+    <td>*graduated* </td>
+    <td>  identifies whether the student graduated from high school: <br>1=graduated or 0=did not graduate </td>
+  </tr>
+</table>
+
 ## Basics of R
 
+### Running code in RStudio
 
 ```{r question-code}
 question("How do we run code that has already been written on an R script?",
@@ -180,8 +216,29 @@ grade_result_strict(
 
 ## Working with Data
 
-### Working with real data
 
+### Reading data into your R sessions
+
+```{r question-read}
+question("What would be the code to read a CSV file called *testscores.csv* and store the data from that file in an object called *grades*?",
+    answer("`grades <- read.csv(''testscores.csv'')`", correct = TRUE),
+    answer("`read.csv(''testscores.csv'')`", message = "This code will read the data from the CSV file, but it won't store it into an object called *grades*."),
+    answer("`grades <- read.csv(testscores.csv)`", message = "You are almost there. Hint: The file name is text and not (1) the name of an object, (2) the name of a function, (3) the name of an argument, or (4) a special character such as TRUE, FALSE, NA, and NULL."),
+    answer("`grades <- read.csv(''testscores'')`", message = "You are almost there. Hint: The file name needs to include its extension (i.e., ''.csv'')."),
+    answer("`testcores <- read.csv(''grades.csv'')`", message = "You are almost there. Hint: The name of the file is *testcores.csv* and the name of the object is *grades*, not the other way around."),
+    post_message = "The correct answer is: `grades <- read.csv(''testscores.csv'') `<br><br>
+    To create an object, we use the assignment operator ` <- ` <br>
+    To the left of the assignment operator, we specify the name of the object; *grades* in this case. <br>
+    To the right of the assignment operator, we specify the contents, which, in this case, are produced by reading the CSV file *testcores.csv*. <br><br>
+    Note: We do not use quotes around the name of an object such as *grades* or around the name of a function such as *read.csv()*, but we do use quotes around the name of a file, because it is text and neither of the exceptions (i.e., it is not (1) the name of an object, (2) the name of a function, (3) the name of an argument, or (4) a special character such as TRUE, FALSE, NA, and NULL).
+<br><br> For more information on how to create objects in R, review subsection 1.6.2 of DSS. And, for more information on how to use the `read.csv()` function, review step #2 of the section 1.7 of DSS. In addition, you may want to review the CHEATSHEETs on page 26.",
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  )
+```
+
+
+### Working with real data
 
 Next, we are going to start working with real data: estimates of world population (in thousands). A vector of data called `world.pop` has been loaded with this lesson. The first element is for the year 1950 up to the last element for 2010. You can see that we create the vector by using the `c()` function which concatenates multiple values together into one vector. We enter the data one value at a time, each separated by a comma.
 
