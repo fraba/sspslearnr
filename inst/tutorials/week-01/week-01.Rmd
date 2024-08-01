@@ -15,8 +15,10 @@ description: "This tutorial will introduce you to the basics of R."
 library(gradethis)
 library(learnr)
 library(sspslearnr)
-tutorial_options(exercise.checker = gradethis::grade_learnr)
+tutorial_options(exercise.checker = gradethis::grade_learnr, 
+                 exercise.reveal_solution="TRUE")
 knitr::opts_chunk$set(echo = FALSE)
+num_tutorial <- 35
 tut_reptitle <- "SSPS [4102|6006] Week 01: In-class Individual Tutorial"
 ```
 
@@ -738,6 +740,98 @@ quiz(caption="",
     allow_retry = TRUE
   ))
 ```
+
+
+## REPORT RESULTS
+
+```{r context="server"}
+shiny::observeEvent(
+  input$get_score, 
+  {
+    objs2 = learnr:::get_tutorial_state()
+    
+    # Number of correct questions/exercises
+    num_correct <- 
+      # Access the $correct sublist item in each list item
+        lapply(objs2, purrr::pluck, "correct") |>
+           # make it a vector containing: TRUE and FALSE and NAs
+           # NA is appearing for list items which don't have
+           # a $correct subitem
+                unlist() |> 
+           # Taking the sum of a logical Vector returns the number of TRUEs
+                sum(na.rm=TRUE)
+    
+    # Number of questions/exercises answered
+    num_answered <- 
+      # 1. Access $type in each list item and make it a vector of types
+      lapply(objs2, purrr::pluck, "type") |> unlist()
+    
+      # 2. Count the number of "question" and "exercise" in that vector
+    num_answered <- num_answered[num_answered == "question" |
+                                               num_answered =="exercise"] |> length()
+    
+    output$chapter = shiny::renderText(
+      paste("SUMMARY REPORT OF: Practice Exercises for", as.character(chapter_id),
+         "of Llaudet and Imai's Data Analysis for Social Science: A Friendly and Practical Introduction (Princeton University Press, 2022)"))
+    
+    output$student = shiny::renderText(
+      paste("Student Name:", input$name,""))
+    
+    output$date = shiny::renderText(
+      paste("Date and Time of Report:", as.character(Sys.time()),""))
+  
+    output$user = shiny::renderText(
+      paste("User Name:", Sys.info()[c("user")]))
+    
+    output$num_tutorial = shiny::renderText(
+      paste("Number of Exercises in Tutorial:", num_tutorial))
+    
+    output$num_answered = shiny::renderText(
+      paste("Number of Exercises Answered by Student:", num_answered,"" ))
+    
+    output$num_correct = shiny::renderText(
+      paste("Number of Exercises Answered Correctly by Student:", num_correct,""))
+    
+    output$completion_rate = shiny::renderText(
+      paste("Proportion of Exercises in Tutorial Answered by Student:",
+            round(num_answered/num_tutorial*100,0), "percent"))
+    
+    output$prop_correct_answered = shiny::renderText(
+      paste("Proportion of Exercises Answered Correctly Out of Those Answered:",
+            round(num_correct/num_answered*100,0),"percent"))
+    
+    output$prop_correct_all = shiny::renderText(
+      paste("Proportion of Exercises Answered Correctly Out of All Exercises in Tutorial:",
+            round(num_correct/num_tutorial*100,0),"percent"))
+    
+    invisible()
+  }
+)
+```
+
+```{r score, echo=FALSE}
+shiny::textInput("name", "Please Enter Your Name")
+shiny::actionButton("get_score", "Generate Summary Report")
+shiny::br()
+shiny::br()
+shiny::br()
+shiny::textOutput("chapter")
+shiny::br()
+shiny::textOutput("student")
+shiny::textOutput("date")
+shiny::textOutput("user")
+shiny::br()
+shiny::textOutput("num_tutorial")
+shiny::textOutput("num_answered")
+shiny::textOutput("num_correct")
+shiny::br()
+shiny::textOutput("completion_rate")
+shiny::textOutput("prop_correct_answered")
+shiny::textOutput("prop_correct_all")
+shiny::br()
+shiny::br()
+```
+
 
 ## Submit Report
 
