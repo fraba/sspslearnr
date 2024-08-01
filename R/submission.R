@@ -33,25 +33,34 @@ submission_server <- function(input, output) {
       
       
       # Set up parameters to pass to Rmd document
-      objs <- learnr:::get_all_state_objects(session)
-      skips <- learnr:::section_skipped_progress_from_state_objects(objs)
-      subs <- learnr:::submissions_from_state_objects(objs)
+      objs2 = learnr:::get_tutorial_state()
+      
       ##browser()
-      out <- tibble::tibble(
-        id = purrr::map_chr(subs, "id"),
-        answers = purrr::map_chr(subs, list("data", "answer"),
-                                 .default = NA),
-        checked = purrr::map_lgl(subs, list("data", "checked"),
-                                 .default = NA),
-        correct = purrr::map_lgl(subs, list("data", "feedback", "correct"),
-                                 .default = NA)
-      )
+      num_correct <- 
+        # Access the $correct sublist item in each list item
+        lapply(objs2, purrr::pluck, "correct") |>
+        # make it a vector containing: TRUE and FALSE and NAs
+        # NA is appearing for list items which don't have
+        # a $correct subitem
+        unlist() |> 
+        # Taking the sum of a logical Vector returns the number of TRUEs
+        sum(na.rm=TRUE)
+      
+      # Number of questions/exercises answered
+      num_answered <- 
+        # 1. Access $type in each list item and make it a vector of types
+        lapply(objs2, purrr::pluck, "type") |> unlist()
+      
+      # 2. Count the number of "question" and "exercise" in that vector
+      num_answered <- num_answered[num_answered == "question" |
+                                     num_answered =="exercise"] |> length()
       out$attempted <- !is.na(out$answers) | out$checked
       params <- list(reporttitle = tut_reptitle,
-                     output = out,
+                     num_answered = num_answered,
+                     num_correct = num_correct,
+                     num_tutorial = num_tutorial,
                      student_name = input$name,
-                     student_unikey = input$unikey,
-                     skipped = length(skips))
+                     student_unikey = input$unikey)
       
       ext <- tools::file_ext(file)
       out_format <- switch(ext, pdf = "pdf_document", html = "html_document")

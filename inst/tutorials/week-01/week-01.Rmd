@@ -770,10 +770,6 @@ shiny::observeEvent(
     num_answered <- num_answered[num_answered == "question" |
                                                num_answered =="exercise"] |> length()
     
-    output$chapter = shiny::renderText(
-      paste("SUMMARY REPORT OF: Practice Exercises for", as.character(chapter_id),
-         "of Llaudet and Imai's Data Analysis for Social Science: A Friendly and Practical Introduction (Princeton University Press, 2022)"))
-    
     output$student = shiny::renderText(
       paste("Student Name:", input$name,""))
     
