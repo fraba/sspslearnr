@@ -15,8 +15,10 @@ date: "`r params$reportdate`"
 
 * STUDENT UniKey: `r params$student_unikey`
 
-```{r, echo = FALSE, }
+```{r, echo = TRUE}
 library("sspslearnr")
+
+print(params)
 
 checked_prop <- sum(params$output$checked, na.rm = T) / length(params$output$checked)
 ```
