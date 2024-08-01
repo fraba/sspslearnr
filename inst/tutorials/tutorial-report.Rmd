@@ -33,6 +33,8 @@ Congrats on getting through this tutorial! Please upload this PDF to Canvas/Grad
 - Exercises attempted (%): `r round(checked_prop*100,2)`
 - Correct exercises: `r sum(params$output$checked, na.rm = T) `
 
+- `r params$output$prop_correct_all`
+
 \newpage
 
 ## Progress detail
