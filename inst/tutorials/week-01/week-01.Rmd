@@ -18,7 +18,7 @@ library(sspslearnr)
 tutorial_options(exercise.checker = gradethis::grade_learnr, 
                  exercise.reveal_solution="TRUE")
 knitr::opts_chunk$set(echo = FALSE)
-num_tutorial <- 35
+num_tutorial <- 36
 tut_reptitle <- "SSPS [4102|6006] Week 01: In-class Individual Tutorial"
 ```
 
