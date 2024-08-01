@@ -15,12 +15,15 @@ date: "`r params$reportdate`"
 
 * STUDENT UniKey: `r params$student_unikey`
 
-```{r, echo = TRUE}
+```{r, echo = FALSE}
 library("sspslearnr")
-
-print(params)
-
 ```
 
 Congrats on getting through this tutorial! Please upload this PDF to Canvas/Gradescope. 
 
+
+- `r paste("Number of Exercises Answered by Student:", params$num_answered,"" )`
+- `r paste("Number of Exercises Answered Correctly by Student:", params$num_correct,""))`
+- `r paste("Proportion of Exercises in Tutorial Answered by Student:", round(params$num_answered/params$num_tutorial*100,0), "percent"))`
+- `r paste("Proportion of Exercises Answered Correctly Out of Those Answered:", round(params$num_correct/params$num_answered*100,0),"percent"))`
+- `r paste("Proportion of Exercises Answered Correctly Out of All Exercises in Tutorial:", round(params$num_correct/num_tutorial*100,0),"percent"))`
