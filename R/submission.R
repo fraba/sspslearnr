@@ -54,7 +54,6 @@ submission_server <- function(input, output) {
       # 2. Count the number of "question" and "exercise" in that vector
       num_answered <- num_answered[num_answered == "question" |
                                      num_answered =="exercise"] |> length()
-      out$attempted <- !is.na(out$answers) | out$checked
       params <- list(reporttitle = tut_reptitle,
                      num_answered = num_answered,
                      num_correct = num_correct,
