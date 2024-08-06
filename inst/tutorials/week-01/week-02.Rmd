@@ -1,0 +1,354 @@
+---
+title: "SSPS [4102|6006] Week 02: Causality"
+tutorial:
+  id: "week-02"
+output:
+  learnr::tutorial:
+    progressive: true
+    ace_theme: github
+    theme: united
+runtime: shiny_prerendered
+description: "This tutorial will cover logicals, subsetting, factors, and
+  calculating means in experiments."
+---
+
+```{r setup, include=FALSE}
+library(gradethis)
+library(learnr)
+library(sspslearnr)
+tutorial_options(exercise.checker = gradethis::grade_learnr, 
+                 exercise.reveal_solution="TRUE")
+knitr::opts_chunk$set(echo = FALSE)
+num_tutorial <- 0
+tut_reptitle <- "SSPS [4102|6006] Week 02: In-class Individual Tutorial"
+data(resume, package = "qss")
+```
+
+
+## Atomic Vectors
+
+An atomic vector is a simple vector of data. You can create an atomic vector by grouping values together with `c`:
+
+```{r vector1-1, exercise = TRUE}
+die <- c(1, 2, 3, 4, 5, 6)
+```
+
+Then print its content with
+
+```{r vector1-2, exercise.setup = "vector1-1", exercise = TRUE}
+die
+```
+
+Is `die` a vector?
+
+```{r vector1-3,  exercise.setup = "vector1-1", exercise = TRUE}
+is.vector(die)
+```
+
+You can also create an atomic vector with a single value:
+
+```{r vector2-1, exercise = TRUE}
+five <- 5
+five
+```
+
+```{r vector2-2, exercise = TRUE, exercise.setup = "vector2-1"}
+is.vector(five)
+```
+
+```{r vector2-3, exercise = TRUE, exercise.setup = "vector2-1"}
+length(five)
+```
+
+```{r vector2-4, exercise = TRUE, exercise.setup = "vector1-1"}
+length(die)
+```
+
+`length` returns the length of an atomic vector. Each atomic vector stores its values as a one-dimensional vector and can only store one type of data. R recognises six basic types of atomic vectors: **doubles**, **integers**, **characters**, **logicals**, complex, and raw (but let's not worried about complex and raw ...).
+
+To make atomic vectors with more than one element, use the `c` function:
+
+```{r vector3-1, exercise = TRUE}
+dbl <- c(1, 5)
+text <- c("ace", "hearts")
+```
+
+Vector types help R behave intuitively. For example, R will do math with numeric atomic vectors:
+
+```{r vector3-2, exercise = TRUE, exercise.setup = "vector3-1"}
+sum(dbl)
+```
+
+but not with character vectors:
+
+```{r vector3-3, exercise = TRUE, exercise.setup = "vector3-1"}
+sum(text)
+```
+
+## Conceptual Questions
+
+```{r concept-quiz, echo=FALSE}
+quiz(
+  caption = "",
+  question(
+    "Suppose a variable is binary, that is, it takes on values of either 0 or 1 (for example, female gender). Which of the following is the same as its sample mean?",
+    answer("the sample median"),
+    answer("the sample proportion of 1s", correct = TRUE),
+    answer("neither of these")
+  ),
+  question(
+    "What kind of value is `FALSE`?",
+    answer("character"),
+    answer("logical", correct = TRUE),
+    answer("binary"),
+    answer("numeric")
+  ),
+  question(
+    "In order to calculate the mean of a variable we have used the `length()` function in the denominator. The `length()` of a vector is equivalent to:",
+    answer("the number of elements", correct = TRUE),
+    answer("the height"),
+    answer("the maximum")
+  )
+)
+```
+
+
+## Working with Logicals in R
+
+### Exploring the resume data
+
+In this tutorial, we are going to be working with the resume data from Section 2.1 of QSS. This data comes from an experiment where researchers sent fictitious resumes with different names that implied different race and gender combinations to see if potential employers were more likely to call back names associated with different racial groups and genders.
+
+Let's first explore the data a bit. It's stored as `resume`.
+
+#### Exercise
+
+- Use the `head` function to show the first six lines of the `resume` data.
+
+
+```{r head, exercise=TRUE}
+## print the first 6 lines of the data
+
+```
+
+```{r head-solution}
+head(resume)
+```
+
+```{r head-check}
+grade_code()
+```
+
+- Print out the dimension of the `resume` data. (If you don't remember the function, try asking our [R coach](https://canvas.sydney.edu.au/courses/59609/pages/my-personal-r-coach-powered-by-chatgpt-4?module_item_id=2446576))
+
+
+```{r resume-dim, exercise=TRUE}
+
+```
+
+```{r resume-dim-solution}
+dim(resume)
+```
+
+```{r resume-dim-check}
+grade_code()
+```
+
+
+- Use the `summary` function to show a summary of the data.
+
+
+```{r res-summary, exercise=TRUE}
+
+```
+
+```{r res-summary-solution}
+summary(resume)
+```
+
+```{r res-summary-check}
+grade_code()
+```
+
+
+### Creating a cross tab
+
+
+To help you analyze this data, you can use a cross tabulation. Cross tabulation (or contingency table) is a table that quickly summarizes categorical data. For instance, in the resume data, we have a `sex` variable that tells us whether or not the fictitious resume had a male or a female name.
+
+#### Exercise
+
+- Using the `table` function, create a cross tab of the `sex` and `call` variables in the resume data.
+- Remember that a variable in the data frame can be accessed with `$`.
+
+```{r table, exercise = TRUE}
+
+```
+
+```{r table-check}
+grade_result(
+  pass_if(~ identical(.result, table(resume$sex, resume$call))),
+  pass_if(~ identical(.result, table(resume$call, resume$sex)))
+)
+```
+
+### Logical values
+
+Pretty soon, you'll be doing more complicated subsetting in R. To do this, it's helpful to understand a special type of object in R: the **logical**. There are two values associated with this type of object: `TRUE` and `FALSE` (where the uppercase is very important).
+
+#### Exercises
+
+- Create a vector called `x` that contains two `TRUE` values and two `FALSE` values in that order.
+- Find the sum of that vector.
+
+```{r logical, exercise = TRUE}
+## create a vector with two TRUE values and two FALSE values
+x <-
+
+## take the sum of this vector
+
+```
+
+
+```{r logical-hint}
+x <- c()
+
+sum(x)
+```
+
+
+```{r logical-check}
+grade_result_strict(
+  pass_if(~ identical(x, c(TRUE, TRUE, FALSE, FALSE))),
+  pass_if(~ identical(.result, 2L))
+)
+```
+
+
+- Create a vector called `z` that contains one `TRUE` values and three `FALSE` values in that order.
+- Find the mean of that vector.
+
+```{r logical2, exercise = TRUE}
+## creat a vector with one TRUE values and three FALSE values
+z <-
+
+## take the mean of this vector
+
+```
+
+```{r logical2-hint}
+z <- c()
+
+mean(z)
+```
+
+
+```{r logical2-check}
+grade_result_strict(
+  pass_if(~ identical(z, c(TRUE, FALSE, FALSE, FALSE))),
+  pass_if(~ identical(.result, 0.25))
+)
+```
+
+
+### Comparing objects
+
+
+There are several *relational operators* that allow us to compare objects in R. The most useful of these are the following:
+
+- `>` greater than, `>=` greater than or equal to
+- `<` less than, `<=` less than or equal to
+- `==` equal to
+- `!=` not equal to
+
+When we use these to compare two objects in R, we end us with a logical object. You can also compare a vector to a particular number.
+
+
+#### Exercises
+
+- Test if 10 is greater than 5.
+
+```{r gt-test, exercise=TRUE}
+
+```
+
+```{r gt-test-solution}
+10 > 5
+```
+
+```{r gt-test-check}
+grade_code()
+```
+
+- Test which values in the vector `x` is greater than or equal to 0.
+
+```{r compare, exercise = TRUE}
+## x vector
+x <- c(-2, -1, 0, 1, 2)
+
+## test which values of x are greater than or equal to 0
+
+```
+
+```{r compare-check}
+grade_result(
+  fail_if(~ identical(.result, x > 0),
+          "Did you forget the 'or equal to' part of the comparison?"),
+  pass_if(~ identical(.result, x >= 0))
+)
+```
+
+## Subsets in R
+
+### Subsetting a vector
+
+You can use the same logical statements you have been using to create subsets of a vector. These can often be helpful because we'll want to calculate various quantities of interest for different subsets of the data. For this exercise, we will use the `resume` data frame made up of the variables `firstname`, `sex`, `race`, and `call`. As a reminder, here is what the data look like:
+
+```{r}
+resume
+```
+
+#### Exercise
+
+Use `[]` to subset the variable `call` of the data frame `resume` so that to get the values of `call` where `sex` is `female`.
+
+
+```{r subset, exercise = TRUE}
+
+```
+
+```{r subset-solution}
+resume$call[resume$sex == "female"]
+```
+
+```{r subset-check}
+grade_code()
+```
+
+
+### Comparing means across treatment conditions
+
+
+You can use the same ideas as in the last step to subtract the mean with the function `mean()` of the variable `call` for males to the mean of the variable `call` for females. 
+
+```{r effect, exercise = TRUE}
+
+```
+
+```{r effect-solution}
+mean(resume$call[resume$sex == "male"]) - mean(resume$call[resume$sex == "female"])
+```
+
+```{r effect-check}
+grade_code("You just analysed an experiment! Way to go!")
+```
+
+## Submit Report
+
+```{r context="setup"}
+submission_ui
+```
+
+```{r context="server"}
+submission_server()
+```
