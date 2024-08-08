@@ -58,6 +58,7 @@ submission_server <- function(input, output) {
                      num_answered = num_answered,
                      num_correct = num_correct,
                      num_tutorial = num_tutorial,
+                     num_excercise = num_excercise,
                      student_name = input$name,
                      student_unikey = input$unikey)
       
@@ -122,7 +123,7 @@ submission_ui <- shiny::div(
   shiny::tags$ol(
     shiny::tags$li("Enter your name and UniKey (should look like: abcd1234) into the text box below.."),
     shiny::tags$li("Click the Download button next to generate a report PDF with a summary of your work. "),
-    shiny::tags$li("Upload this file to the appropriate assignment on Gradescope.")),
+    shiny::tags$li("Upload this file to the appropriate assignment on Canvas")),
   shiny::textInput("name", "Your Name"),
   shiny::textInput("unikey", "UniKey"),
   shiny::downloadButton(outputId = "download_pdf", label = "Download PDF"),

@@ -19,11 +19,13 @@ library(sspslearnr)
 tutorial_options(exercise.checker = gradethis::grade_learnr, 
                  exercise.reveal_solution="TRUE")
 knitr::opts_chunk$set(echo = FALSE)
-num_tutorial <- 0
+num_tutorial <- 23
+num_excercise <- 13
 tut_reptitle <- "SSPS [4102|6006] Week 02: In-class Individual Tutorial"
 data(resume, package = "qss")
 ```
 
+**NOTE: Make sure to click on each "Run code" sequentially (from top to bottom) even if there's no question or you are not asked to modify the R code.**
 
 ## Atomic Vectors
 
@@ -174,7 +176,7 @@ grade_code()
 ### Creating a cross tab
 
 
-To help you analyze this data, you can use a cross tabulation. Cross tabulation (or contingency table) is a table that quickly summarizes categorical data. For instance, in the resume data, we have a `sex` variable that tells us whether or not the fictitious resume had a male or a female name.
+To help you analyze this data, you can use a cross tabulation. Cross tabulation (or contingency table) is a table that quickly summarizes categorical data. For instance, in the resume data, we have a `sex` variable that tells us whether or not the fictitious `resume` had a male or a female name.
 
 #### Exercise
 
@@ -310,7 +312,7 @@ resume
 
 #### Exercise
 
-Use `[]` to subset the variable `call` of the data frame `resume` so that to get the values of `call` where `sex` is `female`.
+Use `[]` to subset the variable `call` of the data frame `resume` so to get the values of `call` where `sex` is `female`.
 
 
 ```{r subset, exercise = TRUE}
@@ -340,7 +342,7 @@ mean(resume$call[resume$sex == "male"]) - mean(resume$call[resume$sex == "female
 ```
 
 ```{r effect-check}
-grade_code("You just analysed an experiment! Way to go!")
+grade_code("You just analysed an experiment! Way to go! This is of course the difference-in-means estimator")
 ```
 
 ## Submit Report
