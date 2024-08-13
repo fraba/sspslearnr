@@ -1,0 +1,379 @@
+---
+title: "SSPS [4102|6006] Week 03: Data visualisation"
+tutorial:
+  id: "week-03"
+output:
+  learnr::tutorial:
+    progressive: true
+    ace_theme: github
+    theme: united
+runtime: shiny_prerendered
+description: "This tutorial will cover data visulisation with ggplot2. Excercises adapted from the tutorial designed by Julia Romanowska (github.com/jromanowska)."
+---
+
+```{r setup, include=FALSE}
+library(gradethis)
+library(learnr)
+library(sspslearnr)
+library(ggplot2)
+
+tutorial_options(exercise.checker = gradethis::grade_learnr, 
+                 exercise.reveal_solution="TRUE")
+knitr::opts_chunk$set(echo = FALSE)
+num_tutorial <- 0
+num_excercise <- 0
+tut_reptitle <- "SSPS [4102|6006] Week 03: In-class Individual Tutorial"
+
+## Data
+gapminder <-
+  readRDS("data/gapminder.rds")
+
+```
+
+**NOTE: Make sure to click on each "Run code" sequentially (from top to bottom) even if there's no question or you are not asked to modify the R code.**
+
+Make sure you have installed ggplot2 on your computer. Try this,
+
+```{r eval = TRUE}
+library(ggplot2)
+```
+
+* If you get no error, you are good to go! The package ggplot2 was successfully loaded.
+
+* If you get "Error in library(ggplot2) : there is no package called ‘ggplot2’" then make sure you install the package with
+
+```{r eval = FALSE}
+install.packages("ggplot2")
+# Then load it with
+library(ggplot2)
+```
+
+
+## About `ggplot2`
+
+A plot in `ggplot2` consists of several layers:
+
+1. data
+    - strict format: tidy data!
+    - one row per datapoint
+    - all grouping must be included in the data
+
+2. aesthetics (`aes`) ([original documentation](https://ggplot2.tidyverse.org/reference/index.html#section-aesthetics))
+    - how to map the data to the graph?
+    - which column is *x*, *y*, ...
+    - which column provides grouping (based on the grouping, one can either connect points into lines, split a graph into several facets, or color differently each group)
+
+3. `geom`s ([original documentation](https://ggplot2.tidyverse.org/reference/index.html#section-geoms))
+    - how to visualize the data?
+    - points (`geom_point`), lines (`geom_line`), bars (`geom_bar`), etc.
+    - `geom`s are connected to `stat`s that conduct any necessary pre-processing of data (e.g., `geom_histogram` would first calculate the number of observations in each bin through `stat_bin`)
+
+4. `scale`s ([original documentation](https://ggplot2.tidyverse.org/reference/index.html#section-scales))
+    - any type of data representation on the plot
+    - coordinates: `scale_x_continuous`, `scale_x_discrete`, `scale_x_date`, etc.
+    - colors: `scale_color_manual`, `scale_colour_brewer`, `scale_fill_continuous`, etc.
+
+5. `theme` ([original documentation](https://ggplot2.tidyverse.org/reference/index.html#section-themes))
+    - visual aspects
+    - size and types of fonts
+    - positioning of axes, legends, etc.
+    
+Each layer is added to the previous one with a `+` sign. The result can be saved to an object and added upon later.
+
+
+## Gapminder data
+
+Let's consider the [Gapminder](https://cran.r-project.org/web/packages/gapminder/readme/README.html) data set.
+
+```{r}
+gapminder
+```
+
+
+```{r gapminder-quiz-1, echo=FALSE}
+quiz(
+  question("What does each row in the dataset represent?",
+           answer("A specific country's statistics for a given year", correct = TRUE),
+           answer("A continent's yearly summary", correct = FALSE),
+           answer("A worldwide summary for a specific year", correct = FALSE),
+           answer("Statistics of multiple countries combined", correct = FALSE),
+           allow_retry = TRUE))
+```
+
+---
+
+## First visualisation
+
+Points are probably the simplest way to visualise two continuous variables. Run the following code
+
+```{r plot-1-1, exercise = TRUE}
+ggplot(data = gapminder) + 
+  geom_point(mapping = aes(x = lifeExp, y = gdpPercap))
+```
+
+```{r gapminder-quiz-2, echo=FALSE}
+quiz(
+  question("What does the `aes()` function do in the code?\n\n`ggplot(data = gapminder) + geom_point(mapping = aes(x = lifeExp, y = gdpPercap))`",
+           answer("Specifies the aesthetic mappings, linking the x and y variables to `lifeExp` and `gdpPercap`, respectively", correct = TRUE),
+           answer("Adds a geometric shape to the plot", correct = FALSE),
+           answer("Filters the data based on the given conditions", correct = FALSE),
+           answer("Specifies the title of the plot", correct = FALSE),
+           allow_retry = TRUE)
+)
+```
+
+Now change the code so that changes in the `lifeExp` variables are mapped on the vertical axis while `gdpPercap` on the horizontal axis.
+
+```{r plot-1-2, exercise = TRUE}
+ggplot(data = gapminder) + 
+  geom_point(mapping = aes(x = lifeExp, y = gdpPercap))
+```
+
+```{r plot-1-2-solution}
+ggplot(data = gapminder) + 
+  geom_point(mapping = aes(x = gdpPercap, y = lifeExp))
+```
+
+```{r plot-1-2-check}
+grade_code()
+```
+
+## Add coloring 
+
+Here is the magic of ggplot - we want to add coloring of the points *by one of
+the variables in a dataset*. Therefore, we need to specify aesthetics
+for the `geom_point`.
+
+Let's consider the `mpg` data frame, where each row is a car model (`mpg` contains observations collected by the US Environmental Protection Agency on 234 models of car.)
+
+```{r}
+mpg
+```
+
+and let's consider this plot
+
+```{r echo = TRUE}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy, color = class))
+```
+
+> NOTE: we can save the plots as objects and then add on to those if we want to modify the plot!
+
+```{r mpg-quiz-1, echo=FALSE}
+quiz(
+  question("In the following `ggplot2` code, which variable determines the colour of the points?\n\n`ggplot(data = mpg) + geom_point(mapping = aes(x = displ, y = hwy, color = class))`",
+           answer("class", correct = TRUE),
+           answer("displ", correct = FALSE),
+           answer("hwy", correct = FALSE),
+           answer("mpg", correct = FALSE),
+           allow_retry = TRUE
+  )
+)
+```
+
+Now let's go back to our `gapminder` dataset. Edit the code so to use the variable `continent` for colouring your points.
+
+```{r plot-1-3, exercise = TRUE}
+ggplot(data = gapminder) + 
+  geom_point(mapping = aes(x = lifeExp, y = gdpPercap))
+```
+
+```{r plot-1-3-solution}
+ggplot(data = gapminder) + 
+  geom_point(mapping = aes(x = lifeExp, y = gdpPercap, colour = continent))
+```
+
+```{r plot-1-3-check}
+grade_this_code(correct = "Well done!",
+                incorrect = "You should set the aesthetic `colour` or `color` within `aes()` to the corresponding variable.")
+```
+
+## Size and Colour
+
+Edit this code so that the size of each point is proportional to the value of `gdpPercap` and the colour to `lifeExp` (life expectancy). (Hint: Consider the type of data `lifeExp` and `continent` represent.)
+
+```{r plot-1-4, exercise = TRUE}
+ggplot(data = gapminder) + 
+  geom_point(mapping = aes(x = lifeExp, y = gdpPercap))
+```
+
+```{r plot-1-4-solution}
+ggplot(data = gapminder) + 
+  geom_point(mapping = aes(x = lifeExp, y = gdpPercap, size = gdpPercap, colour = lifeExp))
+```
+
+```{r plot-1-4-check}
+grade_this_code()
+```
+
+```{r gapminder-quiz-3, echo=FALSE}
+quiz(
+  question("Consider the following `ggplot2` code:\n\n`ggplot(data = gapminder) + geom_point(mapping = aes(x = lifeExp, y = gdpPercap, size = gdpPercap, colour = lifeExp))`\n\nWhy is the legend for the `colour` aesthetic different when you map `colour` to `lifeExp` compared to mapping `colour` to `continent`?",
+           answer("The legend is different because `lifeExp` is a categorical variable, so each level of life expectancy gets a different colour.", correct = FALSE),
+           answer("The legend is different because `continent` is a continuous variable, so the legend shows a gradient of colours representing different continents.", correct = FALSE),
+           answer("The legend is different because `lifeExp` is a continuous variable, so the legend shows a gradient of colours representing different ranges of life expectancy.", correct = TRUE),
+           answer("The legend is different because `continent` is a discrete variable, so each continent gets a different distinct colour.", correct = TRUE),
+           allow_retry = TRUE
+  )
+)
+```
+
+Finally, let's colour all points in red using `colour = "red"`. How would you do it?
+
+```{r plot-1-5, exercise = TRUE}
+ggplot(data = gapminder) + 
+  geom_point(mapping = aes(x = lifeExp, y = gdpPercap))
+```
+
+```{r plot-1-5-solution}
+ggplot(data = gapminder) + 
+  geom_point(mapping = aes(x = lifeExp, y = gdpPercap), colour = 'red')
+```
+
+```{r plot-1-5-check}
+grade_this_code(incorrect = 'Remember to set colour `"red"` with quotes outside of `aes()`')
+```
+
+## One variable categorical (a.k.a., discrete)
+
+Now let's consider again the car models dataset ...
+
+```{r}
+mpg
+```
+
+Let's say I want to visualise with a bar how many models for each `manufacturer` are present in the data frame. Using `geom_bar()`, how would you do it?
+
+```{r plot-1-6, exercise = TRUE}
+ggplot(mpg) + ...
+```
+
+```{r plot-1-6-hint, exercise = TRUE}
+ggplot(mpg) + geom_bar()
+```
+
+```{r plot-1-6-solution}
+ggplot(mpg) + geom_bar(aes(x = manufacturer))
+```
+
+```{r plot-1-6-check}
+grade_this_code(incorrect = 'You should specify the aesthetics of `geom_bar()` with `x = manufacturer`.')
+```
+
+
+```{r mpg-quiz-2, echo=FALSE}
+quiz(
+  question("Why does the y-axis represent a count?",
+           answer("The y-axis represents a count because the dataset includes a `count` variable that is automatically used.", correct = FALSE),
+           answer("The y-axis represents a count because the `aes()` function explicitly mapped the `y` aesthetic to a count variable.", correct = FALSE),
+           answer("The y-axis represents a count because `geom_bar()` by default counts the number of occurrences of each category on the x-axis.", correct = TRUE),
+           answer("The y-axis represents a count because `manufacturer` is a continuous variable and `geom_bar()` sums these values.", correct = FALSE),
+           allow_retry = TRUE
+  )
+)
+```
+
+## One variable continuous
+
+Now let's say that instead of a single categorical variable (`manufacturer`) you want to visualise a single continuous variable such as `lifeExp` in the gapminder data frame. Which one of these options would you use? You can test your code before answering
+
+```{r plot-1-7, exercise = TRUE}
+ggplot(gapminder) + geom_...(aes(x = lifeExp))
+```
+
+```{r gapminder-quiz-4, echo=FALSE}
+quiz(
+  answer("geom_bar()", correct = FALSE),
+  answer("geom_density()", correct = TRUE),
+  answer("geom_col()", correct = FALSE),
+  answer("geom_histogram()", correct = TRUE)
+)
+```
+
+## Subsetting data frames
+
+Before moving on, let's learn something more about base R. Last week we learned how to subset vectors based on some conditions using  `[]`. 
+
+Remember that if vectors are single-dimension data objects, data frames are instead two-dimension data objects. 
+
+If I create this vector (please run the code)
+
+```{r subset-1-1, exercise=TRUE}
+my_vector <- c(1, 3, 5, 7, 9)
+```
+
+I can measure its length with 
+
+```{r subset-1-2, exercise.setup = "subset-1-1", exercise=TRUE}
+length(my_vector)
+```
+
+Conversely, a data frame will have two dimensions, which I capture with
+
+```{r subset-1-3, exercise=TRUE}
+dim(gapminder)
+```
+
+The the length of the gapminder data frame is `r ncol(gapminder)` while its "height" is `r nrow(gapminder)` (but "height" is not a function in R, instead use `nrow()` for number of rows).
+
+As seen to subset `my_vector` and extract the first and the third element I can do (replace the `...`)
+
+```{r subset-1-4, exercise.setup = "subset-1-1", exercise = TRUE}
+my_vector[...]
+```
+
+```{r subset-1-4-solution}
+my_vector[c(1, 3)]
+```
+
+```{r subset-1-4-check}
+grade_this_code()
+```
+
+To subset a data frame, I can do something similar but I will need to act on two dimensions, rows and columns, where rows are selected first columns later, after a comma. For example, to select the 10th row and columns 1, 2 and 3 I can
+
+```{r echo = TRUE}
+# Note the comma separating the two conditions for rows and columns respectively
+gapminder[10 , c(1,2,3)] 
+```
+
+or alternatively if I know the column names
+
+```{r echo = TRUE}
+gapminder[10,c("country","continent","year")]
+```
+
+But let's say I am interested in subsetting the data frame for data about Afghanistan only disregarding rows about other countries. How can I do it if I don't know the number of rows where records correspond to the country `Afghanistan`? I can express this condition with a logical test before the comma (setting no condition after the comma so to capture all the columns). How would you do it? (Replace the `...` with the correct logical operator)
+
+```{r subset-1-5, exercise = TRUE}
+gapminder[gapminder$country ... "Afghanistan", ] 
+```
+
+```{r subset-1-5-solution}
+gapminder[gapminder$country == "Afghanistan", ] 
+```
+
+```{r subset-1-5-check}
+grade_this_code()
+```
+
+
+## One continuous and one discrete with geom_boxplot()
+
+Box plots are effective in visualising the distribution of continuous variables across different categories. For example, how life expectancy (`lifeExp`) compares across continents (`continent`) in the `year` 2007?
+
+```{r subset-1-6, exercise = TRUE}
+ggplot(data = gapminder[... == ... , ]) + geom_boxplot(aes(x = ..., y = lifeExp)) + labs(title = "Life expectancy in 2007")
+```
+
+```{r subset-1-5-solution}
+ggplot(data = gapminder[gapminder$year == 2007. , ]) + geom_boxplot(aes(x = continent, y = lifeExp)) + labs(title = "Life expectancy in 2007")
+```
+
+```{r subset-1-5-check}
+grade_this_code()
+```
+
+Note: We can add a title or change the other labels of the chart with `labs(title = "My title", x = "My x-axis label", "y = "My y-axis label")`.
+
+### How do I read a box plot?
