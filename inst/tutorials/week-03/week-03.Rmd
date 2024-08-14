@@ -8,7 +8,7 @@ output:
     ace_theme: github
     theme: united
 runtime: shiny_prerendered
-description: "This tutorial will cover data visulisation with ggplot2. Excercises adapted from the tutorial designed by Julia Romanowska (github.com/jromanowska)."
+description: "This tutorial will cover data visulisation with ggplot2."
 ---
 
 ```{r setup, include=FALSE}
@@ -32,9 +32,11 @@ gapminder <-
 
 **NOTE: Make sure to click on each "Run code" sequentially (from top to bottom) even if there's no question or you are not asked to modify the R code.**
 
+## Setup
+
 Make sure you have installed ggplot2 on your computer. Try this,
 
-```{r eval = TRUE}
+```{r load-ggplot, exercise = TRUE}
 library(ggplot2)
 ```
 
@@ -42,7 +44,7 @@ library(ggplot2)
 
 * If you get "Error in library(ggplot2) : there is no package called ‘ggplot2’" then make sure you install the package with
 
-```{r eval = FALSE}
+```{r eval = FALSE, echo = TRUE}
 install.packages("ggplot2")
 # Then load it with
 library(ggplot2)
@@ -72,13 +74,10 @@ A plot in `ggplot2` consists of several layers:
     - any type of data representation on the plot
     - coordinates: `scale_x_continuous`, `scale_x_discrete`, `scale_x_date`, etc.
     - colors: `scale_color_manual`, `scale_colour_brewer`, `scale_fill_continuous`, etc.
-
-5. `theme` ([original documentation](https://ggplot2.tidyverse.org/reference/index.html#section-themes))
-    - visual aspects
-    - size and types of fonts
-    - positioning of axes, legends, etc.
     
-Each layer is added to the previous one with a `+` sign. The result can be saved to an object and added upon later.
+Each layer is added to the previous one with a `+` sign. The result can be saved to an object and added upon later. 
+
+(Credit for this explanation: Julia Romanowska)
 
 
 ## Gapminder data
@@ -190,7 +189,7 @@ grade_this_code(correct = "Well done!",
 
 ## Size and Colour
 
-Edit this code so that the size of each point is proportional to the value of `gdpPercap` and the colour to `lifeExp` (life expectancy). (Hint: Consider the type of data `lifeExp` and `continent` represent.)
+Edit this code so that the size of each point is proportional to the value of `gdpPercap` and the colour to `lifeExp` (life expectancy).
 
 ```{r plot-1-4, exercise = TRUE}
 ggplot(data = gapminder) + 
@@ -208,7 +207,7 @@ grade_this_code()
 
 ```{r gapminder-quiz-3, echo=FALSE}
 quiz(
-  question("Consider the following `ggplot2` code:\n\n`ggplot(data = gapminder) + geom_point(mapping = aes(x = lifeExp, y = gdpPercap, size = gdpPercap, colour = lifeExp))`\n\nWhy is the legend for the `colour` aesthetic different when you map `colour` to `lifeExp` compared to mapping `colour` to `continent`?",
+  question("In the previous code consider the type of data `lifeExp` and `continent` represent, why is the legend for the `colour` aesthetic different when you map `colour` to `lifeExp` compared to mapping `colour` to `continent`?",
            answer("The legend is different because `lifeExp` is a categorical variable, so each level of life expectancy gets a different colour.", correct = FALSE),
            answer("The legend is different because `continent` is a continuous variable, so the legend shows a gradient of colours representing different continents.", correct = FALSE),
            answer("The legend is different because `lifeExp` is a continuous variable, so the legend shows a gradient of colours representing different ranges of life expectancy.", correct = TRUE),
@@ -248,10 +247,6 @@ Let's say I want to visualise with a bar how many models for each `manufacturer`
 ggplot(mpg) + ...
 ```
 
-```{r plot-1-6-hint, exercise = TRUE}
-ggplot(mpg) + geom_bar()
-```
-
 ```{r plot-1-6-solution}
 ggplot(mpg) + geom_bar(aes(x = manufacturer))
 ```
@@ -275,18 +270,23 @@ quiz(
 
 ## One variable continuous
 
-Now let's say that instead of a single categorical variable (`manufacturer`) you want to visualise a single continuous variable such as `lifeExp` in the gapminder data frame. Which one of these options would you use? You can test your code before answering
+Now let's say that instead of a single categorical variable (`manufacturer`) you want to visualise a single continuous variable such as `lifeExp` in the gapminder data frame.
 
 ```{r plot-1-7, exercise = TRUE}
 ggplot(gapminder) + geom_...(aes(x = lifeExp))
 ```
 
+
+
 ```{r gapminder-quiz-4, echo=FALSE}
 quiz(
-  answer("geom_bar()", correct = FALSE),
-  answer("geom_density()", correct = TRUE),
-  answer("geom_col()", correct = FALSE),
-  answer("geom_histogram()", correct = TRUE)
+  question("Which one of these options would you use? You can test your code before answering",
+    answer("geom_bar()", correct = FALSE),
+    answer("geom_density()", correct = TRUE),
+    answer("geom_col()", correct = FALSE),
+    answer("geom_histogram()", correct = TRUE),
+    allow_retry = TRUE
+  )
 )
 ```
 
@@ -330,7 +330,7 @@ my_vector[c(1, 3)]
 grade_this_code()
 ```
 
-To subset a data frame, I can do something similar but I will need to act on two dimensions, rows and columns, where rows are selected first columns later, after a comma. For example, to select the 10th row and columns 1, 2 and 3 I can
+To subset a data frame, I can do something similar but I will need to act on two dimensions, rows and columns, where rows are selected first and columns later, after a comma. For example, to select the 10th row and columns 1, 2 and 3 I can
 
 ```{r echo = TRUE}
 # Note the comma separating the two conditions for rows and columns respectively
@@ -366,14 +366,226 @@ Box plots are effective in visualising the distribution of continuous variables 
 ggplot(data = gapminder[... == ... , ]) + geom_boxplot(aes(x = ..., y = lifeExp)) + labs(title = "Life expectancy in 2007")
 ```
 
-```{r subset-1-5-solution}
+```{r subset-1-6-solution}
 ggplot(data = gapminder[gapminder$year == 2007. , ]) + geom_boxplot(aes(x = continent, y = lifeExp)) + labs(title = "Life expectancy in 2007")
 ```
 
-```{r subset-1-5-check}
+```{r subset-1-6-check}
 grade_this_code()
 ```
 
 Note: We can add a title or change the other labels of the chart with `labs(title = "My title", x = "My x-axis label", "y = "My y-axis label")`.
 
 ### How do I read a box plot?
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/zc4ymS5xBQA?si=aXgkMoW_JIXCC7Gu" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+## One continuous and one discrete with geom_col()
+
+Now let's say you want to visualise GDP per capita by Oceanian countries in 1952. You have two conditions for your data frame. In R, We set these two conditions like this: `condition_1 & condition_2` using `&` between the two conditions. Using these two variables we can say `gapminder$year ... 1952` and `gapminder$continent ... "Oceania"`.
+
+Replace the `...` in the code below to visualise this with `geom_col()` - make sure to add the comma when subsetting the dataset!
+
+
+```{r subset-1-7, exercise = TRUE}
+ggplot(gapminder[...]) + geom_col(aes(x = country, y = gdpPercap))
+```
+
+```{r subset-1-7-solution}
+ggplot(gapminder[gapminder$year == 1952 & gapminder$continent == "Oceania",]) + geom_col(aes(x = country, y = gdpPercap))
+```
+
+```{r subset-1-7-check}
+grade_this_code()
+```
+
+## Difference between geom_histogram(), geom_bar() and geom_col()
+
+These three functions will produce very similar geometries. Yet, they should be use with different types of variables because they do different things. 
+
+Let's run this code:
+
+```{r geom-1, exercise = TRUE}
+
+ggplot(mpg) + geom_histogram(aes(x = hwy))
+
+```
+
+### `geom_histogram()`
+
+`geom_histogram()` takes only a single variable and this variable must be continuous. By default, `geom_histogram()` will divide your variable into 30 "bins" of equal width (or brackets) and count on one of the two axis how many observations you have in each bin. You can change the number of bins adding `bins = 10` outside of `aes()` but within `geom_histogram()`.
+
+```{r geom-2, exercise = TRUE}
+
+ggplot(mpg) + geom_histogram(aes(x = hwy), bins = 10)
+
+```
+
+Can you see the difference?
+
+### `geom_bar()`
+
+`geom_bar()` also counts how many observations you have in each "bins" but this time bins are defined by the categories (or levels) of a single discrete variable. 
+
+```{r geom-3, exercise = TRUE}
+
+ggplot(mpg) + geom_bar(aes(x = manufacturer))
+
+```
+
+You might have noticed that the bars this time are separated by some space while with `geom_histogram()` they are stacked side-by-side (this to gives the idea that the variable is discrete or continuous). 
+
+### `geom_col()`
+
+`geom_col()` is the function you need to use if you want the height of your columns representing some continuous value already present in your data. In order for the function to work, you need to provide two variables (one discrete, one continuous), for the vertical and horizontal axis. Contrary to `geom_bar()` and `geom_histogram()`, `geom_col()` will not summarise any variable and will return as many columns as observations in the data frame.
+
+```{r geom-4, exercise = TRUE}
+
+ggplot(mpg) + geom_col(aes(x = model, y = cyl))
+
+```
+
+## Continuous function variable
+
+The most common case when you have a continuous function variable is when you have the same observation taken regularly over time.  
+
+```{r echo = TRUE}
+gapminder[ , c("year", "country", "lifeExp")]
+```
+
+We should consider the variable `lifeExp` as a continuous function of time and the most common way to visualise it is of course with a continuous line (`geom_line()`), running from left (before/past) to right (after/future).
+
+How would you complete this code so to map the evolution of life expectancy (`lifeExp`) over time in Australia?
+
+```{r geom-line-1, exercise = TRUE}
+... + geom_line(aes(...))
+```
+
+```{r geom-line-1-solution}
+ggplot(gapminder[gapminder$country == "Australia",]) + geom_line(aes(x = year, y = lifeExp))
+```
+
+```{r geom-line-1-check}
+grade_this_code(incorrect = "Not quite right! Try using your R coach on Canvas!")
+```
+
+## Scales
+
+The ggplot2 functions starting with `scale_` allows to customise the behaviour of the different scales defined in the aesthetics of the geometries. 
+
+For example,
+
+```{r scale-1, exercise = TRUE}
+ggplot(data = gapminder) + 
+  geom_point(mapping = aes(x = lifeExp, y = gdpPercap)) +
+  scale_y_continuous()
+```
+ 
+will produce the same chart as before, indeed `+ scale_y_continuous()` is added by default so including this line in your code will not change the resulting visualisation (try deleting that line (and the `+` at the end of the previous line and run it again). 
+
+Yet I can limit the y-scale to a specific interval adding the attribute `limits = c( ... , ...)`. So to limit the visualisation to observations where the value of y (in this case `gdpPercap`) is between 300 and 1000 dollars (the unit of my variable) I can do
+
+```{r scale-2, exercise = TRUE}
+ggplot(data = gapminder) + 
+  geom_point(mapping = aes(x = lifeExp, y = gdpPercap)) +
+  scale_y_continuous(limits = c(300, 1000))
+```
+
+Note that R will throw a warning message saying that with these limits some rows (i.e., observations) have been removed - since they are outside the limits you set. 
+
+How would you limit the scale of the x-axis to observation between 45 and 65 leaving the other y-scale unlimited?
+
+```{r scale-3, exercise = TRUE}
+
+```
+
+```{r scale-3-solution}
+ggplot(data = gapminder) + 
+  geom_point(mapping = aes(x = lifeExp, y = gdpPercap)) +
+  scale_x_continuous(limits = c(45, 65))
+```
+
+```{r scale-3-check}
+grade_this_code(incorrect = "Not quite right! Try using your R coach on Canvas!")
+```
+
+### Scale transformation
+
+A very common problem when visualising the data is when your distribution is highly concentrated around some value with a limited number of outliers. A simple approach to improve the visualisation is to log-transform the problematic scale with `+ scale_x_log10()` or `+ scale_y_log10()`.
+
+Which scale would you transform in this case? (You can run the code to check out the result before submitting) 
+
+```{r  scale-4, exercise = TRUE}
+ggplot(data = gapminder) + 
+  geom_point(aes(x = lifeExp, y = gdpPercap))
+```
+
+```{r scale-4-solution}
+ggplot(data = gapminder) + 
+  geom_point(aes(x = lifeExp, y = gdpPercap)) + 
+  scale_y_log10()
+```
+
+```{r scale-4-check}
+grade_this_code()
+```
+
+## Labels
+
+If you want to modify or add labels to your plot, you can use the `labs()` function. In the example below we are replacing the not-so-descriptive labels on the two axes with something more descriptive. 
+
+```{r  labs-1, exercise = TRUE}
+ggplot(data = gapminder) + 
+  geom_point(aes(x = lifeExp, y = gdpPercap)) + 
+  labs(x = "Life expectancy", y = "GDP per capita")
+```
+
+
+Now try to add the `title` "Gross domestic product and life expectancy" and as `caption` "Data source: Gapminder" (remember, you should always indicate the source of your data!). 
+
+```{r labs-2, exercise = TRUE}
+ggplot(data = gapminder) + 
+  geom_point(aes(x = lifeExp, y = gdpPercap))  + 
+  labs(x = "Life expectancy", y = "GDP per capita",
+       ...)
+```
+
+```{r labs-2-solution}
+ggplot(data = gapminder) + 
+  geom_point(aes(x = lifeExp, y = gdpPercap))  + 
+  labs(x = "Life expectancy", y = "GDP per capita",
+       title = "Gross domestic product and life expectancy", caption = "Data source: Gapminder")
+```
+
+```{r labs-2-check}
+grade_this_code()
+```
+
+## Facets
+
+Facets is a feature offered by ggplot2 to visualise subplots each one representing some specific categorical variables found in your data. For example, compare the plot from this code ...
+
+```{r facets-1, exercise = TRUE}
+ggplot(data = gapminder, aes(x = lifeExp)) +
+  geom_histogram()
+```
+
+with the plot from this code as we added the line `facet_wrap("continent")`.
+
+```{r facets-2, exercise = TRUE}
+ggplot(data = gapminder, aes(x = lifeExp)) +
+  geom_histogram() +
+  facet_wrap("continent")
+```
+
+What do you think happened? 
+
+## Submit Report
+
+```{r context="setup"}
+submission_ui
+```
+
+```{r context="server"}
+submission_server()
+```

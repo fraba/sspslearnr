@@ -25,8 +25,6 @@ Congrats on getting through this tutorial! Please upload this PDF to Canvas
 
 - `r paste("Number of Chunks Completed by the Student:", params$num_answered,"" )`
 - `r paste("Number of Exercises Answered Correctly by Student:", params$num_correct,"")`
-- `r paste("Proportion of Chunks Completed by Student:", round(params$num_answered/params$num_tutorial*100,0), "percent")`
-- `r paste("Proportion of Exercises Answered Correctly:", round(params$num_correct/params$num_excercise*100,0),"percent")`
 
 
 
