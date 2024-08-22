@@ -1,6 +1,7 @@
 
 library(shiny)
 library(ggplot2)
+library(MASS)
 
 # Define UI for application that draws a histogram
 ui <- fluidPage(
@@ -11,7 +12,7 @@ ui <- fluidPage(
                         "Number of points:",
                         min = 500,
                         max = 1000,
-                        value = 50),
+                        value = 750),
             sliderInput("mean_x",
                         "Mean of X:",
                         min = -100,

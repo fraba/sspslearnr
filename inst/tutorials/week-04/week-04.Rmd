@@ -36,7 +36,7 @@ star <- STAR
 ### Small class size data
 
 
-In this chapter, you'll analyze data from the STAR project, which is a four-year randomized trial on the effectiveness of small class sizes on education performance. The `star` data frame as been loaded into your space so that you can play around with it a bit.
+In this tutorial, you'll analyse data from the STAR project, which is a four-year randomized trial on the effectiveness of small class sizes on education performance. The `star` data frame as been loaded into your space so that you can play around with it a bit.
 
 #### Exercises
 - Use the `head` function on the `star` to see what the data looks like.
@@ -108,6 +108,12 @@ grade_result(
 )
 ```
 
+Remember that you can sum a vector of logicals with `TRUE` being counted as a `1` and `FALSE` being counted as a `0`. Try to run this
+
+```{r check-sum-logicals, exercise = TRUE}
+sum(c(TRUE, FALSE, TRUE, FALSE))
+```
+
 - Use the `is.na` and `sum` functions to show how many values of the `g4math` variable are missing.
 
 
@@ -162,7 +168,7 @@ grade_code(
 )
 ```
 
-- Try to calculate the `mean` of the `g4math` variable when setting `na.rm = TRUE`.
+- Try to calculate the `mean` of the `g4math` variable when setting `na.rm = TRUE` within the function `mean()`.
 
 ```{r mean-narm, exercise = TRUE}
 
@@ -176,82 +182,39 @@ mean(star$g4math, na.rm = TRUE)
 grade_code()
 ```
 
-## Visualizing Data
+## Visualising Data
 
 ### Barplots
 
-
-The **barplot** is a useful way to visualize a categorical or factor variable. In this exercise, you are going to visualize the `classtype` variable from the `star` data frame, which can take on the following values:
+The **barplot** is a useful way to visualize a categorical or factor variable. In this exercise, you are going to visualiae the `classtype` variable from the `star` data frame, which can take on the following values:
 
 - `1` = small class
 - `2` = regular class
 - `3` = regular class with aid
 
 #### Exercises
-- Use the `table` function to create a vector of counts `classcounts` for each category of the `classtype` in the `star` data.
-- Pass this `classcounts` vector to the `barplot` function.
+- Use the `ggplot()` and `geom_bar()` functions to plot the frequency of each category of the `classtype` in the `star` data.
+
+Note: With ggplot2 data and aesthetic mappings are passed from the first layer to the last. Although, you can define data and aesthetics on different layers in order for your code to be automatically checked as "correct" define data and aesthetics in the layer zero so in `ggplot(data = ..., aes(...))` and not in `geom_xxx()`. 
 
 ```{r barplot, exercise = TRUE}
-## creat a vector called classcounts that has
-## the counts of each category of classtype
-
-
-## pass classcounts to barplot
 
 ```
 
 ```{r barplot-solution}
-classcounts <- table(star$classtype)
-
-## pass classcounts to barplot
-barplot(classcounts)
+ggplot(star, aes(x = classtype)) + geom_bar()
 ```
 
 ```{r barplot-check}
-grade_code("Awesome. The graph is looking a little unhelpful, though. Let's spruce it up.")
+grade_code()
 ```
-
-### Making the barplot readable
-
-The default barplot usually isn't all that readable.
-
-#### Exercises
-
-- Create a vector of character labels called `classnames` that has the values `"Small class"` (for 1), `"Regular class"` (for 2), and `"Regular class with aid"` (for 3).
-- Call `barplot` with the heights as before, but now passing `classnames` to the `names.arg` argument and use `"Number of students"` as the `ylab` argument.
-- Make sure to separate the arguments in the barplot call with commas.
-
-```{r barplot-labels, exercise = TRUE}
-## create a vector giving the counts of each category of classtype
-classcounts <- table(star$classtype)
-
-## create a vector of labels called classnames
-
-
-## pass classcounts to barplot and set the y-axis label
-
-
-```
-
-```{r barplot-labels-solution}
-classcounts <- table(star$classtype)
-
-## create a vector of labels
-classnames <- c("Small class", "Regular class", "Regular class with aid")
-
-## pass classcounts to barplot and set the y-axis label
-barplot(classcounts, names.arg = classnames, ylab = "Number of students")
-```
-
 
 ### Histograms
 
-For quantitative (numerical) variables, the barplot won't work because there are too many unique values. In this case, you will often use a histogram to visualize the a numerical variable.
+For quantitative (numerical) variables, the `geom_bar()` won't work because there are too many unique values. In this case, you will often use a histogram to visualize the a numerical variable.
 
 #### Exercises
-- Use the `hist` function to create a histogram for the `g4math` variable in the `star` data frame.
-- Be sure to use the `freq = FALSE` argument to the `hist` function to get the histogram.
-- Make sure to separate the arguments in function calls with commas.
+- Use the `geom_histogram()` function to create a histogram for the `g4math` variable in the `star` data frame.
 - Remember that you can access a particular variable using the `$`.
 
 ```{r hist, exercise = TRUE}
@@ -261,26 +224,43 @@ For quantitative (numerical) variables, the barplot won't work because there are
 
 
 ```{r hist-solution}
-## create a histogram of g4math
-hist(star$g4math, freq = FALSE)
+ggplot(data = star, aes(x = g4math)) + geom_histogram()
 ```
 
 ```{r hist-check}
 grade_code("Great job, though the graph is a bit spartan. Let's make it more readable.")
 ```
 
+You should have received this warning message:
+
+> Removed 3930 rows containing non-finite outside the scale range (`stat_bin()`). 
+
+```{r quiz-missing-data-warning}
+quiz(
+  question("Why did you get this message?",
+    answer("Because there are not enough bins"),
+    answer("Because of the limits set by scale_x_continuous()"),
+    answer("Because there are missing values in my data", correct = TRUE),
+    incorrect = "Incorret: ggplot2 is informing you that 3930 rows from your data frame coudn't be visualised because they contained missing data",
+    allow_retry = TRUE
+  ))
+```
+
+
 ### Sprucing up the histogram
 
-There are several arguments you can pass to `hist` that will improve its readability:
+There are several layers you can pass after to `geom_histogram()` that will improve its readability:
 
-- `main`: a character string that prints a main title for the plot.
-- `xlab`, `ylab`: character strings that set the labels for the x (horizontal) and y (vertical) axes
-- `xlim`, `ylim`: numeric vectors of length 2 to specify the interval for the x and y axes.
+- with `title = "your title"` and `x = "your x-axis label"` within the function `labs()` you can include the title and change the label for the x-axis. 
+- with `c(low_limit,upper_limit)` within the function `scale_x_continuous()` or `scale_y_continuous()` you can define the limits for the x-axis and y-axis respectively.
+
+(Remember to add all additional layers with a `+`, also set the layers following the order of the instructions and specify data and aes in the layer zero `ggplot(data = my_data, aes(...)`)
 
 #### Exercises
-- Create a histogram (with `freq = FALSE`) where you (a) set the y-axis to be between `0` and `0.015` using the `ylim` argument, (b) include an informative x-axis label using the `xlab` argument, and (c) include a title for the plot using the `main` argument.
-- Make sure to separate the arguments in function calls with commas.
-
+- Create a histogram (with `geom_histogram()`) then set
+    - "Distribution of fourth-grade math scores" as title;
+    - "Score" as label of the x-asis;
+    - Set the limit of the x-axis to 600 and 800.
 
 ```{r hist-nice, exercise = TRUE}
 ## create the histogram with the specifications given in the instructions
@@ -289,91 +269,109 @@ There are several arguments you can pass to `hist` that will improve its readabi
 
 
 ```{r hist-nice-solution}
-## create the histogram with the specifications given in the instructions
-hist(star$g4math, freq = FALSE, xlab = "Score", main = "Distribution of fourth-grade math scores", ylim = c(0,0.015))
+ggplot(data = star, aes(x = g4math)) + geom_histogram() + labs(title = "Distribution of fourth-grade math scores", x = "Score") + scale_x_continuous(limits = c(600,800))
 ```
 
-### Adding lines and text to a plot
+### Adding lines to a plot
 
-We'll often want to add more information to a plot to make it even more readable. You can do that with commands that add to the current plot, such as `abline` and `text`.
-`abline(v = 1)` will add a vertical line to the plot at the specified value (`1` in this example).
+We'll often want to add more information to a plot to make it even more readable. You can do that with commands that add to the current plot, such as `geom_vline()`.
+`geom_vline(xintercept = 1)` will add a vertical line to the plot at the specified value (`1` in this example).
 
 #### Exercises
-- Use the `abline` function to add a vertical line at the mean of the `g4math` variable from the `star` data. Remember, there are missing values in that variable so be sure to use the `na.rm = TRUE` argument to drop them.
+- Use the `geom_vline()` function to add a vertical line at the mean of the `g4math` variable from the `star` data. Remember, there are missing values in that variable so be sure to use the `na.rm = TRUE` argument to drop them.
 
 ```{r hist-line, exercise = TRUE}
-hist(star$g4math, freq = FALSE, xlab = "Score", main = "Distribution of fourth-grade math scores", ylim = c(0,0.015))
+ggplot(data = star, aes(x = g4math)) + geom_histogram() + labs(title = "Distribution of fourth-grade math scores", x = "Score") + scale_x_continuous(limits = c(600,800)) 
 
 ## add a vertical line at the mean of the variable
 
 ```
 
 ```{r hist-line-solution}
-hist(star$g4math, freq = FALSE, xlab = "Score", main = "Distribution of fourth-grade math scores", ylim = c(0,0.015))
-
-## add a vertical line at the mean of the variable
-abline(v = mean(star$g4math, na.rm = TRUE))
-
-
+ggplot(data = star, aes(x = g4math)) + geom_histogram() + labs(title = "Distribution of fourth-grade math scores", x = "Score") + scale_x_continuous(limits = c(600,800)) + geom_vline(xintercept = mean(star$g4math, na.rm = T))
 ```
 
 ```{r hist-line-check}
 grade_code()
 ```
 
+## Conceptual questions Part 1
 
-### Adding text to a plot
-
-We'll sometimes want to add text to a plot to make it more informative. `text(x,y,z)` adds a character string `z` centered at point on the (`x`, `y`) on the plot. You can use the axis labels to see where you might want to add these parts of the plot.
-
-#### Exercise
-
-- Use the `text` function to add the string `Average Score` to the plot at the point (750, 0.014).
-- Make sure to separate the arguments in function calls with commas.
-
-```{r hist-text, exercise = TRUE}
-hist(star$g4math, freq = FALSE, xlab = "Score", main = "Distribution of fourth-grade math scores", ylim = c(0,0.015))
-abline(v = mean(star$g4math, na.rm = TRUE))
-
-## add the text "Average Score" at the specified location
-
-```
-
-```{r hist-text-solution}
-hist(star$g4math, freq = FALSE, xlab = "Score", main = "Distribution of fourth-grade math scores", ylim = c(0,0.015))
-
-## add a vertical line at the mean of the variable
-abline(v = mean(star$g4math, na.rm = TRUE))
-
-## add the text "Average Score" at the specified location
-text(x = 750, y = 0.014, "Average Score")
-```
-
-```{r hist-text-check}
-grade_code()
-```
-
-## Conceptual Questions
-
-
-```{r concept, echo=FALSE}
-quiz(caption = "",
-     question("In section 3.6 of QSS, what kind of plot are we using to visualize ideological differences between Democrats and Republicans?",
-              answer("scatterplot", correct = TRUE),
-              answer("bar plot"),
-              answer("histogram")),
-     question("To estimate the correlation between two variables x and y, we need to know the mean of each as well as the:",
+```{r conceptual-quiz-1}
+quiz(
+       question("To estimate the correlation between two variables x and y, we need to know the mean of each as well as the:",
               answer("maximum"),
               answer("standard deviation", correct = TRUE),
               answer("length")),
      question("What type of relationships does correlation measure?",
               answer("linear relationships", correct = TRUE),
               answer("nonlinear relationships"),
-              answer("both"))
-     )
+              answer("both")),
+  question("What is the main reason researchers use samples instead of collecting data from an entire population?",
+    answer("It is easier to analyze smaller datasets"),
+    answer("Collecting data from every individual in a population is often too expensive or infeasible", correct = TRUE),
+    answer("Samples provide more accurate data than full population surveys"),
+    answer("It is the standard practice without any specific reason"),
+    incorrect = "The correct answer is that it is often too expensive or infeasible to collect data from the entire population.",
+    allow_retry = TRUE
+  ),
+
+  question("Why is it important for a sample to be representative of the population?",
+    answer("It increases the sample size"),
+    answer("It reduces the cost of data collection"),
+    answer("It ensures that inferences made about the population from the sample are accurate", correct = TRUE),
+    answer("It speeds up the data analysis process"),
+    incorrect = "A representative sample ensures that the inferences made about the population are accurate.",
+    allow_retry = TRUE
+  ),
+
+  question("Which of the following best describes random sampling?",
+    answer("Randomly assigning treatments to different groups"),
+    answer("Randomly selecting individuals from a population to ensure representativeness", correct = TRUE),
+    answer("Randomly shuffling data before analysis"),
+    answer("Randomly assigning variables to a dataset"),
+    incorrect = "Random sampling involves selecting individuals from a population at random.",
+    allow_retry = TRUE
+  ),
+
+  question("What is a histogram used for in data analysis?",
+    answer("To show the relationship between two variables"),
+    answer("To display the frequency distribution of a single variable", correct = TRUE),
+    answer("To compute the mean of a dataset"),
+    answer("To perform random sampling"),
+    incorrect = "A histogram displays the frequency distribution of a single variable.",
+    allow_retry = TRUE
+  ),
+
+  question("Which of the following statements is true?",
+    answer("Random treatment assignment ensures that the sample is representative of the population."),
+    answer("Random sampling ensures that the treatment and control groups are comparable."),
+    answer("Random treatment assignment is used to estimate causal effects, while random sampling is used to infer population characteristics.", correct = TRUE),
+    answer("Random treatment assignment and random sampling are the same concepts."),
+    incorrect = "The correct statement is that random treatment assignment is used to estimate causal effects, while random sampling is used to infer population characteristics.",
+    allow_retry = TRUE
+  ),
+
+  question("What should the sum of the proportions in a table of proportions equal to?",
+    answer("0"),
+    answer("0.5"),
+    answer("1", correct = TRUE),
+    answer("It depends on the data"),
+    incorrect = "The sum of the proportions in a table of proportions should equal 1.",
+    allow_retry = TRUE
+  ),
+
+  question("What does a larger standard deviation indicate about a dataset?",
+    answer("The data points are closely clustered around the mean"),
+    answer("The data points are spread out farther from the mean", correct = TRUE),
+    answer("The data has fewer outliers"),
+    answer("The data has a perfect normal distribution"),
+    incorrect = "A larger standard deviation indicates that the data points are spread out farther from the mean.",
+    allow_retry = TRUE
+  )
+
+)
 ```
-
-
 
 ## More visualization
 
@@ -382,38 +380,91 @@ We'll continue to analyze data from the STAR project, which is a four-year rando
 
 ### Boxplots
 
-Boxplots are useful tools to visualize how the distribution of a continuous variable changes across levels of a categorical variable. There are several ways to specify a boxplot, but one of the most useful is with what R calls a formula:
+Boxplots are useful tools to visualize how the distribution of a continuous variable changes across levels of a categorical variable.
 
-    boxplot(numvar ~ catvar, data = mydata)
+With ggplot2 we create a boxplot with `geom_boxplot()`. Importantly `geom_boxplot()` requires two aesthetics (`x` and `y`) where one must be a categorical variable and the other a continuous variable. 
 
-Here, the first argument are the two variables of interest separated by the tilde character `~`. On the left hand side is the numerical variable that you are investigating and on the right hand side is the categorical variable we want to subset by. The `data` argument tells the function where the function can find these variables (that is, in what data frame are these variables).
+Let's try this now:
+
+```{r boxplot-1, exercise = TRUE}
+ggplot(data = star, aes(x = classtype, y = g4math)) + geom_boxplot()
+```
+
+What's going on? Why is there only on `classtype` on the x-axis? The problem is that `classtype` is coded in the data frame as a numerical variable. You can check it with
+
+```{r boxplot-2, exercise = TRUE}
+class(star$classtype)
+```
+
+and
+
+```{r boxplot-3, exercise = TRUE}
+head(star$classtype)
+```
+
+But there is a solution. You can force R to consider your numerical variable as a character or better as a factor with `factor()`.
+
+Try this
+
+```{r boxplot-4, exercise = TRUE}
+factor(star$classtype)
+```
+
+`factors()` allows you to define the labels of your levels in this case (1, 2, and 3). Since we now that 1 = "Small class", 2 = "Regular class", 3 = "Regular class with aid", we can do
+
+Try this
+
+```{r boxplot-5, exercise = TRUE}
+factor(star$classtype, 
+          labels = c("Small class", "Regular class", "Regular class with aid"))
+```
 
 #### Exercises
 
-- Call the `boxplot` function using the `g4math` is the numerical variable and `classtype` is the categorical variable. Pass the `star` data frame to the `data` argument. Include an informative y-axis label with `ylab` argument. Finally, pass the `classnames` vector to the `names` argument to place labels on the boxplots.
+- Produce a boxplot with `geom_boxplot()` where on the x-axis you have the levels of `classtype` and on the y-axis you have the distribution of `g4math`.
+- Make sure you specify the labels of your levels.
+- Include some informative label for both the x-axis and y-axis: "Class type" and "Score".
 
-```{r boxplot, exercise = TRUE}
-## labels for the class type
-classnames <- c("Small class", "Regular class", "Regular class with aid")
+Note: when you add labels to your factor's levels make sure that they are in the right order!
 
-## create a box plot with the characteristics specified in the instructions
-
+```{r boxplot-6, exercise = TRUE}
+ggplot(data = star, aes(x = factor(..., labels = c(...)),  y = ...)) + 
+  geom_boxplot() +
+  labs(...)
 ```
 
 
-```{r boxplot-solution}
-classnames <- c("Small class", "Regular class", "Regular class with aid")
-boxplot(g4math ~ classtype, data = star, ylab = "Math scores", names = classnames)
+```{r boxplot-6-solution}
+ggplot(data = star, aes(x = factor(classtype, 
+                                      labels =  c("Small class", "Regular class", "Regular class with aid")),
+                        y = g4math)) + 
+  geom_boxplot() +
+  labs(x = "Class type", y = "Score")
+```
+
+```{r boxplot-6-check}
+grade_code()
+```
+
+#### Bonus on factor's labels
+
+Note that you can also obtain the same result by setting the label at in the `scale` layer in ggplot, like this
+
+```{r eval = F}
+# Don't run
+scale_x_discrete(labels = c(
+  "1" = "Small class", 
+  "2" = "Regular class", 
+  "3" = "Regular class with aid"))
 ```
 
 
 ### Scatter plots
 
-Now you'll think more about to measure bivariate relationships---that is, the relationship between two variables. The `plot(x,y)` function will take two vectors and plot a series of points on a two-dimensional grid where the x-coordinates come from the `x` vector and the y-coordinates come from the `y` vector. For instance, `plot(x = c(1,2), y = c(3,4))` will plot two points, one at (1,3) and the other at (2,4). You will use this plot to explore the relationship between math and reading test scores in the `star` data.
+Now you'll think more about to measure bivariate relationships---that is, the relationship between two variables. The `ggplot` function takes the `data` argument followed by `aes` to specify the variable-of-interests, more importantly, specify `geom_point` to create a scatter plot as such: `ggplot(data, aes(x = variable, y = variable)) + geom_point()`. You will use this plot to explore the relationship between math and reading test scores in the `star` data.
 
 #### Exercises
-- Create a scatter plot using the `plot` function with `g4math` on the x-axis and `g4reading` on the y-axis, both from the `star` data.
-- Remember you can access a particular variable in a data frame using the `$` symbol.
+- Create a scatter plot using the `ggplot` and `geom_point` function with `g4math` on the x-axis and `g4reading` on the y-axis, both from the `star` data.
 
 ```{r scatter, exercise = TRUE}
 ## produce a scatterplot of g4math on the x-axis and g4reading on the y-axis
@@ -422,94 +473,111 @@ Now you'll think more about to measure bivariate relationships---that is, the re
 
 ```{r scatter-solution}
 ## produce a scatterplot of g4math on the x-axis and g4reading on the y-axis
-plot(x = star$g4math, y = star$g4reading)
+ggplot(star, aes(x = g4math, y = g4reading)) +
+  geom_point()
 ```
 
 ```{r scatter-check}
-grade_code("Ok, great plot. Let's make a bit more polished.")
+grade_code("OK, great plot! Let's make it a bit more polished.")
 ```
 
 
 ### Plotting two sets of points
 
-Often we want to plot certain pints differently than others. For instance, maybe you want to see how the relationship between math and reading scores differs between students in small classes versus those not in small classes. To do this, we can use subsets and the `points` function.
-
-After using the `plot` function, you can add more points to the current plot by using the `points(x,y)` function, where the points are plotted very similarly to `plot`.
+Often we want to plot certain points differently than others. For instance, maybe you want to see how the relationship between math and reading scores differs between students in small classes versus those not in small classes. 
 
 #### Exercises
 
-- Create a subset of the `star` data called `small.class` which is when `classtype` is equal to 1. Create a second subset called `reg.class` which is when `classtype` is not equal to 1.
-- Use the `plot` function to create a scatter plot of `g4math` and `g4reading` from the `small.class`. Change the color of the points by including the `col = "indianred"` argument.
-- Use the `points` function to add the points of `g4math` and `g4reading` from the `reg.class`. Change the color of the points by including the `col = "dodgerblue"` argument.
-- Remember that you can use `x == y` to test if `x` is equal to `y` and `x != y` to test if `x` is not equal to `y`
+- With `geom_point()`, plot the relationship between `g4math` (on the x-axis) and `g4reading` on the y-axis.
+- This time, differentiate data points on the variable `classtype` by specifying `colour` in the `aes()` nested in `geom_point` (Note you might want to consider `classtype` as a factor variable). 
+
 
 ```{r plot-points, exercise = TRUE}
-## create a subset for small classes called small.class (classtype is 1)
-
-## create a subset for regular classes called reg.class (classtype is not 1)
-
-
-## use the plot command for the small.class and use one color
-
-
-## use the points command for the reg.class and use another color
 
 ```
 
 
 ```{r plot-points-solution}
-## create a subset for small classes (classtype is 1)
-small.class <- subset(star, classtype == 1)
-
-## create a subset for regular classes (classtype is not 1)
-reg.class <- subset(star, classtype != 1)
-
-## use the plot command for the small.class and use one color
-plot(small.class$g4math, small.class$g4reading, col = "indianred")
-
-## use the points command for the reg.class and use another color
-points(reg.class$g4math, reg.class$g4reading, col = "dodgerblue")
+ggplot(star, aes(x = g4math, y = g4reading, colour = factor(classtype))) + 
+  geom_point() 
+  
 ```
 
 ```{r plot-points-check}
-grade_result_strict(
-  pass_if(~ identical(small.class, subset(star, classtype == 1))),
-  pass_if(~ identical(reg.class, subset(star, classtype != 1)))
-)
+grade_this_code()
 ```
 
 ### Finalizing your scatter plot
 
-The scatter plot is looking very good, but it could use a little bit of polish. Let's add axis labels and a title. Remember that you can add these to the plot via the `xlab`, `ylab`, and `main`. Also, it's important to note that you can only add these to the initial `plot` function; adding them to the `points` or `text` or `abline` functions won't have any effect.
+The scatter plot is looking very good, but it could use a little bit of polish. Let's add axis labels and a title. 
 
 #### Exercises
-- Take the current plot and add the following arguments: `xlab`, `ylab`, and `main`. Make them informative.
+
+- To do so, take the current plot and pass it to the `labs` function to make the graph more informative.
 
 ```{r niceplot, exercise = TRUE}
-small.class <- subset(star, classtype == 1)
 
-## create a subset for regular classes (classtype is not 1)
-reg.class <- subset(star, classtype != 1)
-
-## add the arguments to make the plot more readable
-plot(small.class$g4math, small.class$g4reading, col = "indianred")
-points(reg.class$g4math, reg.class$g4reading, col = "dodgerblue")
 ```
-
 
 ```{r niceplot-solution}
-small.class <- subset(star, classtype == 1)
-
-## create a subset for regular classes (classtype is not 1)
-reg.class <- subset(star, classtype != 1)
-
-## add the arguments to make the plot more readable
-plot(small.class$g4math, small.class$g4reading, col = "indianred",
-     xlab = "Fourth Grad Math Scores",
-     ylab = "Fourth Grade Reading Score",
-     main = "Math vs Reading")
-points(reg.class$g4math, reg.class$g4reading, col = "dodgerblue")
+ggplot(data = star, aes(x = g4math, y = g4reading)) +
+  geom_point(aes(color = classtype)) +
+  labs(x = "Fourth Grade Math Scores", 
+       y = "Fourth Grade Reading Score", 
+       title = "Math vs Reading")
 ```
+
+
+## Correlation
+
+- How would you calculatge correlation between `g4math` and `g4reading` from the `star` data frame?
+
+Note: You must use the the attribute `use = "complete.obs"` as you have missing values in your variables.
+
+```{r cor-1, exercise = TRUE}
+...(... ,...,  use = "complete.obs")
+```
+
+```{r cor-1-solution}
+cor(star$g4math, star$g4reading, use = "complete.obs")
+```
+
+```{r cor-1-check}
+grade_code()
+```
+
+## Conceptual questions Part 2
+
+```{r conceptual-quiz-2}
+quiz(
+  question("What does a correlation coefficient of -0.8 indicate?",
+    answer("A strong negative linear relationship between two variables", correct = TRUE),
+    answer("A strong positive linear relationship between two variables"),
+    answer("No linear relationship between two variables"),
+    answer("A weak negative linear relationship between two variables"),
+    incorrect = "A correlation coefficient of -0.8 indicates a strong negative linear relationship.",
+    allow_retry = TRUE
+  ),
+    question("Which of the following best describes the purpose of a scatter plot?",
+    answer("To show the distribution of a single variable"),
+    answer("To compare the mean and median of a dataset"),
+    answer("To visualize the relationship between two variables", correct = TRUE),
+    answer("To calculate the correlation coefficient"),
+    incorrect = "A scatter plot is used to visualize the relationship between two variables.",
+    allow_retry = TRUE
+  ),
+    question("In a skewed distribution, which measure of central tendency is more resistant to outliers?",
+    answer("Mean"),
+    answer("Median", correct = TRUE),
+    answer("Standard deviation"),
+    answer("Variance"),
+    incorrect = "The median is more resistant to outliers in a skewed distribution.",
+    allow_retry = TRUE
+  )
+)
+```
+
+
 
 
 ## Submit Report
