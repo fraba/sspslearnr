@@ -12,15 +12,15 @@ description: "This tutorial will cover basics of data manipulation with dplyr"
 ---
 
 ```{r setup, include=FALSE}
-library(gradethis)
 library(learnr)
+library(tidyverse)
 library(sspslearnr)
-library(ggplot2)
 library(nycflights13)
+library(gradethis)
 
 tutorial_options(exercise.checker = gradethis::grade_learnr, 
                  exercise.reveal_solution="TRUE")
-knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(echo = TRUE)
 num_tutorial <- 0
 num_excercise <- 0
 tut_reptitle <- "SSPS [4102|6006] Week 05: In-class Individual Tutorial"
@@ -38,9 +38,18 @@ To practice these skills, we will use the `flights` data set from the nycflights
 
 We will also use the ggplot2 package to visualize the data.
 
+I have preloaded the required packages for your with
+
+```{r eval = FALSE}
+library(tidyverse) # loads dplyr, ggplot2, and others
+library(nycflights13)
+```
+
 If you are ready to begin, click on!
 
 ## Filter rows with `filter()`
+
+Note: In the code below, all the dplyr verbs are introduced with an explicit reference to the name of the package: `dplyr::verb()` (e.g., `dplyr::filter()`). This is recommended as there are other packages with functions of the same name (e.g., `stats::filter()`).
 
 ### filter()
 
@@ -48,8 +57,8 @@ If you are ready to begin, click on!
 
 So for example, we can use `filter()` to select every flight in flights that departed on January 1st. Click Run Code to give it a try:
 
-```{r filter1, exercise = TRUE, exercise.eval = FALSE}
-filter(flights, month == 1, day == 1)
+```{r filter1, exercise = TRUE}
+dplyr::filter(flights, month == 1, day == 1)
 ```
 
 
@@ -61,12 +70,16 @@ If you want to save the output of `filter()`, you'll need to use the assignment 
 
 Rerun the command in the code chunk below, but first arrange to save the output to an object named `jan1`.
 
-```{r filter2, exercise = TRUE, exercise.eval = FALSE}
-filter(flights, month == 1, day == 1)
+```{r filter2, exercise = TRUE}
+dplyr::filter(flights, month == 1, day == 1)
 ```
 
 ```{r filter2-solution}
-jan1 <- filter(flights, month == 1, day == 1)
+jan1 <- dplyr::filter(flights, month == 1, day == 1)
+```
+
+```{r filter2-check}
+grade_code()
 ```
 
 ###
@@ -81,9 +94,11 @@ Did you notice that this code used the double equal operator, `==`? `==` is one 
 
 R provides a suite of comparison operators that you can use to compare values: `>`, `>=`, `<`, `<=`, `!=` (not equal), and `==` (equal). Each creates a logical test. For example, is `pi` greater than three?
 
-```{r}
+```{r pitrue, exercise = TRUE}
 pi > 3
 ```
+
+Note: `pi` (3.141593...) is a constant variable built in in R.
 
 ###
 
@@ -95,8 +110,8 @@ Our code above returned every row whose month value was equal to one _and_ whose
 
 When you start out with R, the easiest mistake to make is to test for equality with `=` instead of `==`. When this happens you'll get an informative error:
 
-```{r, error = TRUE}
-filter(flights, month = 1)
+```{r filter-error, exercise = TRUE}
+dplyr::filter(flights, month = 1)
 ```
 
 ### Multiple tests
@@ -114,7 +129,7 @@ Both `|` and `xor()` will return TRUE if one or the other logical comparison ret
 Study the diagram below to get a feel for how these operators work.
 
 ```{r fig1, echo = FALSE, out.width = "100%", fig.cap = "In the figure above, `x` is the left-hand circle, `y` is the right-hand circle, and the shaded region show which parts each command selects."}
-knitr::include_graphics("images/transform-logical.png")
+knitr::include_graphics("img/transform-logical.png")
 ```
 
 ### Test Your Knowledge
@@ -139,26 +154,22 @@ Here are four more tips to help you use logical tests and Boolean operators in R
 
 1. A useful short-hand for this problem is `x %in% y`. This will select every row where `x` is one of the values in `y`. We could use it to rewrite the code in the question above:
 
-    ```{r, eval = FALSE}
-    nov_dec <- filter(flights, month %in% c(11, 12))
-    ```
+```{r, eval = FALSE, echo = TRUE}
+nov_dec <- dplyr::filter(flights, month %in% c(11, 12))
+```
 
 ###
 
 2. Sometimes you can simplify complicated subsetting by remembering De Morgan's law: `!(x & y)` is the same as `!x | !y`, and `!(x | y)` is the same as `!x & !y`. For example, if you wanted to find flights that weren't delayed (on arrival or departure) by more than two hours, you could use either of the following two filters:
 
     ```{r, eval = FALSE}
-    filter(flights, !(arr_delay > 120 | dep_delay > 120))
-    filter(flights, arr_delay <= 120, dep_delay <= 120)
+    dplyr::filter(flights, !(arr_delay > 120 | dep_delay > 120))
+    dplyr::filter(flights, arr_delay <= 120, dep_delay <= 120)
     ```
 
 ###
 
-3. As well as `&` and `|`, R also has `&&` and `||`. Don't use them with `filter()`! You'll learn when you should use them later.
-
-###
-
-4. Whenever you start using complicated, multipart expressions in `filter()`, consider making them explicit variables instead. That makes it much easier to check your work. You'll learn how to create new variables shortly.
+3. Whenever you start using complicated, multipart expressions in `filter()`, consider making them explicit variables instead. That makes it much easier to check your work. You'll learn how to create new variables shortly.
 
 ## Missing values
 
@@ -174,21 +185,21 @@ NA / 2
 NA == NA
 ```
 
-```{r nas-check}
+###
+
 "In every case, R does not have enough information to compute a result. Hence, each result is an unknown value, `NA`."
-```
 
 ### is.na()
 
 The most confusing result above is this one:
 
-```{r}
+```{r echo = TRUE}
 NA == NA
 ```
 
 It's easiest to understand why this is true with a bit more context:
 
-```{r}
+```{r echo = TRUE}
 # Let x be Mary's age. We don't know how old she is.
 x <- NA
 
@@ -211,33 +222,51 @@ is.na(x)
 `filter()` only includes rows where the condition is `TRUE`; it excludes both `FALSE` and `NA` values. If you want to preserve missing values, ask for them explicitly:
 
 ```{r}
-df <- tibble(x = c(1, NA, 3))
-filter(df, x > 1)
-filter(df, is.na(x) | x > 1)
+df <- data.frame(x = c(1, NA, 3))
+dplyr::filter(df, x > 1)
+dplyr::filter(df, is.na(x) | x > 1)
 ```
+
+Remember that `|` means OR so `is.na(x) | x > 1` means values that are either `NA` OR larger than 1. 
 
 ## Exercises
 
 ### Exercise 1
 
-Use the code chunks below to find all flights that
+With `filter(flights, ...)`, use the code chunks below to find all flights that
 
-1. Had an arrival delay of two or more hours
+1. Had an arrival delay (`arr_delay`) of two or more hours
 
     ```{r filterex1, exercise = TRUE}
-
-    ```
-    ```{r filterex1-solution}
-    filter(flights, arr_delay >= 120) # arr_delay is in minutes
+    
     ```
 
-1. Flew to Houston (`IAH` or `HOU`)
+    ```{r filterex1-check}
+grade_this({
+  if (isTRUE(dplyr::all_equal(.result, dplyr::filter(flights, arr_delay >= 120)))) {
+    pass("Great work!")
+  } 
+  fail("Try again!")
+})
+    ```
+
+1. Flew to Houston (`IAH` or `HOU` (as specified in columns `dest`))
 
     ```{r filterex2, exercise = TRUE}
 
     ```
     ```{r filterex2-solution}
-    filter(flights, dest %in% c("IAH", "HOU"))
+    dplyr::filter(flights, dest %in% c("IAH", "HOU"))
+    ```
+    ```{r filterex2-check}
+grade_this({
+  if (isTRUE(dplyr::all_equal(.result, 
+                              dplyr::filter(flights, dest %in% c("IAH", "HOU"))
+                              ))) {
+    pass("Great work!")
+  } 
+  fail("Try again!")
+})
     ```
 
     <div id="filterex2-hint">
@@ -250,8 +279,19 @@ Use the code chunks below to find all flights that
 
     ```
     ```{r filterex3-solution}
-    filter(flights, carrier %in% c("UA", "AA", "DL"))
+    dplyr::filter(flights, carrier %in% c("UA", "AA", "DL"))
     ```
+    ```{r filterex3-check}
+grade_this({
+  if (isTRUE(dplyr::all_equal(.result, 
+                              dplyr::filter(flights, carrier %in% c("UA", "AA", "DL"))
+                              ))) {
+    pass("Great work!")
+  } 
+  fail("Try again!")
+})
+    ```
+    
 
     <div id="filterex3-hint">
     **Hint:** The `carrier` variable lists the airline that operated each flight. This is another good case for the `%in%` operator.
@@ -263,69 +303,56 @@ Use the code chunks below to find all flights that
 
     ```
     ```{r filterex4-solution}
-    filter(flights, 6 < month, month < 10)
+    dplyr::filter(flights, 6 < month, month < 10)
+    ```
+    ```{r filterex4-check}
+grade_this({
+  if (isTRUE(dplyr::all_equal(.result, 
+                              dplyr::filter(flights, 6 < month, month < 10)
+                              ))) {
+    pass("Great work!")
+  } 
+  fail("Try again!")
+})
     ```
 
     <div id="filterex4-hint">
     **Hint:** When converted to numbers, July, August, and September become 7, 8, and 9.
     </div>
 
-1. Arrived more than two hours late, but didn't leave late
+1. Arrived more than two hours late (`arr_delay`), but didn't leave late (`dep_delay`)
 
     ```{r filterex5, exercise = TRUE}
 
     ```
     ```{r filterex5-solution}
-    filter(flights, arr_delay > 120, dep_delay <= 0)
+    dplyr::filter(flights, arr_delay > 120, dep_delay <= 0)
+    ```
+    ```{r filterex5-check}
+grade_this({
+  if (isTRUE(dplyr::all_equal(.result, 
+                              dplyr::filter(flights, arr_delay > 120, dep_delay <= 0)
+                              ))) {
+    pass("Great work!")
+  } 
+  fail("Try again!")
+})
     ```
 
     <div id="filterex5-hint">
     **Hint:** Remember that departure and arrival delays are recorded in     _minutes_.
     </div>
 
-1. Were delayed more than an hour, but made up more than 30 minutes in flight
-
-    ```{r filterex6, exercise = TRUE}
-
-    ```
-    ```{r filterex6-solution}
-    filter(flights, dep_delay > 60, (dep_delay - arr_delay) > 30)
-    ```
-
-    <div id="filterex6-hint">
-    **Hint:** The time a plane makes up is `dep_delay - arr_delay`.
-    </div>
-
-1. Departed between midnight and 6am (inclusive)
-
-    ```{r filterex7, exercise = TRUE}
-
-    ```
-    ```{r filterex7-solution}
-    filter(flights, dep_time <= 600 | dep_time == 2400)
-    ```
-
-    <div id="filterex7-hint">
-    **Hint:** Don't forget flights that left at exactly midnight (`2400`). This is a good case for an "or" operator.
-    </div>
-
 ### Exercise 2
-
-Another useful dplyr filtering helper is `between()`. What does it do? Can you use `between()` to simplify the code needed to answer the previous challenges?
-
-```{r filterex8, exercise = TRUE}
-?between
-```
-
-### Exercise 3
 
 How many flights have a missing `dep_time`? What other variables are missing? What might these rows represent?
 
 ```{r filterex9, exercise = TRUE}
 
 ```
+
 ```{r filterex9-solution}
-filter(flights, is.na(dep_time))
+dplyr::filter(flights, is.na(dep_time))
 ```
 
 <div id="filterex9-hint">
@@ -333,42 +360,298 @@ filter(flights, is.na(dep_time))
 </div>
 
 ```{r filterex9-check}
-"Flights with a missing departure time are probably cancelled flights."
+grade_this({
+  if (isTRUE(dplyr::all_equal(.result, 
+                              dplyr::filter(flights, is.na(dep_time))
+                              ))) {
+    pass("Great work! These are probably cancelled flights!")
+  } 
+  fail("Try again!")
+})
 ```
 
-### Exercise 4
+## Mutate
 
-Why is `NA ^ 0` not missing? Why is `NA | TRUE` not missing?
-Why is `FALSE & NA` not missing? Can you figure out the general
-rule?  (`NA * 0` is a tricky counterexample!)
+Now you will learn how to derive new variables from a data frame, including:
 
-```{r filterex10, exercise = TRUE}
+* How to create new variables with `mutate()`
+* How to recognize the most useful families of functions to use with `mutate()`
+
+## Add new variables with mutate()
+
+A data set often contains information that you can use to compute new variables. `mutate()` helps you compute those variables. Since `mutate()` always adds new columns to the end of a dataset, we'll start by creating a narrow dataset which will let us see the new variables (If we added new variables to `flights`, the new columns would run off the side of your screen, which would make them hard to see).
+
+You can use any function inside of `mutate()` so long as the function is **vectorised**. A vectorised function takes a vector of values as input and returns a vector with the same number of values as output.
+
+Over time, I've found that several families of vectorised functions are particularly useful with `mutate()` including:
+
+*   **Arithmetic operators**: `+`, `-`, `*`, `/`, `^`. These are all vectorised, using the so called "recycling rules". If one parameter is shorter than the other, it will automatically be repeated multiple times to create a vector of the same length. This is most useful when one of the arguments is a single number: `air_time / 60`, `hours * 60 + minute`, etc.
+
+*   **Logical comparisons**, `<`, `<=`, `>`, `>=`, `!=`, which you learned about earlier. If you're doing a complex sequence of logical operations it's often a good idea to store the interim values in new variables so you can check that each step is working as expected.
+
+### mutate()
+
+`mutate()` returns a new data frame that contains the new variables appended to a copy of the original data set. 
+
+With `mutate(flights, ...)` create two new variables:
+
+- `gain`, created by subtracting `dep_delay` from `arr_delay`.
+- `speed`, created by dividing `distance` by `air_time` and then by multiplying by 60 (the number of seconds in a minute).
+
+```{r mutate1, exercise = TRUE}
 
 ```
-```{r filterex10-hint-1}
-# any number with a zero exponent is equal to one
-NA ^ 0
+
+```{r mutate1-solution}
+mutate(flights,
+  gain = arr_delay - dep_delay,
+  speed = distance / air_time * 60
+)
 ```
 
-```{r filterex10-hint-2}
-# unknown value or true evaluates to true
-# (because if one operand of "or" is true, we can be sure the result is true)
-NA | TRUE
+```{r mutate1-check}
+grade_this({
+  if (isTRUE(dplyr::all_equal(.result, 
+                              mutate(flights,
+                                     gain = arr_delay - dep_delay,
+                                     speed = distance / air_time * 60
+                              )
+  ))) {
+    pass("Great work! These are probably cancelled flights!")
+  } 
+  fail("Try again!")
+})
 ```
 
-```{r filterex10-hint-3}
-# false and unknown value evaluates to false
-# (because if one operand of "and" is true, we can be sure the result is false)
-FALSE & NA
+## ifelse() and case_when()
+
+You can combine `ifelse()` and `case_when()` to recode existing variables with `mutate()`. 
+
+`ifelse()` works on a single logical test, to which it returns either one value if the test is `TRUE` or another value if the test is `FALSE`. Let's say you have a variable `x` with negative or positive numbers and you want to recode it so that it takes the value "negative" or "positive" instead of the number. You can do this (try it out).
+
+```{r ifelse-1, exercise = TRUE}
+x <- c(-1, -5, 0, 1, 1, 4)
+ifelse(x > 0, "positive", "zero or negative")
 ```
 
-```{r filterex10-hint-4}
-# this is not a logical comparison, it's a numerical calculation involving an
-# unknown value, thus resulting in an unknown value
-NA * 0
+But then you realise you want a different value for 0 ("negative", "zero", "positive"). In this case you should use a different function, as you are creating more than two values in your new, recoded variable. You can use `case_when()` from dplyr. Note that for each new value you want to create you will need a logical test on some existing variable followed by `~` followed by some value to be assigned if the test is `TRUE`. Let's try this:  
+
+```{r case_when-1, exercise = TRUE}
+x <- c(-1, -5, 0, 1, 1, 4)
+case_when(x < 0 ~ "negative", 
+          x == 0 ~ "zero",
+          x > 0 ~ "positive")
 ```
 
-## Columns
+Now try this, let's assume you have a data frame named `people` with the age of few individuals.
+
+```{r}
+people <- data.frame(
+  Name = c("Alice", "Bob", "Charlie", "David", "Eve"),
+  Age = c(10, 15, 25, 70, 45)
+)
+```
+
+```{r case_when-2-setup}
+people <- data.frame(
+  Name = c("Alice", "Bob", "Charlie", "David", "Eve"),
+  Age = c(10, 15, 25, 70, 45)
+)
+```
+
+Now you want to create a new variable `age_group` which takes the value `Child` if the person is 12 or less, `Teenager` if is older than 12 and younger than 20, `Adult` if is older than 19 and younger than 64 and `Senior` if is 65+. How would you do it? Hint: you can `&` allows you to combine two logical tests and define that both have to be `TRUE`.
+
+```{r case_when-2, exercise=TRUE}
+
+```
+
+```{r case_when-2-check}
+grade_this({
+  if (identical(.result, 
+                people |>
+    mutate(age_group = case_when(
+    Age >= 0 & Age <= 12 ~ "Child",
+    Age >= 13 & Age <= 19 ~ "Teenager",
+    Age >= 20 & Age <= 64 ~ "Adult",
+    Age >= 65 ~ "Senior"
+  )))) {
+    pass("Great work!")
+  } 
+  fail("Try again!")
+})
+```
+
+### select()
+
+You can select a subset of variables by name with the `select()` function in dplyr. Run the code below to see the narrow data set that `select()` creates.
+
+```{r select, exercise = TRUE, exercise.eval = FALSE}
+flights_sml <- select(flights,
+  arr_delay,
+  dep_delay,
+  distance,
+  air_time
+)
+```
+
+
+## Summarise
+
+You will learn how to summarise a table of data, including:
+
+* How to summarise tables with `summarise()`
+* How to recognize the most useful families of functions to combine with `summarise()`
+* How to combine multiple dplyr operations with the pipe, `|>`
+* How to compute counts of observations with `n()`
+* How to summarise groups of observations with `group_by()` and `summarise()`
+
+## Summarise groups with summarise()
+
+### summarise()
+
+`summarise()` collapses a data frame to a single row of summaries. You get to choose how many summaries appear in the row and how they are computed:
+
+```{r summarize}
+summarise(flights, delay = mean(dep_delay, na.rm = TRUE),
+                  total =  sum(dep_delay, na.rm = TRUE))
+```
+
+(We'll come back to what that `na.rm = TRUE` means very shortly.)
+
+Notice that the syntax of `summarise()` is similar to `mutate()`. As with `mutate()`, you give summarise:
+
+1. The name of a data frame to transform
+2. One or more column names to appear in the transformed output. Each column name is set equal to the R expression that will generate the content of the column.
+
+The main difference between `summarise()` and `mutate()` is the type of function that you use to generate the new columns. `mutate()` takes functions that return an entire vector of output (to append to the original data frame). `summarise()` takes functions that return a single value (or summary). These values will appear in a new data frame that has only one row.
+
+### group_by()
+
+`summarise()` is not terribly useful unless you pair it with `group_by()`. `group_by()` changes the unit of analysis of the data frame: it assigns observations in the data frame to separate groups, and it instructs dplyr to apply functions separately to each group. `group_by()` assigns groups by grouping together observations that have the same combinations of values for the variables that you pass to `group_by()`.
+
+For example, the `summarise()` code above computes the average delay for the entire data set. If we apply exactly the same code to a data set that has been grouped by date (i.e. the unique combinations of `year`, `month`, and `day`), we get the average delay per date. Click "Run Code" to see what I mean:
+
+```{r summarise, exercise = TRUE, exercise.eval = FALSE}
+by_day <- group_by(flights, year, month, day)
+summarise(by_day, delay = mean(dep_delay, na.rm = TRUE),
+                  total = sum(dep_delay, na.rm = TRUE))
+```
+
+```{r summarise-check}
+"Good job!"
+```
+
+
+### Exercise 1
+
+Calculate the average `dep_delay` of each `carrier` and store the result in a variable called `avg_delay` (remove the missing values with `na.rm = TRUE` when calculating the average).
+
+```{r summariseex4, exercise = TRUE}
+
+```
+
+```{r summariseex4-solution, exercise = TRUE}
+flights |>
+  group_by(carrier) |>
+  summarise(avg_delay = mean(dep_delay, na.rm = T))
+```
+
+```{r summariseex4-check}
+grade_this({
+  if (isTRUE(dplyr::all_equal(.result, 
+                              flights |>
+                              group_by(carrier) |>
+                              summarise(avg_delay = mean(dep_delay, na.rm = T))
+  ))) {
+    pass("Great work! These are probably cancelled flights!")
+  } 
+  fail("Try again!")
+})
+```
+
+### Exercise 2
+
+Assuming each row in the data frame represents a flight, count the number of flights for each plane (`tailnum`). Remember that you can count the rows for each group using `count()` after `group_by()`.
+
+```{r summariseex5, exercise = TRUE}
+
+```
+
+```{r summariseex5-solution}
+flights |>
+  group_by(tailnum) |>
+  count()
+```
+
+## Combining multiple operations
+
+### Multiple steps
+
+Imagine that we want to explore the relationship between the distance and average delay for each destination in `flights`. Using what you know about dplyr, you might write code like this:
+
+```{r, fig.width = 6, message = FALSE}
+by_dest <- group_by(flights, dest)
+delay <- summarise(by_dest,
+  count = n(), # the function n() return the number of rows for each group
+  dist = mean(distance, na.rm = TRUE),
+  delay = mean(arr_delay, na.rm = TRUE)
+)
+delay <- filter(delay, count > 20, dest != "HNL")
+
+ggplot(data = delay, mapping = aes(x = dist, y = delay)) +
+  geom_point(aes(size = count), alpha = 1/3) +
+  geom_smooth(se = FALSE)
+```
+
+The code works, and we find an interesting effect: It looks like delays increase with distance up to ~750 miles and then decrease. Maybe as flights get longer there's more ability to make up delays in the air?
+
+Now let's look at how we prepared the data. There are three steps:
+
+1.  Group flights by destination.
+
+1.  Summarise to compute distance, average delay, and number of flights.
+
+1.  Filter to remove noisy points and Honolulu airport, which is almost twice as far away as the next closest airport.
+
+This code is a little frustrating to write because we have to give each intermediate data frame a name, even though we don't care about it. Naming things is hard, so this slows down our analysis.
+
+### Pipes
+
+There's another way to tackle the same problem. We can turn the code into a pipe with the pipe operator, `|>`:
+
+```{r}
+delays <- flights |>
+  group_by(dest) |>
+  summarise(
+    count = n(),
+    dist = mean(distance, na.rm = TRUE),
+    delay = mean(arr_delay, na.rm = TRUE)
+  ) |>
+  filter(count > 20, dest != "HNL")
+```
+
+Behind the scenes, `x |>f(y)` turns into `f(x, y)`, and `x |> f(y) |> g(z)` turns into `g(f(x, y), z)` and so on. You can use the pipe to rewrite multiple operations in a way that you can read left-to-right, top-to-bottom.
+
+This focuses on the transformations, not what's being transformed, which makes the code easier to read. You can read it as a series of imperative statements: group, then summarise, then filter. As suggested by this reading, a good way to pronounce `|>` when reading code is "then".
+
+### Missing values
+
+You may have wondered about the `na.rm` argument we used in a previous section. What happens if we don't set it?
+
+```{r}
+flights |>
+  group_by(year, month, day) |>
+  summarise(mean = mean(dep_delay))
+```
+
+We get a lot of missing values! That's because aggregation functions obey the usual rule of missing values: if there's any missing value in the input, the output will be a missing value. Fortunately, all aggregation functions have an `na.rm` argument which removes the missing values prior to computation:
+
+```{r}
+flights |>
+  group_by(year, month, day) |>
+  summarise(mean = mean(dep_delay, na.rm = TRUE))
+```
+
 
 ## Submit Report
 
