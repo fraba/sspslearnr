@@ -29,7 +29,8 @@ Imports:
   gradethis (>= 0.1.0.9004),
   rlang,
   base64enc,
-  qss
+  qss,
+  nycflights13
 License: GPL-3
 URL: https://github.com/fraba/sspslearnr
 BugReports: https://github.com/fraba/sspslearnr/issues
