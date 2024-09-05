@@ -1,0 +1,273 @@
+---
+title: "SSPS [4102|6006] Week 06: Prediction"
+tutorial:
+  id: "week-06"
+output:
+  learnr::tutorial:
+    progressive: true
+    ace_theme: github
+    theme: united
+runtime: shiny_prerendered
+description: "This tutorial will cover basics of regression analysis with two variables."
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(tidyverse)
+library(sspslearnr)
+library(nycflights13)
+library(gradethis)
+
+tutorial_options(exercise.checker = gradethis::grade_learnr, 
+                 exercise.reveal_solution="TRUE")
+knitr::opts_chunk$set(echo = TRUE)
+num_tutorial <- 0
+num_excercise <- 0
+tut_reptitle <- "SSPS [4102|6006] Week 06: In-class Individual Tutorial"
+
+# Data
+set.seed(12345)
+n <- 10
+x <- sample(100)
+y <- x + rnorm(100, mean = 0, sd = 0.5)
+```
+
+
+## Conceptual questions
+
+```{r lm-multi, echo = FALSE}
+quiz(
+  caption = "",
+  question(
+    "We use the regression line to predict the value of the outcome variable y hat, otherwise known as:",
+    answer("predicted value"),
+    answer("fitted value"),
+    answer("both of these", correct = TRUE)),
+  question(
+    "The differences between the observed outcome and its predicted value is called a:",
+    answer("residual"),
+    answer("prediction error"),
+    answer("either of these", correct = TRUE)),
+  question(
+    "An R^2 close to 1 suggests the model fits:",
+    answer("well", correct = TRUE),
+    answer("not well")),
+  question(
+    "With a single binary independent variable, what is the interpretation of the slope coefficient in a linear regression model?",
+    answer("Average outcome in the `X = 1` group"),
+    answer("Average outcome in the `X = 0` group"),
+    answer("Differences in means between the `X=1` and `X=0` groups", correct = TRUE))
+)
+```
+
+## Interpreting intercepts
+
+In the following box, type answer to the following question: The intercept in the model $Y_i = \alpha + \beta X_i + \epsilon_i$ represents the average value of $Y_i$ when $X_i$ is equal to what?
+
+```{r intercept, echo = FALSE}
+question_text(
+  "The intercept is the average of Y when X is equal to:",
+  answer("0", correct = TRUE)
+)
+```
+
+
+
+
+## Running regressions in R
+
+We have included two vectors `x` and `y`. Regress `y` on `x` and assign it to an object called `fit` and print that object to see what the output looks like.
+
+```{r lm, exercise = TRUE}
+
+```
+
+```{r lm-solution}
+fit <- lm(y ~ x)
+fit
+```
+
+```{r lm-check}
+grade_result(
+  pass_if(~ identical(coef(.result), coef(lm(y~x))))
+)
+```
+
+<div id="lm-hint">
+**Hint:** To print an object just add its name to your code.
+</div>
+
+## Accessing output from lm
+
+Now, use the `coef()` function to access the two coefficients in the `fit` object.
+
+```{r coef, exercise = TRUE}
+fit <- lm(y ~ x)
+
+```
+
+```{r coef-check}
+grade_result(
+  pass_if(~ identical(.result, coef(fit)), "Good job!")
+)
+```
+
+
+Now you can also access the fitted values using the `fitted()` function. Print the fitted values here:
+
+```{r fitted, exercise = TRUE}
+fit <- lm(y ~ x)
+
+```
+
+```{r fitted-check}
+grade_result(
+  pass_if(~ identical(.result, fitted(fit)) | identical(.result, predict(fit)),
+          "Good job!")
+)
+```
+
+Do you understand what the values from `predict()` represent? 
+
+```{r lm-quiz, echo = FALSE}
+quiz(
+  question(
+    "What does values does `predict(fit)` return?",
+    answer("The residuals from the linear model, which represent the difference between the observed and predicted y values."),
+    answer("The estimated coefficients (slope and intercept) from the linear model."),
+    answer("The predicted `y` values for the `x` values used in the model.", correct = TRUE),
+    answer("A list of statistical metrics such as R-squared, p-values, and standard errors.")
+  )
+)
+```
+
+
+## Model fit
+
+Use the `summary()` function to access the value of $R^2$, which is named `Multiple R-squared` in summary output, and replace with its values the `#` in the code.
+
+```{r rsq, exercise = TRUE}
+fit <- lm(y ~ x)
+summary(fit)
+#
+```
+
+
+```{r rsq-check}
+grade_result(
+  pass_if(~ identical(.result, 0.9997), "Good job!")
+)
+```
+
+###
+
+Yes, if you have two variables you can also calculate your $R^2$ with `cor(y, x)^2` and you will get the exact same result.
+
+```{r cor-1, exercise = TRUE}
+cor(y, x)^2
+```
+
+## Using `lm()`
+
+Now, consider the `mtcars` dataset.
+
+```{r mtcars-1, exercise = TRUE}
+head(mtcars)
+```
+
+Using the `mtcars` data and replacing `...`, fit a linear model with `lm()` where where `mpg` is the dependent variable, and `hp` is the independent variable.
+
+```{r mtcars-2, exercise = TRUE}
+fit <- ...
+fit
+```
+
+```{r mtcars-2-solution}
+fit <- lm(mpg~hp, data = mtcars)
+fit
+```
+
+```{r mtcars-2-check}
+grade_result(
+  pass_if(~ identical(coef(.result), coef(lm(mpg~hp, data = mtcars))), "Good job!")
+)
+```
+
+Using `mtcars`, model the relation between `wt` (the weight of the car in 1000 lbs) as your independent variable and `mpg` (miles per gallon) as dependent variable.
+
+```{r mtcars-3, exercise = TRUE}
+fit <- ...
+fit
+```
+
+```{r mtcars-3-solution}
+fit <- lm(mpg~wt, data = mtcars)
+fit
+```
+
+```{r mtcars-3-check}
+grade_result(
+  pass_if(~ identical(coef(.result), coef(lm(mpg~wt, data = mtcars))), "Great")
+)
+```
+
+Based on linear model you just estimated with `lm()`, use `predict()` to find the predicted value or outcome ($\hat{Y}$) for the "Ferrari Dino". Enter the value below replacing `#____`). ("Run" `lm()` and `predict()` in the first block to find the value.)
+
+```{r mtcars-4-0, exercise = TRUE}
+fit <- lm(mpg~wt, data = mtcars)
+predict(fit)
+```
+
+```{r mtcars-4, exercise = TRUE}
+pred_ferrari_dino <- #____
+pred_ferrari_dino
+```
+
+
+```{r mtcars-4-solution}
+predict(fit)
+pred_ferrari_dino <- 22.480940
+pred_ferrari_dino
+```
+
+```{r mtcars-4-check}
+grade_result(
+  pass_if(~ identical(.result, 22.480940), "Great")
+)
+```
+
+Now, how do you calculate the prediction error $\hat{\epsilon}$ (as in $\hat{\epsilon} = Y - \hat{Y}$) for the "Ferrari Dino"? 
+
+First, you will need to find the actual observed value for your dependent variable $Y$ for that car. You can do this (since the car name is also the row name ) ...
+
+```{r mtcars-5, exercise = TRUE }
+mtcars["Ferrari Dino",]
+```
+
+Then you can compute the error  $\hat{\epsilon}$ (as in $\hat{\epsilon} = Y - \hat{Y}$) (use the predicted value $\hat{Y}$ you estimated and visualised above).
+
+```{r mtcars-6, exercise = TRUE, exercise.blanks = "___+"}
+error <- ____ - ____
+error
+```
+
+```{r mtcars-6-solution}
+error <- 19.7 - 22.480940
+error
+```
+
+```{r mtcars-6-check}
+grade_result(
+  pass_if(~ identical(.result, 19.7 - 22.480940), "Yes!")
+)
+```
+
+## Submit Report
+
+```{r context="setup"}
+submission_ui
+```
+
+```{r context="server"}
+submission_server()
+```
