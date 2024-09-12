@@ -1,0 +1,200 @@
+---
+title: "SSPS [4102|6006] Week 07: Probability"
+tutorial:
+  id: "week-07"
+output:
+  learnr::tutorial:
+    progressive: true
+    ace_theme: github
+    theme: united
+runtime: shiny_prerendered
+description: "This tutorial will cover `lm()`, `predict()` and basic probability concepts. (Questions from tutorial designed by Matt Blackwell)"
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(tidyverse)
+library(sspslearnr)
+library(nycflights13)
+library(gradethis)
+
+tutorial_options(exercise.checker = gradethis::grade_learnr, 
+                 exercise.reveal_solution="TRUE")
+knitr::opts_chunk$set(echo = TRUE)
+num_tutorial <- 0
+num_excercise <- 0
+tut_reptitle <- "SSPS [4102|6006] Week 07: In-class Individual Tutorial"
+```
+
+
+## `lm()`
+
+Using the data set `mtcars`, run a regression predicting `mpg` using as predictors `wt` and `hp`. 
+
+```{r lm-1, exercise = TRUE}
+
+```
+
+```{r lm-1-solution}
+fit <- lm(mpg ~ wt + hp,  data = mtcars)
+summary(fit)
+```
+
+Then report below $\hat{\beta}$ for the variable `wt` (round it to two digits).
+
+```{r lm-2, echo = FALSE}
+question_text(
+  "Answer",
+  answer("-3.88", correct = TRUE),
+  answer("-3.87", correct = TRUE),
+  allow_retry = TRUE
+)
+```
+
+### Conceptual questions
+
+```{r lm-3, echo = FALSE}
+quiz(caption = "",
+     question("What does the coefficient of a variable in a multiple linear regression model represent?",
+              answer("The average effect of a one-unit change in that variable, holding other variables constant", correct = TRUE),
+              answer("The total change in the dependent variable"),
+              answer("The predicted value of the dependent variable")),
+              
+     question("If a coefficient is very small, what does this imply?",
+              answer("The variable has a measurable but weak association with the dependent variable", correct = TRUE),
+              answer("The variable has no association with the dependent variable"),
+              answer("The model is invalid")),
+              
+     question("What is the difference between multiple R-squared and adjusted R-squared?",
+              answer("Adjusted R-squared accounts for the number of predictors in the model", correct = TRUE),
+              answer("Multiple R-squared always gives a higher value than adjusted R-squared"),
+              answer("Multiple R-squared penalises for adding more predictors"))
+     )
+```
+
+
+## `lm() with categorical variables as predictors`
+
+The `iris` data frame contains observations of 50 flowers from 3 species of iris.
+
+```{r}
+head(iris)
+```
+
+Fit the `iris` data into a model that predicts `Sepal.Length` using the variables `Petal.Length`, `Petal.Width` and `Species`, then print key model summary statistics with `summary()`.
+
+```{r predict-1, exercise = TRUE}
+
+```
+
+```{r predict-1-solution}
+fit <- lm(Sepal.Length ~ Petal.Length + Petal.Width + Species, data = iris)
+summary(fit)
+```
+
+### Wait a minute!
+
+The variable `Species` is a categorical variable with three levels (`r paste0(levels(iris$Species), collapse = ", ")`)! Yes, but the interpretation of the coefficient is only slightly different.
+
+In this case, the coefficient `Speciesversicolor` (i.e. the versicolor species) represents how much the predicted outcome (`Sepal.Length`) differs for the versicolor species compared to the reference species (in this case the setosa species).
+
+## predict()
+
+Now use this model to predict the sepal length for a flower of the species virginica, with petal length 4 and petal width 2.
+
+```{r predict-2, exercise = TRUE}
+fit <- lm(Sepal.Length ~ Petal.Length + Petal.Width + Species, data = iris)
+# Add your predict(fit, newdata = ...) code here
+```
+
+```{r predict-2-solution}
+fit <- lm(Sepal.Length ~ Petal.Length + Petal.Width + Species, data = iris)
+predict(fit, newdata = data.frame(Petal.Length = 4, Petal.Width = 2, Species = "virginica"))
+```
+
+Enter your prediction for the sepal length below (round to two digits)
+
+```{r predict-3, echo = FALSE}
+question_text(
+  "Answer",
+  answer("5.18", correct = TRUE),
+  allow_retry = TRUE
+)
+```
+
+## Probability Basics
+
+### Conceptual questions
+
+```{r concept, echo=FALSE}
+quiz(
+  caption = "",
+  question(
+    "I roll a fair 6-sided die 3,000,000 times. The number 1 turns up approximately 500,000 times, so I conclude that the probability of a 1 is 1/6. What approach to probability does this ",
+    answer("Frequentist", correct = TRUE),
+    answer("Bayesian"))
+)
+```
+
+
+
+### Bounding probabilities
+
+Suppose that P(A)=0.4 and P(B)=0.3. What is the minimum value of P(A and not B)?
+
+
+```{r ltp, echo = FALSE}
+question_text(
+  "Answer:",
+  answer("0.1", correct = TRUE),
+  answer(".1", correct = TRUE),
+  allow_retry = TRUE
+)
+```
+
+
+<div id="filter-hint">
+**Hint:** See the Law of Total Probability. What happens if B is entirely contained in A?
+</div>
+
+
+### Combinations/Permutations
+
+```{r combn, echo = FALSE}
+question("Out of all possible anagrams for the word CHAIR (including the original word), what is the probability that the letter I comes first?",
+         answer("0.1"),
+         answer("0.2", correct = TRUE),
+         answer("0.3"),
+         answer("0.4"))
+```
+
+
+### Independence
+
+Let A and B be two independent variables that take on only the values 0 and 1. If P(A=1, B=1)=0.12, P(A=0, B=1)=0.28, and P(A=1)=0.3, what is P(A=0, B=0)? Use this code block to perform calculations and enter the probability below.
+
+
+```{r indep_chunk, exercise = TRUE}
+
+```
+
+
+```{r indep, echo = FALSE}
+question_text(
+  "Answer:",
+  answer("0.42", correct = TRUE),
+  answer(".42", correct = TRUE),
+  allow_retry = TRUE
+)
+```
+
+
+## Submit Report
+
+```{r context="setup"}
+submission_ui
+```
+
+```{r context="server"}
+submission_server()
+```
