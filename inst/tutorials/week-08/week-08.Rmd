@@ -1,0 +1,186 @@
+---
+title: "SSPS [4102|6006] Week 08: Uncertainty"
+tutorial:
+  id: "week-08"
+output:
+  learnr::tutorial:
+    progressive: true
+    ace_theme: github
+    theme: united
+runtime: shiny_prerendered
+description: "This tutorial will cover `lm()` and hypothesis testing."
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(tidyverse)
+library(sspslearnr)
+library(gradethis)
+
+tutorial_options(exercise.checker = gradethis::grade_learnr, 
+                 exercise.reveal_solution="TRUE")
+knitr::opts_chunk$set(echo = FALSE)
+num_tutorial <- 0
+num_excercise <- 0
+tut_reptitle <- "SSPS [4102|6006] Week 08: In-class Individual Tutorial"
+```
+
+
+## Quiz: Understanding the Null Hypothesis
+
+```{r null_hypothesis_quiz}
+question("What is the null hypothesis in hypothesis testing?",
+         answer("The hypothesis that the true effect is non-zero."),
+         answer("The hypothesis that the sample mean equals the population mean."),
+         answer("The hypothesis that the true effect is zero.", correct = TRUE),
+         allow_retry = TRUE,
+         correct = "Correct! The null hypothesis usually states that there is no effect or relationship.",
+         incorrect = "Not quite. The null hypothesis is typically about no effect or no relationship."
+)
+
+```
+
+## Calculate the average causal effect of attending a small class on math test scores using the provided data
+
+```{r estimate_ate, exercise = TRUE, exercise.blanks = "___+"}
+# Load the data (don't change this)
+star <- read.csv("data/STAR.csv")
+
+# Create the treatment variable
+star$small <- ifelse(star$classtype == "small", 1, 0)
+
+# Now on the line below fit a linear model with lm() predicting
+# the `math` test result using the treatment variable `small`
+fit <- lm(____)
+
+# Finally, display the summary of the model
+summary(fit)
+```
+
+```{r estimate_ate-solution}
+star <- read.csv("STAR.csv")
+star$small <- ifelse(star$classtype == "small", 1, 0)
+fit <- lm(star$math ~ star$small)
+summary(fit)
+```
+
+### What is the average causal effect of attending a small class on math test scores? Round all values to two decimal places.
+
+```{r estimate_ate-1}
+question_text(
+  "Answer",
+  answer("5.99", correct = TRUE),
+  answer("5.98", correct = TRUE),
+  allow_retry = TRUE
+)
+```
+
+###  What is the test-statistic for $\hat{\beta}$ Round all values to two decimal places.
+
+```{r estimate_ate-2}
+question_text(
+  "Answer",
+  answer("2.75", correct = TRUE),
+  allow_retry = TRUE
+)
+```
+
+###  Interpreting Regression Coefficients
+
+```{r interpret_coefficients}
+question("What does the coefficient for 'star$small' represent in the regression output?",
+  answer("The estimated average difference in math scores between students in small and regular classes.", correct = TRUE),
+  answer("The estimated average math score for all students."),
+  answer("The estimated average difference in reading scores."),
+  allow_retry = TRUE,
+  correct = "Correct! The coefficient represents the average difference in scores between the two groups.",
+  incorrect = "Incorrect. Remember, the coefficient directly measures the effect of the treatment variable."
+)
+```
+
+###  Conclusion on Statistical Significance
+
+```{r conclusion_significance}
+question("Based on the calculated p-value, is the effect of attending a small class statistically significant at the 5% level?",
+  answer("Yes, because the p-value is less than 0.05.", correct = TRUE),
+  answer("No, because the p-value is greater than 0.05."),
+  allow_retry = TRUE,
+  correct = "Correct! A p-value less than 0.05 indicates that the effect is statistically significant.",
+  incorrect = "Incorrect. Check the calculated p-value and compare it to the 5% threshold."
+)
+```
+
+## Calculating the test-statistic of a regression coefficient
+
+OK, this is a bit hard as it requires remembering the formula for the test-statistic...
+
+### First, estimate the average causal effect of attending a small class on the reading test scores?
+
+```{r estimate_ate-3, exercise = TRUE, exercise.blanks = "___+"}
+# Load the data (don't change this)
+star <- read.csv("data/STAR.csv")
+
+# Create the treatment variable
+star$small <- ifelse(star$classtype == "small", 1, 0)
+
+# Now on the line below fit a linear model with lm() predicting
+# the `reading` test result using the treatment variable `small`
+fit <- lm(____)
+
+# Finally, display the summary of the model
+____
+```
+
+```{r estimate_ate-3-solution}
+star <- read.csv("data/STAR.csv")
+star$small <- ifelse(star$classtype == "small", 1, 0)
+fit <- lm(star$reading ~ star$small)
+summary(fit)
+```
+
+### What is the p-value of the `reading` coefficient? Round the p-value to four decimal places.
+
+```{r estimate_ate-4}
+question_text(
+  "Answer",
+  answer("0.0004", correct = TRUE),
+  answer("0.0005", correct = TRUE),
+  allow_retry = TRUE
+)
+```
+
+```{r conclusion_significance-2}
+question("Based on the calculated p-value, is the effect of attending a small class on the reading test statistically significant at the 5% level?",
+  answer("Yes", correct = TRUE),
+  answer("No"),
+  allow_retry = TRUE,
+  correct = "Correct! A p-value less than 0.05 indicates that the effect is statistically significant.",
+  incorrect = "Incorrect. Check the calculated p-value and compare it to the 5% threshold."
+)
+```
+
+### Now, using the values you can find in the summary of the model, calculate the test-statistic for the coefficient of `small` and store it in the variable `z_obs`. Round all values to two decimal places. 
+
+```{r z-obs, exercise = TRUE, exercise.blanks = "___+"}
+# Test statistic
+z_obs <- ___ / ___
+```
+
+```{r z-obs-solution}
+# Test statistic
+z_obs <- 7.21 / 2.06
+```
+
+```{r z-obs-check}
+grade_code()
+```
+
+## Submit Report
+
+```{r context="setup"}
+submission_ui
+```
+
+```{r context="server"}
+submission_server()
+```
