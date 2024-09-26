@@ -1,0 +1,240 @@
+---
+title: "SSPS [4102|6006] Week 09: Uncertainty"
+tutorial:
+  id: "week-09"
+output:
+  learnr::tutorial:
+    progressive: true
+    ace_theme: github
+    theme: united
+runtime: shiny_prerendered
+description: "This tutorial will cover `knn()`, `lm()` and `glm()`"
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(tidyverse)
+library(sspslearnr)
+library(gradethis)
+library(class)
+
+tutorial_options(exercise.checker = gradethis::grade_learnr, 
+                 exercise.reveal_solution="TRUE")
+knitr::opts_chunk$set(echo = FALSE)
+num_tutorial <- 0
+num_excercise <- 0
+tut_reptitle <- "SSPS [4102|6006] Week 09: In-class Individual Tutorial"
+```
+
+## Quiz: Supervised vs. Unsupervised Learning
+
+```{r supervised_unsupervised_quiz, echo=FALSE}
+quiz(
+  question("What is a key characteristic of supervised learning?",
+           answer("It does not require any data"),
+           answer("It requires labeled data for training", correct = TRUE),
+           answer("It only works with numerical data"),
+           allow_retry = TRUE,
+           correct = "Correct! Supervised learning requires labeled data to train the model.",
+           incorrect = "Not quite. Supervised learning specifically needs labeled data for training."),
+  
+  question("Which of the following is an example of unsupervised learning?",
+           answer("Clustering customers based on purchasing behavior", correct = TRUE),
+           answer("Predicting house prices based on features"),
+           answer("Classifying emails as spam or not spam"),
+           allow_retry = TRUE,
+           correct = "Correct! Clustering customers is a classic example of unsupervised learning.",
+           incorrect = "Not quite. Clustering customers is an example of unsupervised learning, while the others are supervised.")
+)
+```
+
+## Quiz: Parametric vs. Non-Parametric Learning
+
+```{r parametric_nonparametric_quiz, echo=FALSE}
+quiz(
+  
+    question("What is a defining feature of parametric learning methods?",
+           answer("They use a fixed number of coefficients to model the relationship", correct = TRUE),
+           answer("They adapt the model based on the data without fixed parameters"),
+           answer("They do not rely on any mathematical functions"),
+           allow_retry = TRUE,
+           correct = "Correct! Parametric methods use a fixed set of coefficients to define the model.",
+           incorrect = "Not quite. Parametric methods involve a predetermined number of coefficients to describe the relationship."),
+
+  question("Which method does not rely on fixed coefficients to define its model?",
+           answer("Parametric learning"),
+           answer("Non-parametric learning", correct = TRUE),
+           answer("Both parametric and non-parametric learning"),
+           allow_retry = TRUE,
+           correct = "Correct! Non-parametric methods do not use fixed coefficients; they adapt based on the data.",
+           incorrect = "Not quite. Non-parametric methods do not assume a fixed set of coefficients and adapt to the data directly."),
+
+  question("In parametric models, what do the coefficients represent?",
+           answer("The relationship between predictors and the outcome variable", correct = TRUE),
+           answer("The distance between data points"),
+           answer("The number of data points used in training"),
+           allow_retry = TRUE,
+           correct = "Correct! In parametric models, coefficients quantify the relationship between predictors and the outcome.",
+           incorrect = "Not quite. Coefficients in parametric models reflect the relationship between predictors and the outcome."),
+
+  question("Why might non-parametric methods require more data than parametric methods?",
+           answer("They are always more complex and cannot handle simple relationships"),
+           answer("They do not rely on fixed coefficients, needing more data to capture relationships", correct = TRUE),
+           answer("They only work with very large datasets"),
+           allow_retry = TRUE,
+           correct = "Correct! Non-parametric methods adapt their models based on the data, often needing more samples to accurately capture relationships.",
+           incorrect = "Not quite. Non-parametric methods need more data to effectively model the relationships without fixed coefficients."),
+  
+  question("Which of the following is an example of a non-parametric method?",
+           answer("Linear Regression"),
+           answer("k-Nearest Neighbors (k-NN)", correct = TRUE),
+           answer("Logistic Regression"),
+           allow_retry = TRUE,
+           correct = "Correct! k-NN is a classic example of a non-parametric learning method.",
+           incorrect = "Not quite. k-NN is non-parametric, while linear and logistic regression are parametric methods.")
+)
+```
+
+
+
+## Quiz: Key Concepts of k-NN
+
+```{r knn-quiz}
+quiz(
+  question("What does the 'k' in k-NN stand for?",
+           answer("The number of features in the dataset"),
+           answer("The number of nearest neighbors", correct = TRUE),
+           answer("The number of classes"),
+           answer("The number of samples"),
+           allow_retry = TRUE,
+           correct = "Correct! 'k' refers to the number of nearest neighbors used in the classification.",
+           incorrect = "Not quite. The 'k' in k-NN refers to the number of nearest neighbors used."),
+  
+  question("What type of learning method is k-NN?",
+           answer("Eager learning"),
+           answer("Supervised learning"),
+           answer("Lazy learning", correct = TRUE),
+           answer("Unsupervised learning"),
+           allow_retry = TRUE,
+           correct = "Correct! k-NN is a lazy learning algorithm because it doesn't build an explicit model.",
+           incorrect = "Not quite. k-NN is a lazy learning method because it stores training data without building an explicit model."),
+  
+  question("Which distance measure is most commonly used in k-NN?",
+           answer("Manhattan distance"),
+           answer("Cosine similarity"),
+           answer("Euclidean distance", correct = TRUE),
+           answer("Jaccard distance"),
+           allow_retry = TRUE,
+           correct = "Correct! Euclidean distance is commonly used to measure similarity in k-NN.",
+           incorrect = "Not quite. The most common distance measure in k-NN is Euclidean distance.")
+)
+```
+
+## Predict with knn
+
+Let's consider this dataset of countries with two 2020 country-level measures collected by the World Bank.
+
+```{r knn-load}
+countries <- 
+  read.csv("data/countries.csv") |>
+  dplyr::filter(country != "Mauritius")
+head(countries)
+```
+
+- `NY.GDP.PCAP.KD`: GDP per capita (constant 2015 US$)
+- `SH.XPD.CHEX.GD.ZS`: Current health expenditure (% of GDP)
+
+The dataset `countries` doesn't contain the record for Mauritius, which is this: 
+
+```{r}
+head(read.csv("data/countries.csv") |>
+  dplyr::filter(country == "Mauritius"))
+```
+
+### Use knn() to train your classifier on the dataframe `countries` and predict the `region` for Mauritius.
+
+- Note you will need to set the values for the predictors for the country from above.
+
+```{r knn-ex-1, exercise = TRUE, exercise.blanks = "___+", exercise.setup = "knn-load"}
+knn(train = dplyr::select(countries, NY.GDP.PCAP.KD, SH.XPD.CHEX.GD.ZS),
+    test = data.frame(___),
+    cl = ___,
+    k = 3 # Let's set this to 3
+) 
+```
+
+```{r knn-ex-1-solution}
+knn(train = dplyr::select(countries, NY.GDP.PCAP.KD, SH.XPD.CHEX.GD.ZS),
+    test = data.frame(NY.GDP.PCAP.KD = 9362.874, SH.XPD.CHEX.GD.ZS = 6.482102),
+    cl = countries$region,
+    k = 3 # Let's set this to 3
+)
+```
+
+```{r knn-ex-quiz}
+quiz(
+  question("What region does knn predict for Mauritius?",
+           answer("East Asia & Pacific"),
+           answer("Europe & Central Asia"),
+           answer("Latin America & Caribbean", correct = TRUE),
+           answer("Middle East & North Africa"),
+           answer("North America"),
+           answer("South Asia"),
+           answer("Sub-Saharan Africa"),
+           allow_retry = TRUE))
+```
+
+
+## Quiz: Key Concepts of Linear Regression
+
+```{r linear_regression_quiz, echo=FALSE}
+quiz(
+  question("What does the coefficient in a linear regression represent?",
+           answer("The standard error of the predictor"),
+           answer("The change in the predictor for a one-unit change in the outcome"),
+           answer("The change in the outcome variable for a one-unit change in the predictor", correct = TRUE),
+           allow_retry = TRUE,
+           correct = "Correct! The coefficient represents the change in the outcome for each one-unit change in the predictor.",
+           incorrect = "Not quite. The coefficient shows how the outcome changes with the predictor."),
+  
+  question("What is the purpose of the residuals in a linear regression model?",
+           answer("To determine the significance of the predictors"),
+                      answer("To measure the difference between observed and predicted values", correct = TRUE),
+           answer("To improve the model's accuracy"),
+           allow_retry = TRUE,
+           correct = "Correct! Residuals represent the difference between the observed and predicted values.",
+           incorrect = "Not quite. Residuals measure the error between observed and predicted values.")
+)
+```
+
+## Quiz: Key Concepts of Logistic Regression
+
+```{r logistic_regression_quiz, echo=FALSE}
+quiz(
+  question("What type of outcome does logistic regression predict?",
+           answer("Continuous outcomes"),
+           answer("Binary outcomes (0/1)", correct = TRUE),
+           answer("Categorical outcomes with more than two categories"),
+           allow_retry = TRUE,
+           correct = "Correct! Logistic regression is used for predicting binary outcomes.",
+           incorrect = "Not quite. Logistic regression is specifically for binary outcomes."),
+  
+  question("What does the logistic regression coefficient represent?",
+           answer("The change in the probability of the outcome for a one-unit change in the predictor"),
+           answer("The average effect of the predictor on the outcome"),
+           answer("The change in log-odds of the outcome for a one-unit change in the predictor", correct = TRUE),
+           allow_retry = TRUE,
+           correct = "Correct! The coefficient represents the change in log-odds with a one-unit predictor change.",
+           incorrect = "Not quite. Logistic regression coefficients reflect changes in log-odds.")
+)
+```
+
+## Submit Report
+
+```{r context="setup"}
+submission_ui
+```
+
+```{r context="server"}
+submission_server()
+```
