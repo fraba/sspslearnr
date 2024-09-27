@@ -130,7 +130,7 @@ quiz(
 )
 ```
 
-## Predict with knn
+## Predict with `knn()`
 
 Let's consider this dataset of countries with two 2020 country-level measures collected by the World Bank.
 
@@ -228,6 +228,51 @@ quiz(
            incorrect = "Not quite. Logistic regression coefficients reflect changes in log-odds.")
 )
 ```
+
+## Logistic regression with `glm()`
+
+Consider this data set
+
+```{r load-logit}
+adminissions <- 
+  read.csv("data/binary.csv")
+head(adminissions)
+```
+
+This dataset `adminissions` includes a binary response (outcome, dependent) variable called `admit`. There are three predictor variables: `gre`, `gpa`, and `rank`. The variables `gre` and `gpa` will be treated as continuous. The variable `rank` ranges from 1 to 4, where institutions with a `rank` of 1 have the highest prestige, and those with a `rank` of 4 have the lowest. Note that `rank` is loaded as a numeric variable, you must consider it as a factor in your logistic regression formula (`factor(rank)`).
+
+```{r logit-ex, exercise = TRUE, exercise.setup = "load-logit", exercise.blanks = "___+"}
+fit <- glm(formula = ___, data = ___, family = ___)
+summary(fit)
+```
+
+```{r logit-ex-solution}
+fit <- glm(formula = admit ~ gre + gpa + factor(rank), data = binary, family = binomial)
+summary(fit)
+```
+
+```{r logit-ex-1, echo = FALSE}
+quiz(
+  question("Is the `gre` result positively or negatively associated with the probability of admission?",
+           answer("Positively", correct = TRUE),
+           answer("Negatively"),
+           allow_retry = TRUE,
+           correct = "Correct! The estimated log-odds is +0.002264.",
+           incorrect = "Not quite. The estimated log-odds is +0.002264."),
+  question("Is the `gre` result significantly associated with the probability of admission at the 5% level?",
+           answer("Yes", correct = TRUE),
+           answer("No"),
+           allow_retry = TRUE,
+           correct = "Correct! The p-value for `gre` is 0.038465, which is smaller than 0.05.",
+           incorrect = "Not quite. The p-value for `gre` is 0.038465, which is smaller than 0.05."),
+  question("Is an increase of 1 point in a student's `gpa` associated on average with an increase of 80 percentage points in their chance of adminission?",
+           answer("Yes"),
+           answer("No", correct = TRUE),
+           allow_retry = TRUE,
+           correct = "Correct! The estimates of a logistic regression are not expressed in terms of the probability of the outcome but in log-odds.",
+           incorrect = "Not quite. The estimates of a logistic regression are not expressed in terms of the probability of the outcome but in log-odds."))
+```
+
 
 ## Submit Report
 
