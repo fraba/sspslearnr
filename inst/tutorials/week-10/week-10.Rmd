@@ -1,0 +1,235 @@
+---
+title: "SSPS [4102|6006] Week 10: Uncertainty"
+tutorial:
+  id: "week-10"
+output:
+  learnr::tutorial:
+    progressive: true
+    ace_theme: github
+    theme: united
+runtime: shiny_prerendered
+description: "This tutorial will cover the basics of text analysis"
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(tidyverse)
+library(sspslearnr)
+library(gradethis)
+library(class)
+library(tidytext)
+
+tutorial_options(exercise.checker = gradethis::grade_learnr, 
+                 exercise.reveal_solution="TRUE")
+knitr::opts_chunk$set(echo = FALSE)
+num_tutorial <- 0
+num_excercise <- 0
+tut_reptitle <- "SSPS [4102|6006] Week 10: In-class Individual Tutorial"
+```
+
+## Language and modelling
+
+```{r lang_quiz, echo=FALSE}
+quiz(
+  question("Why is linguistic knowledge important in text modeling?",
+           answer("It eliminates the need for labeled data"),
+           answer("It prevents any form of bias in text models"),
+           answer("It helps in creating meaningful features from language data", correct = TRUE),
+           allow_retry = TRUE,
+           correct = "Correct! Linguistic knowledge helps in transforming unstructured text into features that capture language nuances.",
+           incorrect = "Not quite. Linguistic knowledge is essential for creating features that meaningfully represent language."
+  ),
+  
+  question("What is an example of how language variation can impact model performance?",
+           answer("A model trained on tweets will work perfectly on medical documents"),
+           answer("A model trained on standard English may misinterpret African American Vernacular English (AAVE)", correct = TRUE),
+           answer("Language variation has no impact on model accuracy"),
+           allow_retry = TRUE,
+           correct = "Correct! Language variations, such as dialects, can significantly affect a model's accuracy.",
+           incorrect = "Not quite. Language variation can indeed affect how well a model performs."
+  )
+)
+```
+
+
+## Tokenization
+
+```{r token_quiz, echo=FALSE}
+quiz(
+  question("What is tokenization in the context of text analysis?",
+           answer("Combining multiple documents into one text"),
+           answer("Removing stop words from text"),
+           answer("Splitting text into meaningful units, like words or sentences", correct = TRUE),
+           allow_retry = TRUE,
+           correct = "Correct! Tokenization involves breaking text into units, such as words or sentences.",
+           incorrect = "Not quite. Tokenization is the process of dividing text into meaningful units."
+  ),
+  
+  question("Which of the following is a token type?",
+           answer("Sentences"),
+           answer("Characters"),
+           answer("N-grams"),
+           answer("All of the above", correct = TRUE),
+           allow_retry = TRUE,
+           correct = "Correct! Tokens can be sentences, characters, words, and even n-grams.",
+           incorrect = "Not quite. Tokens can be sentences, characters, words, or n-grams."
+  ),
+  
+  question("Why is tokenization a crucial step in natural language processing?",
+           answer("It eliminates bias in text data"),
+           answer("It transforms text into a format suitable for computational analysis", correct = TRUE),
+           answer("It compresses large documents into smaller files"),
+           allow_retry = TRUE,
+           correct = "Correct! Tokenization prepares text data for analysis by breaking it down into computationally manageable units.",
+           incorrect = "Not quite. Tokenization is essential for structuring text data for computational tasks."
+  ),
+  
+  question("What is an n-gram in tokenization?",
+           answer("A contiguous sequence of n words in a text", correct = TRUE),
+           answer("A method for counting words in a document"),
+           answer("A measure of term frequency in text data"),
+           allow_retry = TRUE,
+           correct = "Correct! An n-gram is a sequence of n words, commonly used to capture word order.",
+           incorrect = "Not quite. An n-gram is a contiguous sequence of words, capturing context in a text."
+  )
+)
+```
+
+* Manually tokenize the following sentence: "Indeed, machine learning in text analysis offers new opportunities."
+
+(Make sure to set all characters to lower-case) and each token as a different element of the vector: `c("one", "two", "three")`
+
+```{r token-ex-1, exercise = TRUE, exercise.blanks = "___+"}
+c(___)
+```
+ 
+```{r token-ex-1-check}
+grade_result(
+  pass_if(~identical(.result, c("indeed","machine","learning","in","text","analysis","offers","new","opportunities")))
+)
+```
+
+## Stop Words
+
+```{r stop_quiz, echo=F}
+quiz(
+  question("What is the main purpose of removing stop words in text analysis?",
+           answer("To add more words to the dataset"),
+           answer("To decrease computational time and improve model efficiency", correct = TRUE),
+           answer("To reduce the overall text length for readability"),
+           allow_retry = TRUE,
+           correct = "Correct! Removing stop words can help streamline text analysis by focusing on meaningful words.",
+           incorrect = "Not quite. The primary purpose is to reduce computational load and focus on informative words."
+  ),
+  
+  question("Which of the following is an example of a subject-specific stop word?",
+           answer("and"),
+           answer("bedroom", correct = TRUE),
+           answer("the"),
+           allow_retry = TRUE,
+           correct = "Correct! 'Bedroom' might be a stop word in a real estate corpus but is not a general stop word.",
+           incorrect = "Not quite. Subject-specific stop words vary by context, like 'bedroom' in real estate listings."
+  )
+)
+```
+
+* Using  `dplyr::anti_join(stop_words)` and `tidytext::unnest_tokens()`, tokenise this document then remove the stop words.
+
+```{r anti_join-ex, exercise = TRUE, exercise.blanks = "___+"}
+data.frame(text = "The quick brown fox jumps over the lazy dog") |>
+  ___() |>
+  ___()
+```
+
+```{r anti_join-ex-solution}
+data.frame(text = "The quick brown fox jumps over the lazy dog") |>
+  tidytext::unnest_tokens(input = text, output = word) |>
+  dplyr::anti_join(stop_words)
+```
+
+```{r anti_join-ex-check}
+grade_code()
+```
+
+
+
+## Stemming
+
+```{r stem_quiz, echo = FALSE}
+quiz(
+  question("What is the primary purpose of stemming in text preprocessing?",
+           answer("To identify the parts of speech of each word"),
+           answer("To reduce words to their base or root form", correct = TRUE),
+           answer("To remove all punctuation from the text"),
+           allow_retry = TRUE,
+           correct = "Correct! Stemming reduces words to a common root, simplifying text for analysis.",
+           incorrect = "Not quite. Stemming is used to reduce words to their base or root form."
+  ),
+  
+  question("What is a potential drawback of stemming?",
+           answer("It increases the number of unique words in the text"),
+           answer("It only works for English text"),
+           answer("It may alter words to forms that are not real words", correct = TRUE),
+           allow_retry = TRUE,
+           correct = "Correct! Stemming can produce non-standard forms, which may not be actual words.",
+           incorrect = "Not quite. A key drawback is that stemming may generate forms that aren't real words."
+  )
+)
+```
+
+
+## Word Embeddings
+
+```{r emb_quiz, echo=F}
+
+quiz(
+  question("What is a primary benefit of using word embeddings in text analysis?",
+           answer("They eliminate all text preprocessing steps"),
+           answer("They capture semantic meaning based on word context", correct = TRUE),
+           answer("They only work for short documents"),
+           allow_retry = TRUE,
+           correct = "Correct! Word embeddings capture semantic meaning by analyzing word context.",
+           incorrect = "Not quite. The main benefit is that embeddings capture the contextual meaning of words."
+  ),
+  
+  question("What is the purpose of the inverse document frequency (IDF) component in TF-IDF?",
+           answer("To increase the weight of common words across documents"),
+           answer("To decrease the weight of words that appear frequently across documents", correct = TRUE),
+           answer("To standardize all words to have the same frequency"),
+           allow_retry = TRUE,
+           correct = "Correct! IDF reduces the weight of common words, helping highlight distinctive terms.",
+           incorrect = "Not quite. IDF down-weights words that appear often across documents."
+  ),
+  
+  question("How does window size influence word embeddings?",
+           answer("Only large windows can capture meaningful relationships"),
+           answer("Window size has no impact on word embeddings"),
+           answer("A larger window captures topical similarity, while a smaller window captures functional similarity", correct = TRUE),
+           allow_retry = TRUE,
+           correct = "Correct! Larger windows capture broad topical associations, while smaller windows capture functional similarities.",
+           incorrect = "Not quite. Window size determines the level of word relationships captured."
+  ),
+  
+  question("Why might pre-trained word embeddings introduce bias into a model?",
+           answer("They use only numerical data"),
+           answer("They are based on non-standard language"),
+           answer("They are often trained on large datasets that reflect societal biases", correct = TRUE),
+           allow_retry = TRUE,
+           correct = "Correct! Pre-trained embeddings may carry biases present in the text they were trained on.",
+           incorrect = "Not quite. Biases can occur if embeddings were trained on biased datasets."
+  )
+)
+
+
+```
+
+
+## Submit Report
+
+```{r context="setup"}
+submission_ui
+```
+
+```{r context="server"}
+submission_server()
+```
