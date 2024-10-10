@@ -151,6 +151,48 @@ data.frame(text = "The quick brown fox jumps over the lazy dog") |>
 grade_code()
 ```
 
+## Sentiment analysis
+
+```{r sent-quiz, echo = FALSE}
+quiz(
+  question("What is sentiment analysis?",
+           answer("A method for summarizing long documents"),
+           answer("A process of identifying emotions or attitudes expressed in text", correct = TRUE),
+           answer("A way to detect language in text data"),
+           allow_retry = TRUE,
+           correct = "Correct! Sentiment analysis identifies emotions or attitudes in text.",
+           incorrect = "Not quite. Sentiment analysis focuses on detecting emotions or sentiments in text."
+  ),
+  
+  question("Which of the following is a common approach to sentiment analysis?",
+           answer("Counting all stop words in the text"),
+           answer("Using a predefined lexicon of positive and negative words", correct = TRUE),
+           answer("Translating text into numerical data for clustering"),
+           allow_retry = TRUE,
+           correct = "Correct! A lexicon of positive and negative words is often used in sentiment analysis.",
+           incorrect = "Not quite. A predefined lexicon is commonly used for sentiment analysis."
+  ),
+  
+  question("What is a limitation of lexicon-based sentiment analysis?",
+           answer("It only works on numerical data"),
+           answer("It can only be applied to short documents"),
+           answer("It struggles with context, such as sarcasm or negation", correct = TRUE),
+           allow_retry = TRUE,
+           correct = "Correct! Lexicon-based approaches struggle to detect nuances like sarcasm.",
+           incorrect = "Not quite. The main limitation is understanding context, like sarcasm or negation."
+  ),
+  
+  question("How does supervised learning differ in sentiment analysis compared to lexicon-based approaches?",
+           answer("It does not require any text data"),
+           answer("It requires labeled data for training to learn sentiment patterns", correct = TRUE),
+           answer("It always produces more accurate results"),
+           allow_retry = TRUE,
+           correct = "Correct! Supervised learning in sentiment analysis uses labeled data to train models.",
+           incorrect = "Not quite. Supervised learning relies on labeled data to learn sentiment patterns."
+  )
+)
+```
+
 
 
 ## Stemming
