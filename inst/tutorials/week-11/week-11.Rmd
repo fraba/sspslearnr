@@ -1,0 +1,242 @@
+---
+title: "SSPS [4102|6006] Week 11: Uncertainty"
+tutorial:
+  id: "week-11"
+output:
+  learnr::tutorial:
+    progressive: true
+    ace_theme: github
+    theme: united
+runtime: shiny_prerendered
+description: "This tutorial will cover machine learning and text analysis"
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(tidyverse)
+library(sspslearnr)
+library(gradethis)
+library(class)
+library(tidytext)
+
+tutorial_options(exercise.checker = gradethis::grade_learnr, 
+                 exercise.reveal_solution="TRUE")
+knitr::opts_chunk$set(echo = FALSE)
+num_tutorial <- 0
+num_excercise <- 0
+tut_reptitle <- "SSPS [4102|6006] Week 11: In-class Individual Tutorial"
+```
+
+## Machine learning
+
+```{r ml-quiz}
+quiz(
+  question("What is the main goal of supervised learning in machine learning?",
+           answer("To discover hidden patterns in data without labels"),
+           answer("To predict outcomes based on labeled training data", correct = TRUE),
+           answer("To automatically cluster data points"),
+           allow_retry = TRUE,
+           correct = "Correct! Supervised learning involves predicting outcomes based on labeled data.",
+           incorrect = "Not quite. Supervised learning relies on labeled data to make predictions."
+  ),
+  
+  question("Which of the following is a common evaluation metric for classification tasks?",
+           answer("Mean Absolute Error"),
+           answer("Accuracy", correct = TRUE),
+           answer("Root Mean Square Error"),
+           allow_retry = TRUE,
+           correct = "Correct! Accuracy is a commonly used metric for evaluating classification models.",
+           incorrect = "Not quite. For classification tasks, metrics like accuracy or precision are usually applied."
+  ),
+  
+  question("What is overfitting in machine learning?",
+           answer("When a model performs well on training data but poorly on new data", correct = TRUE),
+           answer("When a model generalizes well to new data"),
+           answer("When a model has high bias and low variance"),
+           allow_retry = TRUE,
+           correct = "Correct! Overfitting occurs when the model performs well on training data but fails to generalize.",
+           incorrect = "Not quite. Overfitting refers to a model performing poorly on new data."
+  ),
+  
+  question("Why is it important to separate data into training and test sets?",
+         answer("To ensure the model performs well on the training data"),
+         answer("To prevent the model from seeing the test data, providing an unbiased evaluation of performance on unseen data", correct = TRUE),
+         answer("To reduce the size of the dataset for faster computation"),
+         allow_retry = TRUE,
+         correct = "Correct! Separating data helps us evaluate model performance on unseen data, reducing bias.",
+         incorrect = "Not quite. Separating training and test data ensures that the model's performance is assessed objectively on new data."
+)
+  
+)
+```
+
+
+## R2 and RMSE
+
+```{r r2}
+quiz(
+  question("What does the R2 metric indicate in a regression model?",
+           answer("The percentage of variance in the dependent variable explained by the model", correct = TRUE),
+           answer("The average error of predictions"),
+           answer("The amount of data points close to the mean"),
+           allow_retry = TRUE,
+           correct = "Correct! R2 measures how well the model explains the variance in the outcome variable.",
+           incorrect = "Not quite. R2 represents the proportion of variance explained by the model."
+  ),
+  
+  question("If a regression model has an R2 of 0, what does this imply?",
+           answer("The model perfectly predicts the outcome variable"),
+           answer("The model explains none of the variance in the outcome variable", correct = TRUE),
+           answer("The model has high accuracy"),
+           allow_retry = TRUE,
+           correct = "Correct! An R2 of 0 means the model explains none of the variance.",
+           incorrect = "Not quite. R2 of 0 implies no variance is explained by the model."
+  ),
+  
+  question("What is the main purpose of the Root Mean Square Error (RMSE) metric?",
+           answer("To evaluate the average magnitude of prediction errors", correct = TRUE),
+           answer("To indicate how well the model explains the variance in the data"),
+           answer("To compare training and test data"),
+           allow_retry = TRUE,
+           correct = "Correct! RMSE provides the average magnitude of prediction errors in the same units as the target variable.",
+           incorrect = "Not quite. RMSE evaluates the size of errors in predictions."
+  ),
+  
+  question("How is RMSE interpreted in the context of model performance?",
+           answer("Lower RMSE values indicate a better model fit", correct = TRUE),
+           answer("Higher RMSE values indicate better predictions"),
+           answer("RMSE is unaffected by the units of the outcome variable"),
+           allow_retry = TRUE,
+           correct = "Correct! A lower RMSE means the model's predictions are closer to actual values, indicating better performance.",
+           incorrect = "Not quite. Lower RMSE values suggest better model fit, as they mean predictions are closer to actual values."
+  ),
+  
+  question("What would a very high RMSE suggest about a model?",
+           answer("The model's predictions are far from the actual values", correct = TRUE),
+           answer("The model perfectly fits the data"),
+           answer("The model explains all the variance in the outcome variable"),
+           allow_retry = TRUE,
+           correct = "Correct! A high RMSE indicates that the model's predictions deviate significantly from actual values.",
+           incorrect = "Not quite. A high RMSE suggests that the model is making large prediction errors."
+  )
+)
+```
+
+## p-values
+
+Let's go back to p-values...
+
+- p-values should be approached with caution and not misinterpreted as the probability of a hypothesis being false. 
+
+- p-value only indicates the likelihood of observing the data given a specific hypothesis, not the likelihood of the hypothesis itself.
+
+```{r p-value}
+quiz(
+  question("What does a p-value represent in hypothesis testing?",
+           answer("The probability of obtaining results as extreme as the observed results, assuming the null hypothesis is true", correct = TRUE),
+           answer("The probability that the alternative hypothesis is true"),
+           answer("The probability of observing any data"),
+           allow_retry = TRUE,
+           correct = "Correct! The p-value measures the probability of observing data as extreme as the observed data if the null hypothesis is true.",
+           incorrect = "Not quite. The p-value represents the likelihood of observing data as extreme as the observed results under the null hypothesis."
+  ),
+  
+  question("If a p-value is 0.03, what does this imply if we have a significance level of 0.05?",
+           answer("There is strong evidence to reject the null hypothesis", correct = TRUE),
+           answer("The null hypothesis should be accepted"),
+           answer("There is no evidence against the null hypothesis"),
+           allow_retry = TRUE,
+           correct = "Correct! A p-value of 0.03 is less than 0.05, suggesting strong evidence against the null hypothesis.",
+           incorrect = "Not quite. A p-value of 0.03 is below the 0.05 significance level, indicating evidence to reject the null hypothesis."
+  ),
+  
+  question("What does a large p-value (e.g., 0.5) indicate about the null hypothesis?",
+           answer("It suggests weak evidence against the null hypothesis, so it should not be rejected", correct = TRUE),
+           answer("It suggests strong evidence against the null hypothesis"),
+           answer("It suggests that the null hypothesis is definitely true"),
+           allow_retry = TRUE,
+           correct = "Correct! A high p-value indicates weak evidence against the null hypothesis, suggesting it should not be rejected.",
+           incorrect = "Not quite. A large p-value implies there is not enough evidence to reject the null hypothesis."
+  ),
+  
+  question("What is a common threshold (alpha) for determining statistical significance with p-values?",
+           answer("0.01"),
+           answer("0.05", correct = TRUE),
+           answer("0.5"),
+           allow_retry = TRUE,
+           correct = "Correct! 0.05 is a commonly used threshold for statistical significance.",
+           incorrect = "Not quite. While thresholds can vary, 0.05 is often used as the significance level in hypothesis testing."
+  ),
+  
+  question("Does a small p-value (e.g., < 0.01) prove that the alternative hypothesis is true?",
+           answer("Yes, it proves the alternative hypothesis is true"),
+           answer("No, it only suggests that the data is unlikely under the null hypothesis", correct = TRUE),
+           answer("Yes, it guarantees that the null hypothesis is false"),
+           allow_retry = TRUE,
+           correct = "Correct! A small p-value does not prove the alternative hypothesis; it only suggests that the null hypothesis is unlikely.",
+           incorrect = "Not quite. A small p-value means the data is unlikely under the null hypothesis but does not prove the alternative hypothesis."
+  )
+)
+```
+
+## Reporting on hypothesis testing
+
+```{r htest}
+quiz(
+  question("How should you start a conclusion statement when reporting the results of hypothesis testing?",
+           answer("By explaining the context of the hypothesis and the assumptions made", correct = TRUE),
+           answer("By stating the test statistic value"),
+           answer("By only mentioning the sample data"),
+           allow_retry = TRUE,
+           correct = "Correct! Begin by explaining the context of the hypothesis and any assumptions.",
+           incorrect = "Not quite. The conclusion should begin with the context and assumptions."
+  ),
+  
+  question("What should you include in the conclusion about the estimated effect?",
+           answer("Only whether the effect is positive or negative"),
+           answer("Both the direction, size of the effect, and unit of measurement", correct = TRUE),
+           answer("Only the statistical significance of the effect"),
+           allow_retry = TRUE,
+           correct = "Correct! Report the effect's direction, size, and unit to clearly communicate the result.",
+           incorrect = "Not quite. Mention the effect's direction, size, and unit for clarity."
+  ),
+  
+  question("If the p-value is below 0.05, what should you report about the null hypothesis?",
+           answer("We fail to reject the null hypothesis"),
+           answer("We reject the null hypothesis, indicating the effect is statistically significant", correct = TRUE),
+           answer("The null hypothesis is accepted"),
+           allow_retry = TRUE,
+           correct = "Correct! A p-value below 0.05 means we reject the null hypothesis and report statistical significance.",
+           incorrect = "Not quite. A low p-value means we reject the null hypothesis and report significance."
+  ),
+  
+  question("How should statistical significance be interpreted when reporting results?",
+           answer("If significant, it likely indicates a non-zero effect at the population level", correct = TRUE),
+           answer("Significance proves the true effect is exactly equal to the estimated effect"),
+           answer("It indicates the model has no error"),
+           allow_retry = TRUE,
+           correct = "Correct! Statistical significance suggests the effect is likely non-zero at the population level.",
+           incorrect = "Not quite. Statistical significance means the effect is unlikely to be zero, not that the estimate is exact."
+  ),
+  
+  question("What is the importance of replication in hypothesis testing results?",
+           answer("It increases confidence by showing similar conclusions across samples", correct = TRUE),
+           answer("It allows the null hypothesis to be accepted with certainty"),
+           answer("It’s only necessary if the p-value is greater than 0.05"),
+           allow_retry = TRUE,
+           correct = "Correct! Replication confirms results by showing similar findings in different samples.",
+           incorrect = "Not quite. Replication helps confirm findings but doesn't 'prove' any hypothesis."
+  )
+)
+```
+
+
+## Submit Report
+
+```{r context="setup"}
+submission_ui
+```
+
+```{r context="server"}
+submission_server()
+```
