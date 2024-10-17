@@ -300,6 +300,30 @@ quiz(
 )
 ```
 
+### Now using the `civilwar` data set and R calculate the effect of `polity2` (democracy) and `ef`(ethnic frammentation) on `war` (civil war is ongoing that year if `1`). What is the most appropriate model to measure the effect on `war`?
+
+```{r estimate, exercise = TRUE, exercise.blanks = "___+"}
+# Load the data (don't change this)
+civilwar <- read.csv("data/civilwar.csv")
+
+# Now on the line below fit your model predicting `war`
+fit <- ___(war ~ ___ data = civilwar)
+
+# Finally, display the summary of the model
+summary(fit)
+```
+
+```{r estimate-solution}
+civilwar <- read.csv("data/civilwar.csv")
+
+fit <- glm(war ~ polity2 + ef, family = "binomial" , data = civilwar)
+
+summary(fit)
+```
+
+```{r estimate-check}
+grade_code()
+```
 
 ## Submit Report
 
