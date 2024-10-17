@@ -230,6 +230,76 @@ quiz(
 )
 ```
 
+## Regression analysis in R
+
+```{r reg}
+
+quiz(
+  question("What function is commonly used in R to fit a linear regression model?",
+           answer("lm()", correct = TRUE),
+           answer("glm()"),
+           answer("fit()"),
+           allow_retry = TRUE,
+           correct = "Correct! The lm() function is used for fitting linear regression models.",
+           incorrect = "Not quite. The lm() function is specifically used for linear regression."
+  ),
+  
+  question("What argument should you set in the glm() function to specify a logistic regression model?",
+           answer("family = 'logistic'"),
+           answer("family = binomial", correct = TRUE),
+           answer("type = 'binary'"),
+           allow_retry = TRUE,
+           correct = "Correct! Setting family = binomial in glm() specifies a logistic regression model.",
+           incorrect = "Not quite. Use family = binomial for logistic regression in glm()."
+  ),
+  
+  question("Which evaluation metric is commonly used to assess logistic regression model performance?",
+           answer("Root Mean Square Error (RMSE)"),
+           answer("Accuracy", correct = TRUE),
+           answer("Adjusted R-squared"),
+           allow_retry = TRUE,
+           correct = "Correct! Accuracy is a common metric for evaluating logistic regression models.",
+           incorrect = "Not quite. Accuracy is typically used for logistic regression evaluation."
+  ),
+  
+  question("What is the purpose of using the summary() function on a linear or logistic regression model?",
+           answer("To fit the model to the data"),
+           answer("To view detailed results and statistics from the model fit", correct = TRUE),
+           answer("To create predictions for new data"),
+           allow_retry = TRUE,
+           correct = "Correct! The summary() function provides detailed statistics on the fitted model.",
+           incorrect = "Not quite. summary() is used to view statistics on the fitted model."
+  ),
+  
+  question("In a logistic regression model, what does an odds ratio greater than 1 indicate?",
+           answer("The predictor is associated with a lower likelihood of the outcome"),
+           answer("The predictor is associated with a higher likelihood of the outcome", correct = TRUE),
+           answer("The predictor has no impact on the outcome"),
+           allow_retry = TRUE,
+           correct = "Correct! An odds ratio greater than 1 suggests a higher likelihood of the outcome.",
+           incorrect = "Not quite. An odds ratio above 1 indicates an increased likelihood."
+  ),
+  
+  question("What R function is used to make predictions from a regression model on new data?",
+           answer("predict()", correct = TRUE),
+           answer("summary()"),
+           answer("estimate()"),
+           allow_retry = TRUE,
+           correct = "Correct! The predict() function is used to generate predictions for new data.",
+           incorrect = "Not quite. Use predict() for making predictions with a fitted model."
+  ),
+  
+  question("What does the coefficient of a predictor variable represent in a linear regression model?",
+           answer("The expected change in the outcome variable for a one-unit increase in the predictor", correct = TRUE),
+           answer("The probability of the outcome given the predictor"),
+           answer("The proportion of variance explained by the model"),
+           allow_retry = TRUE,
+           correct = "Correct! In linear regression, the coefficient represents the change in the outcome for a one-unit change in the predictor.",
+           incorrect = "Not quite. In linear regression, the coefficient indicates the expected change in the outcome."
+  )
+)
+```
+
 
 ## Submit Report
 
