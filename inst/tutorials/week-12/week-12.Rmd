@@ -201,7 +201,7 @@ beauty_nonenglish <-
 ```
 
 <div id="filter-hint">
-**Hint:** To affect rpws, you might want to review the slides from Week 05: https://fraba.github.io/SSPS4102-SSPS6006/slide/week-05.html#31.
+**Hint:** To affect rows, you might want to review the slides from Week 05: https://fraba.github.io/SSPS4102-SSPS6006/slide/week-05.html#31.
 </div>
 
 ```{r filter-solution}
@@ -225,7 +225,7 @@ beauty <-
                       age >= ___ ~ "41+"))
 ```
 
-<div id="plot1-hint">
+<div id="casewhen-hint">
 **Hint:** To transform columns, you might want to review the slides from Week 05: https://fraba.github.io/SSPS4102-SSPS6006/slide/week-05.html#42.
 </div>
 
@@ -254,7 +254,7 @@ cor(___)
 ```
 
 <div id="cor-hint">
-**Hint:** To transform columns, you might want to review the slides from Week 05: https://fraba.github.io/SSPS4102-SSPS6006/slide/week-05.html#42.
+**Hint:** On this you can check the stat slides from Week 06: https://canvas.sydney.edu.au/courses/59609/files/39052980?module_item_id=2474521.
 </div>
 
 ```{r cor-solution}
