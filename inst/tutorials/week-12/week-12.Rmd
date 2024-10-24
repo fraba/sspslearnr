@@ -1,0 +1,461 @@
+---
+title: "SSPS [4102|6006] Week 12: Network and Spatial data"
+tutorial:
+  id: "week-12"
+output:
+  learnr::tutorial:
+    progressive: true
+    ace_theme: github
+    theme: united
+runtime: shiny_prerendered
+description: "This tutorial will cover machine learning and text analysis"
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(tidyverse)
+library(sspslearnr)
+library(gradethis)
+library(class)
+library(tidytext)
+
+tutorial_options(exercise.checker = gradethis::grade_learnr, 
+                 exercise.reveal_solution="TRUE")
+knitr::opts_chunk$set(echo = FALSE)
+num_tutorial <- 0
+num_excercise <- 0
+tut_reptitle <- "SSPS [4102|6006] Week 12: In-class Individual Tutorial"
+```
+
+## 1. Import the data
+
+```{r import-quiz}
+quiz(
+  question("Which function is most commonly used to load data from a CSV file into R?",
+           answer("read.csv()", correct = TRUE),
+           answer("load.file()"),
+           answer("import.data()"),
+           allow_retry = TRUE,
+           correct = "Correct! The `read.csv()` function is typically used to load data from a CSV file into R.",
+           incorrect = "Not quite. The correct function is `read.csv()`."
+  ),
+  
+  question("What is the easiest way to import a dataset in RStudio without writing code?",
+           answer("Using the Import Dataset button in the Environment pane", correct = TRUE),
+           answer("Using the `read.import()` function"),
+           answer("Using the 'Load Data' command"),
+           allow_retry = TRUE,
+           correct = "Correct! RStudio provides a graphical interface to import datasets via the Import Dataset button in the Environment pane.",
+           incorrect = "Not quite. The Import Dataset button in RStudio’s Environment pane is the easiest way to load data without code."
+  )
+)
+```
+
+- Now complete the code so to import a CSV file "beauty.csv" from the folder "data" into an object R data.frame called `beauty` using the `read.csv()` function.
+
+```{r importcode, exercise = TRUE, exercise.blanks = "___+"}
+
+```
+
+```{r importcode-solution}
+beauty <- read.csv("data/beauty.csv")
+```
+
+```{r importcode-check}
+grade_code()
+```
+
+## 2. Data exploration
+
+- Now that we have loaded the data frame `beauty`, do a summary of all its columns with the function `summary()`. 
+
+```{r load-beauty}
+beauty <- 
+  read.csv("data/beauty.csv")
+```
+
+```{r summary, exercise = TRUE, exercise.blanks = "___+", exercise.setup = 'load-beauty'}
+
+```
+
+```{r summary-solution}
+summary(beauty)
+```
+
+```{r summary-check}
+grade_code()
+```
+
+It is always important to know your data! The table contains data from anonymous teaching evaluations in economics classes at the University of Texas. 
+
+This is real data collected for this study if you want to read it: Hamermesh, D. S., & Parker, A. (2005). Beauty in the classroom: Instructors’ pulchritude and putative pedagogical productivity. *Economics of Education Review*, 24(4), 369–376. https://doi.org/10.1016/j.econedurev.2004.07.013
+
+The exercise was instead published in Gelman, A., Hill, J., & Vehtari, A. (2021). *Regression and Other Stories*. Cambridge University Press.
+
+These are the variable:
+
+- `eval`: The student evaluation on a 1-5 Likert scale.
+- `beauty`: The instructor beauty according to ratings from six undergraduate students (three women and three men) based on the instructor's picture. This variable was standardised. 
+- `female`: Whether the instructor is a female.
+- `age`: Age of instructor.
+- `minority`: Whether the instructor is part of a minority.
+- `nonenglish`: Whether the instructor is not a native English speaker.
+- `lower`: Whether the course was offered in the first years of the program.
+- `course_id` The ID identifying the course.
+
+You can come back to this tab to check what each variable means.
+
+## 3. Data description
+
+Let's now describe the key variable from the data: `eval`.
+
+```{r description1-quiz}
+quiz(
+  question("Using ggplot, which graph can you use to show the distribution of a single continuous variable?",
+           answer("geom_line()"),
+           answer("geom_density()", correct = TRUE),
+           answer("geom_bar()"),
+           answer("geom_histogram()", correct = TRUE),
+           answer("geom_col()"),
+           answer("geom_boxplot()"),
+           allow_retry = TRUE,
+           correct = "Correct! With a single continous variable you can use both `geom_density()` or geom_histogram(). If you consider the Likert scale as a discrete variable you could use `geom_col()` or `geom_bar()`.",
+           incorrect = "Not quite."
+  )
+)
+```
+
+### Now let's plot the variable `eval` with ggplot.
+
+```{r plot1, exercise = TRUE, exercise.blanks = "___+", exercise.setup = 'load-beauty'}
+
+```
+
+<div id="plot1-hint">
+**Hint:** You might want to review this slide from Week 03: https://fraba.github.io/SSPS4102-SSPS6006/slide/week-03.html#55.
+</div>
+
+```{r plot1-solution}
+ggplot(data = beauty, aes(x = eval)) + 
+  geom_histogram()
+```
+
+```{r plot1-check}
+grade_code()
+```
+
+### It might also be useful to provide some statistics about your key variables.
+
+What is the mean of the variable `eval`. 
+
+```{r mean, exercise = TRUE, exercise.blanks = "___+", exercise.setup = 'load-beauty'}
+
+```
+
+<div id="mean-hint">
+**Hint:** Remember that you can access a variable in a data frame using the `$` after the data frame name.
+</div>
+
+```{r mean-solution}
+ggplot(data = beauty, aes(x = eval)) + 
+  geom_histogram()
+```
+
+```{r mean-check}
+mean(beauty$eval)
+```
+
+### Finally, it could be useful to visualise the associations among key variables.
+
+- Can you plot with `geom_point()` the association between `eval` and `beauty`?
+
+```{r plot2, exercise = TRUE, exercise.blanks = "___+", exercise.setup = 'load-beauty'}
+
+```
+
+<div id="plot2-hint">
+**Hint:** You might want to review this slide from Week 03: https://fraba.github.io/SSPS4102-SSPS6006/slide/week-03.html#64.
+</div>
+
+```{r plot2-solution}
+ggplot(data = beauty, aes(x = eval, beauty)) + 
+  geom_point()
+```
+
+```{r plot2-check}
+grade_code()
+```
+
+## 4. Data Manipulation
+
+Likely, you are not going to use all the variables you find in a data set. Also, you might need to **filter** your data set (excluding observations you don't need) and **recode** some of the variables (maybe creating a new variable). 
+
+Let's review how to do this with dplyr.
+
+### Create a new data frame called `beauty_nonenglish` where you have only non-English instructors
+
+```{r filter, exercise = TRUE, exercise.blanks = "___+", exercise.setup = 'load-beauty'}
+beauty_nonenglish <- 
+  beauty |>
+  ___(nonenglish ___ ___)
+```
+
+<div id="filter-hint">
+**Hint:** To affect rpws, you might want to review the slides from Week 05: https://fraba.github.io/SSPS4102-SSPS6006/slide/week-05.html#31.
+</div>
+
+```{r filter-solution}
+beauty_nonenglish <- 
+  beauty |>
+  filter(nonenglish == 1)
+```
+
+```{r filter-check}
+grade_code()
+```
+
+
+### Use mutate(), case_when() and pipes to create a variable called `age_group` that groups age into thre categories: "21-30", "31-40", "41+" (use this also as labels of your categories).
+
+```{r casewhen, exercise = TRUE, exercise.blanks = "___+", exercise.setup = 'load-beauty'}
+beauty <- 
+  beauty |>
+  ___(___ = case_when(age >= ___ & age <=___ ~ "21-30",
+                      age >= ___ & age <= ___ ~ "31-40",
+                      age >= ___ ~ "41+"))
+```
+
+<div id="plot1-hint">
+**Hint:** To transform columns, you might want to review the slides from Week 05: https://fraba.github.io/SSPS4102-SSPS6006/slide/week-05.html#42.
+</div>
+
+```{r casewhen-solution}
+beauty <- 
+  beauty |>
+  mutate(age_group = case_when(age >= 21 & age <= 30 ~ "21-30",
+                               age >= 31 & age <= 40 ~ "31-40",
+                               age >= 41 ~ "41+"))
+```
+
+```{r casewhen-check}
+grade_code()
+```
+
+## 5. Data analysis
+
+Once you have read in and prepared your data you can run your analysis. 
+
+### Let's start simple and only analysie the relationship between two variable.
+
+- Use the function `cor()` to measure the *correlation* between `eval` and `beauty`. 
+
+```{r cor, exercise = TRUE, exercise.blanks = "___+", exercise.setup = 'load-beauty'}
+cor(___)
+```
+
+<div id="cor-hint">
+**Hint:** To transform columns, you might want to review the slides from Week 05: https://fraba.github.io/SSPS4102-SSPS6006/slide/week-05.html#42.
+</div>
+
+```{r cor-solution}
+cor(beauty$eval, beauty$beauty)
+```
+
+```{r cor-check}
+grade_code()
+```
+
+```{r cor-quiz}
+quiz(
+  question("What does the correlation coefficient (cor(X,Y)) represent in data analysis?",
+           answer("The exact cause of variation between two variables"),
+           answer("The direction and strength of the linear relationship between two variables", correct = TRUE),
+           answer("The difference between two variables"),
+           allow_retry = TRUE,
+           correct = "Correct! The correlation coefficient measures the direction and strength of the linear relationship between two variables.",
+           incorrect = "Not quite. The correlation coefficient represents the direction and strength of the linear relationship between two variables."
+  ),
+  
+  question("What is the possible range of values for the correlation coefficient?",
+           answer("0 to 1"),
+           answer("0 to 100"),
+           answer("-1 to 1", correct = TRUE),
+           allow_retry = TRUE,
+           correct = "Correct! The correlation coefficient ranges from -1 (perfect negative correlation) to 1 (perfect positive correlation).",
+           incorrect = "Not quite. The correct range is -1 to 1."
+  ),
+  
+  question("If the correlation coefficient between two variables is close to 0, what does that imply?",
+           answer("There is no strong linear relationship between the two variables", correct = TRUE),
+           answer("The variables are not related in any way"),
+           answer("One variable directly causes the other"),
+           allow_retry = TRUE,
+           correct = "Correct! A correlation close to 0 suggests there is no strong linear relationship between the variables.",
+           incorrect = "Not quite. A correlation close to 0 means there is no strong *linear* relationship, but they might still be related in other ways."
+  )
+)
+```
+
+### Let's use the linear regression to predict `eval`.
+
+```{r predict-quiz}
+quiz(
+  question("When we say that we want to predict a variable (e.g., `eval`)...",
+           answer("We consider that variable the outcome variable", correct = TRUE),
+           answer("We consider that variable a control variable"),
+           answer("We consider that variable the dependent variable", correct = TRUE),
+           answer("We consider that variable the independent variable"),
+           allow_retry = TRUE,
+           correct = "Correct! Outcomes and dependent variable is what we want to predict with a regression.",
+           incorrect = "Not quite."
+  )
+)
+```
+
+- Write your code to predict `eval` with a linear regression `lm()` using `beauty` as the only predictor.
+
+```{r lm, exercise = TRUE, exercise.blanks = "___+", exercise.setup = 'load-beauty'}
+lm(formula = ___, data = beauty)
+```
+
+<div id="lm-hint">
+**Hint:** Remember that the formula for the regression is `Y ~ X` where `Y` is the dependent variable and `X` are all the independent variables.  
+</div>
+
+```{r lm-solution}
+lm(formula = eval ~ beauty, data = beauty)
+```
+
+```{r lm-check}
+grade_code()
+```
+
+
+```{r coeff-1}
+question_numeric(
+  "What is the coefficient of `beauty`?", 
+  answer(0.133, correct = TRUE), 
+  allow_retry = TRUE, min = 0.132, max = 0.134, step = 0.01 )
+```
+
+### Let's complicate things a bit. 
+
+```{r control-quiz}
+quiz(
+  question("What is a confounding variable in the context of observational data analysis?",
+           answer("A variable that only affects the outcome"),
+           answer("A variable that affects both the treatment and the outcome", correct = TRUE),
+           answer("A variable that only affects the treatment"),
+           allow_retry = TRUE,
+           correct = "Correct! A confounding variable influences both the likelihood of receiving the treatment and the outcome.",
+           incorrect = "Not quite. A confounding variable affects both the treatment and the outcome."
+  ),
+  
+  question("Why do we include control variables in a multiple regression model?",
+           answer("To increase the sample size"),
+           answer("To account for potential confounders and isolate the effect of the treatment on the outcome", correct = TRUE),
+           answer("To change the relationship between the treatment and the outcome"),
+           allow_retry = TRUE,
+           correct = "Correct! Control variables help to account for potential confounders, allowing us to estimate the treatment effect more accurately.",
+           incorrect = "Not quite. Control variables are used to account for confounders, not to change the relationship."
+  ),
+  
+  question("What is the main assumption we make when controlling for confounders using multiple regression?",
+           answer("We assume that confounding variables do not affect the outcome"),
+           answer("We assume that we have included all relevant confounding variables in the model", correct = TRUE),
+           answer("We assume that confounders are independent of the treatment"),
+           allow_retry = TRUE,
+           correct = "Correct! When using multiple regression, we assume that all relevant confounding variables are included in the model to estimate the treatment effect accurately.",
+           incorrect = "Not quite. We need to assume that all confounders are accounted for in the model."
+  )
+)
+```
+
+
+- Let's add a control variable to your linear model. How would you control for `age` while predicting `eval` with `beauty` (this time we store the result in `fit`)?
+
+
+```{r lm2, exercise = TRUE, exercise.blanks = "___+", exercise.setup = 'load-beauty'}
+fit <- lm(formula = ___, data = beauty)
+```
+
+<div id="lm2-hint">
+**Hint:** Remember that you can add control variables to your formula with a `+` after your independent variable.  
+</div>
+
+```{r lm2-solution}
+fit <- lm(formula = eval ~ beauty + age, data = beauty)
+```
+
+```{r lm2-check}
+grade_code()
+```
+
+- Let's check the results from the regression with `summary()` (note that they are stored in `fit`).
+
+```{r beautylm}
+beauty <- read.csv("data/beauty.csv")
+fit <- lm(formula = eval ~ beauty + age, data = beauty)
+```
+
+```{r lm3, exercise = TRUE, exercise.blanks = "___+", exercise.setup = 'beautylm'}
+___
+```
+
+
+```{r coeff-2}
+question_numeric(
+  "What is the coefficient of `beauty` now?", 
+  answer(0.1340634, correct = TRUE), 
+  allow_retry = TRUE, min = 0.134, max = 0.135, step = 0.01 )
+```
+
+```{r coeff-quiz}
+quiz(
+  question("Which of the following is the correct interpretation of a coefficient in a multiple linear regression model?",
+           answer("It represents the change in the outcome variable for a one-unit increase in the predictor variable, without considering other variables"),
+           answer("It represents the change in the predicted value of the outcome variable for a one-unit increase in the predictor variable, holding all other variables constant", correct = TRUE),
+           answer("It represents the percentage change in the outcome variable for a one-unit increase in the predictor variable"),
+           allow_retry = TRUE,
+           correct = "Correct! The coefficient reflects the change in the predicted outcome for a one-unit increase in the predictor, holding other variables constant.",
+           incorrect = "Not quite. Remember that the coefficient shows the effect of a predictor variable while controlling for other variables in the model."
+  )
+)
+```
+
+```{r pvalue-quiz}
+quiz(
+  question("Is the coefficient of `beauty` statistically significant at the .05 level?",
+           answer("Yes", correct = TRUE),
+           answer("No")
+  ), 
+  question("Which of the following is the correct interpretation of a p-value in hypothesis testing?",
+           answer("It is the probability of observing data as extreme as the observed data, assuming the null hypothesis is true", correct = TRUE),
+           answer("It is the probability that the null hypothesis is true"),
+           answer("It is the probability that the alternative hypothesis is true"),
+           allow_retry = TRUE,
+           correct = "Correct! The p-value represents the likelihood of observing data as extreme as the observed data under the null hypothesis.",
+           incorrect = "Not quite. The p-value reflects the probability of the observed data under the assumption that the null hypothesis is true."
+  )
+)
+```
+
+- What other control variables would you add to predict `eval` from `beauty`? Why?
+
+```{r lm4, exercise = TRUE, exercise.blanks = "___+", exercise.setup = 'load-beauty'}
+fit <- lm(formula = ___, data = beauty)
+summary(fit)
+```
+
+
+## Submit Report
+
+```{r context="setup"}
+submission_ui
+```
+
+```{r context="server"}
+submission_server()
+```
+
+
